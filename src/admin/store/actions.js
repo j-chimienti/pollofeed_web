@@ -1,0 +1,5 @@
+export const OPEN_ADMIN_WEBSOCKET = 'OPEN_ADMIN_WEBSOCKET'
+export const RESUME_SESSION = 'RESUME_SESSION'
+export const LOGIN = 'LOGIN'
+export const MARK_SHIPPED = 'MARK_SHIPPED'
+export const UPDATE_CONFIG = 'UPDATE_CONFIG'

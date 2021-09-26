@@ -1,0 +1,16 @@
+export const LOGOUT = 'LOGOUT'
+export const TOTAL_ORDER_COUNT = 'TOTAL_ORDER_COUNT'
+export const SWAG_INVOICES = 'SWAG_INVOICES'
+export const CLIENT_COUNT = 'CLIENT_COUNT'
+export const PROCESSING_INVOICES = 'PROCESSING_INVOICES'
+
+export const INVOICES = 'INVOICES'
+export const ORDERS_VIEW = 'ORDERS_VIEW'
+export const ORDERS_BY_DAY = 'ORDERS_BY_DAY'
+
+export const LOGGING_IN = 'LOGGING_IN'
+export const LOGGED_IN = 'LOGGED_IN'
+export const LOGGED_OUT = 'LOGGED_OUT'
+
+export const POLLOFEED_CONFIG = 'POLLOFEED_CONFIG'
+export const ADD_ALERT = 'ADD_ALERT'
