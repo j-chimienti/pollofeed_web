@@ -1,4 +1,8 @@
 
+<p align="center">
+<img src="src/assets/pollofeed_logo.png" alt="pf"/>
+</p>
+
 ![pollofeed](./src/assets/pollofeed_logo.png)
 
 # Pollofeed
