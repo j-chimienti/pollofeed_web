@@ -6,10 +6,13 @@
    <p v-if="!feedTokens.length" class="text-grey">
      No delayed orders found
    </p>
+    <div class="row">
+      <q-btn icon="save" label="export to csv" @click="exportToCsv"/>
+    </div>
      <div v-for="feedToken in feedTokens" :key="feedToken" class="row flex justify-around">
          <q-input readonly :model-value="feedToken"/>
-              <q-btn @click="feed(feedToken)" rounded color="green">Feed</q-btn>
-           <q-btn @click="removeToken(feedToken)" color="red"  icon="delete"/>
+            <q-btn @click="feed(feedToken)" color="green">Feed</q-btn>
+           <q-btn @click="removeToken(feedToken)"   icon="delete"/>
 
      </div>
      <q-input v-model="manualFeedToken" placeholder="enter token" class="q-my-md"/>
@@ -21,6 +24,7 @@
 import {DELAY_FEEDING} from "../store/actions";
 import {mapGetters} from "vuex";
 import {REMOVE_FEED_TOKEN} from "../store/mutations";
+import {exportFile} from "quasar";
 
 export default {
   name: "DelayFeeding",
@@ -29,6 +33,12 @@ export default {
     ...mapGetters(['delayedFeedingResponse', 'websocket', 'feedTokens'])
   },
   methods: {
+    exportToCsv() {
+      if (this.feedTokens.length) {
+      const tokens = this.feedTokens.join("\n")
+      exportFile("pollofeed-tokens.csv", tokens)
+      } else this.$q.notify("No tokens found")
+    },
     manualFeed() {
       const id = this.manualFeedToken.trim()
       return this.feed(id)

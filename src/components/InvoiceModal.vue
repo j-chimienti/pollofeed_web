@@ -14,16 +14,25 @@
      </div>
      <br/>
      <div class="flex justify-center">
-       <a v-bind:href="href">
-         <qrcode-vue :value="payreq" :size="250" level="H"/>
+       <a v-bind:href="href" class="bg-white">
+         <qrcode-vue
+             margin="3"
+             :value="payreq"
+             :size="250" level="H"/>
        </a>
-     </div>
-     <br/>
-     <div class="mb-1">
-       <small>{{copyText}}</small>
      </div>
        <q-input class="pointer" readonly id="payreq" v-model="payreq" @click.prevent="copyPaymentRequest"/>
        <q-input v-if="feedToken" class="pointer" readonly id="feedToken" v-model="feedToken"/>
+      <div class="row q-my-md">
+        <q-btn
+            :href="href"
+            type="a"
+            label="Open in wallet"
+            icon="link"
+            :loading="loadingInvoice"
+        />
+        <q-btn v-close-popup="-1" flat color="grey" class="q-ml-auto">Close</q-btn>
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -34,12 +43,11 @@
 import {mapGetters, mapMutations} from "vuex";
 import {isDelayed} from "../services/Ws";
 import QrcodeVue from "qrcode.vue";
-import {CLOSE_INVOICE_MODAL} from "src/store/mutations";
+import {CLOSE_INVOICE_MODAL, OPEN_INVOICE_MODAL} from "src/store/mutations";
 const fmtbtc = require('fmtbtc')
 const {msat2sat, sat2btc} = fmtbtc
-import {copyToClipboard} from 'quasar'
+import {copyToClipboard, openURL} from 'quasar'
 
-const copyText = "copy the lightning invoice"
 export default {
   components: {
     QrcodeVue,
@@ -53,11 +61,13 @@ export default {
     if (this.updateDurationInterval) clearInterval(this.updateDurationInterval)
   },
   methods: {
+    open() {
+      openURL(this.href)
+    },
     ...mapMutations([CLOSE_INVOICE_MODAL]),
     copyPaymentRequest() {
       copyToClipboard(this.payreq)
-      this.copyText = "Copied!"
-      setInterval(() => this.copyText = copyText, 3000)
+      this.$q.notify("Copied invoice")
     },
     updateExp  ()  {
       return setInterval(() => {
@@ -76,8 +86,13 @@ export default {
   },
 
   computed: {
-    isVisible() { return this.modals.invoice.visible },
-    ...mapGetters(['feedTokens', 'invoice', 'payreq', 'qr', 'btc_usd', 'modals']),
+    isVisible: {
+      get: function () { return this.modals.invoice.visible },
+      set: function(value) {
+        return this.$store.commit(value ? OPEN_INVOICE_MODAL : CLOSE_INVOICE_MODAL)
+      }
+    },
+    ...mapGetters(['feedTokens', 'invoice', 'payreq', 'qr', 'btc_usd', 'modals', 'loadingInvoice']),
     feedToken() {
       const invoiceId = isDelayed(this.invoice)
       return this.feedTokens.find(token => token === invoiceId)
@@ -94,7 +109,6 @@ export default {
     return {
       timeRemaining: null,
       updateDurationInterval: null,
-      copyText
     }
   }
 }

@@ -1,15 +1,49 @@
 <template>
-  <div>{{address}}</div>
-  <qrcode-vue size="300" :value="address"/>
+  <q-input
+      readonly
+      class="cursor-pointer"
+      @click="copyAddr"
+      :model-value="address"/>
+  <div class="row">
+    <q-btn
+        type="a"
+        :href="url"
+        size="sm"
+        icon="link"
+        label="Open in wallet"
+    />
+
+  </div>
+  <div class="row flex justify-center">
+    <a :href="url" class="bg-white">
+      <qrcode-vue
+          size="250"
+          margin="3"
+          :value="address"/>
+    </a>
+  </div>
 </template>
 
 <script>
 import QrcodeVue from "qrcode.vue";
+import {copyToClipboard, openURL} from "quasar";
 export default {
   name: "LightningAddress",
+  methods: {
+    open() {
+      openURL(this.url)
+    },
+    copyAddr() {
+      copyToClipboard(this.url)
+      this.$q.notify("Copied address")
+    }
+  },
   data() {
+    const address = "pollofeed@pollofeed.com"
+    const url = 'lightning:' + address
     return {
-      address: "pollofeed@pollofeed.com"
+      address,
+      url
     }
   },
   components: {

@@ -3,19 +3,17 @@ import {
   ADD_FEED_TOKEN,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
-  CLOSE_DELAY_FEEDING_MODAL,
   CLOSE_INVOICE_MODAL,
-  CLOSE_SUCCESS_MODAL,
   DELAYED_FEEDING_FAILURE,
   DELAYED_FEEDING_SUCCESS,
   FEEDER_DONE_SPINNING,
-  FEEDER_SPINNING, OPEN_INVOICE_MODAL,
-  OPEN_SUCCESS_MODAL,
+  FEEDER_SPINNING,
+  OPEN_INVOICE_MODAL,
   REMOVE_FEED_TOKEN,
   SET_INVOICE,
   SET_ORDERS
 } from "../store/mutations";
-import { Notify } from 'quasar'
+import {Notify} from 'quasar'
 
 let spinnerTimout = null
 export function websocketMessageFactory(store, json) {
@@ -27,7 +25,6 @@ export function websocketMessageFactory(store, json) {
     if (success) {
       store.commit(REMOVE_FEED_TOKEN, token)
       setTimeout(() => {
-        store.commit(CLOSE_DELAY_FEEDING_MODAL)
       }, 2000)
     }
   }
@@ -43,8 +40,9 @@ export function websocketMessageFactory(store, json) {
     store.commit(SET_INVOICE, invoice)
     handleDelayed(invoice)
     store.commit(CLOSE_INVOICE_MODAL)
-    // todo: if delayed show the token
-    Notify.create("Invoice paid")
+    const delayed = isDelayed(invoice);
+    const msg = delayed ? `Invoice paid token=${delayed}` : "Invoice paid"
+    Notify.create(msg)
   }
 
 

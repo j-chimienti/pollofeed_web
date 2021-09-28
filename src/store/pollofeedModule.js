@@ -10,7 +10,6 @@ import {
   ADD_FEED_TOKEN,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
-  CLOSE_DELAY_FEEDING_MODAL,
   CLOSE_INVOICE_MODAL,
   DELAYED_FEEDING_FAILURE,
   DELAYED_FEEDING_SUCCESS,
@@ -21,10 +20,11 @@ import {
   OPEN_INVOICE_MODAL,
   REMOVE_FEED_TOKEN,
   SET_DELAYED_FEEDING,
-  SET_INVOICE,
+  SET_INVOICE, SET_PAYMENT_TYPE,
   WEBSOCKET_CLOSED,
   WEBSOCKET_OPEN
 } from "./mutations";
+const PAYMENT_TYPE_KEY = "PAYMENT_TYPE"
 import {WebsocketService} from "../services/WebsocketService";
 import {websocketMessageFactory} from "../services/Ws";
 
@@ -32,6 +32,7 @@ export const pollofeedModule = {
   getters: {
     isDelayedOrder: state => state.delayFeeding === "delayed",
     btc_usd: state => state.btc_usd,
+    paymentType: state => state.paymentType,
     loadingInvoice: state => state.loadingInvoice,
     loadingBtcpayserverInvoice: state => state.loadingBtcpayserverInvoice,
     invoice: state => state.invoice,
@@ -48,6 +49,7 @@ export const pollofeedModule = {
     modals: state => state.modals,
   },
   state: {
+    paymentType: localStorage.getItem(PAYMENT_TYPE_KEY) || "INVOICE",
     delayFeeding: "not_delayed",
     feederSpinning: null,
     websocket: null,
@@ -72,6 +74,10 @@ export const pollofeedModule = {
     delayedFeedingResponse: null,
   },
   mutations: {
+    [SET_PAYMENT_TYPE] (state, paymentType) {
+      localStorage.setItem(PAYMENT_TYPE_KEY, paymentType)
+      state.paymentType = paymentType
+    },
     [SET_DELAYED_FEEDING] (state, delayFeeding) { state.delayFeeding = delayFeeding },
     [SET_INVOICE] (state, invoice) { state.invoice = invoice },
     [BTC_USD] (state, btc_usd) { state.btc_usd = btc_usd },
@@ -88,10 +94,6 @@ export const pollofeedModule = {
     [REMOVE_FEED_TOKEN](state, token) { state.feedTokens = state.feedTokens.filter(ft => ft !== token) },
     [DELAYED_FEEDING_SUCCESS](state, message) { state.delayedFeedingResponse = message },
     [DELAYED_FEEDING_FAILURE](state, message) { state.delayedFeedingResponse = message },
-    [CLOSE_DELAY_FEEDING_MODAL](state) {
-      state.modals.delayFeeding.visible = false
-      state.delayedFeedingResponse = ""
-    },
     [OPEN_INVOICE_MODAL](state) { state.modals.invoice.visible = true },
     [CLOSE_INVOICE_MODAL](state) { state.modals.invoice.visible = false },
     [LOADING_BTCPAYSERVER_INVOICE](state, loading = true) { state.loadingBtcpayserverInvoice = loading }
