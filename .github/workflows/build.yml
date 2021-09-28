@@ -1,4 +1,4 @@
-name: Scala CI
+name: web app
 
 on: [push, pull_request]
 jobs:

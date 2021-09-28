@@ -1,6 +1,10 @@
-# Pollofeed (pollofeed_web)
 
+![pollofeed](./src/assets/pollofeed_logo.png)
+
+# Pollofeed
 Bitcoin Lighning Chicken Feeder
+
+[![Scala CI](https://github.com/j-chimienti/pollofeed_web/actions/workflows/build.yml/badge.svg)](https://github.com/j-chimienti/pollofeed_web/actions/workflows/build.yml)
 
 ## Install the dependencies
 ```bash
