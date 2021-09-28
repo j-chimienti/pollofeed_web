@@ -3,8 +3,6 @@
 <img src="src/assets/pollofeed_logo.png" alt="pf"/>
 </p>
 
-![pollofeed](./src/assets/pollofeed_logo.png)
-
 # Pollofeed
 Bitcoin Lighning Chicken Feeder
 
