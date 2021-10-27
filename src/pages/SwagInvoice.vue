@@ -4,7 +4,7 @@
     <div>
       <button class="btn btn-danger" @click="markShipped">Mark Shipped!</button>
     </div>
-    <div class="d-flex justify-content-around p-2">
+    <div class="flex justify-content-around p-2">
       <div><span>Order</span>
         <a :href="invoiceHref"></a>
       </div>

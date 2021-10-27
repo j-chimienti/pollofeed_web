@@ -1,5 +1,5 @@
 <template>
-      <q-table v-if="ordersByDay.length" dark :fields="fields" :items="ordersByDay" style="max-width: 20rem;"></q-table>
+      <q-table v-if="ordersByDay && ordersByDay.length" dark :fields="fields" :items="ordersByDay" style="max-width: 20rem;"></q-table>
 </template>
 
 <script>

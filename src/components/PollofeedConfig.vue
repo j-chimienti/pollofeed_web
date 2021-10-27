@@ -1,7 +1,7 @@
 <template>
-<div v-if="pollofeedConfig.id !== null">
+<div v-if="pollofeedConfig && pollofeedConfig.id !== null">
   <EditPollofeedConfig v-if="edit"/>
-  <table v-else class="table table-responsive table-borderless text-white">
+  <q-markup-table >
     <caption>Configuration for feedings</caption>
     <tbody>
     <tr>
@@ -19,7 +19,7 @@
     </tbody>
     <tfoot>
     </tfoot>
-  </table>
+  </q-markup-table>
   <q-btn @click="toggleEdit">edit</q-btn>
 
 </div>

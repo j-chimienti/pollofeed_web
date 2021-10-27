@@ -22,11 +22,13 @@
       <q-btn
           size="lg"
           push
+          evelated
           color="primary"
-          @click.prevent="INVOICE(delayFeeding)"
+          @click.prevent="invoiceRequest()"
           label="Create invoice"
+          :disable="invoiceBtnDisabled"
       />
-      <div class="q-gutter-sm">
+      <div class="q-gutter-sm q-my-md">
       <q-checkbox
           label="I want to delay feeding"
           v-model="delayFeeding"
@@ -40,8 +42,8 @@
       </q-checkbox>
       </div>
     </q-tab-panel>
-    <q-tab-panel  name="LNURL"><LightningUrl/></q-tab-panel>
     <q-tab-panel  name="OFFER"><offer/></q-tab-panel>
+    <q-tab-panel  name="LNURL"><LightningUrl/></q-tab-panel>
     <q-tab-panel  name="LNADDR"><LightningAddress/></q-tab-panel>
     <q-tab-panel name="DELAYED"><DelayFeeding/></q-tab-panel>
 
@@ -64,7 +66,8 @@ export default {
   components: {DelayFeeding, LightningAddress, LightningUrl, Offer},
   data()  {
     return {
-      delayFeeding: false
+      delayFeeding: false,
+      invoiceBtnDisabled: false
     }
   },
   computed: {
@@ -79,8 +82,10 @@ export default {
     ...mapGetters(['buttonDisabled', 'loadingInvoice', 'paymentType']),
   },
   methods: {
-    saveToLocalStorage(e) {
-      localStorage.setItem(KEY, e)
+    invoiceRequest() {
+      this.invoiceBtnDisabled = true
+      setTimeout(() => this.invoiceBtnDisabled = false, 2000)
+      return this.INVOICE(this.delayFeeding)
     },
     ...mapActions([INVOICE]),
     ...mapMutations([SET_DELAYED_FEEDING, SET_PAYMENT_TYPE])

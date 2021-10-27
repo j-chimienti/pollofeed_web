@@ -1,98 +1,71 @@
 <template>
-  <div class="col-md-12">
-    <h4 class="mb-3">Delivery address</h4>
-    <q-form novalidate @submit.prevent="submit">
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="firstName">First name</label>
-          <q-form-input v-model="purchaseForm.firstName" id="firstName" required/>
-          <q-form-invalid-feedback> Valid first name is required. </q-form-invalid-feedback>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="lastName">Last name</label>
-          <q-form-input id="lastName" required v-model="purchaseForm.lastName"/>
-          <q-form-invalid-feedback> Valid last name is required. </q-form-invalid-feedback>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="address">Address</label>
-        <q-form-input id="address" placeholder="1234 Main St" required v-model="purchaseForm.address"/>
-        <q-form-invalid-feedback> Please enter your shipping address. </q-form-invalid-feedback>
-      </div>
-      <div class="mb-3">
-        <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-        <q-form-input id="address2" placeholder="Apartment or suite" v-model="purchaseForm.address2"/>
-      </div>
-      <div class="row">
-        <div class="col-md-5 mb-3">
-          <label for="country">Country</label>
-          <select class="custom-select d-block w-100" id="country" required v-model="purchaseForm.country">
-            <option value="">Select Country</option>
-            <option v-for="country in countries" :key="country">{{country}}</option>
-          </select>
-          <q-form-invalid-feedback> Please select a valid country. </q-form-invalid-feedback>
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="state">State</label>
-          <select class="custom-select d-block w-100" id="state" required v-model="purchaseForm.state">
-            <option value="">Select State...</option>
-            <option v-for="state in states" :key="state">{{state}}</option>
-          </select>
-          <q-form-invalid-feedback> Please provide a valid state. </q-form-invalid-feedback>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label for="zip">Zip</label>
-          <q-form-input id="zip" required v-model="purchaseForm.zip"/>
-          <q-form-invalid-feedback> Zip code required. </q-form-invalid-feedback>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="city">City</label>
-        <q-form-input id="city" v-model="purchaseForm.city"/>
-        <q-form-invalid-feedback> Please enter a valid city. </q-form-invalid-feedback>
-      </div>
-      <div class="mb-3">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" placeholder="you@@example.com" required v-model="purchaseForm.email">
-        <q-form-invalid-feedback> Please enter a valid email address for shipping updates. </q-form-invalid-feedback>
-      </div>
-          <kbd id="command"></kbd>
-          <q-btn color="primary" block type="submit">
-            <q-spinner small v-if="loadingBtcpayserverInvoice">
-            </q-spinner>
-            <span v-else>
+  <q-card class="q-pa-md q-ma-md">
+    <h4 class="q-mb-3">Delivery address</h4>
+    <q-form @submit.prevent="submit">
+          <q-input v-model="purchaseForm.firstName" label="first name" :rules="nameRules"/>
+          <q-input label="last name" required v-model="purchaseForm.lastName" :rules="nameRules"/>
+        <q-input label="address" placeholder="1234 Main St" required v-model="purchaseForm.address" :rules="nameRules"/>
+        <q-input label="address2" placeholder="Apartment or suite" v-model="purchaseForm.address2"/>
+          <q-select label="country" required v-model="purchaseForm.country" :options="countries" />
+          <q-select label="state" required v-model="purchaseForm.state" :options="states">
+          </q-select>
+          <q-input label="zip" required v-model="purchaseForm.zip"/>
+        <q-input label="city" v-model="purchaseForm.city"/>
+        <q-input type="email"  label="email" placeholder="you@@example.com" required v-model="purchaseForm.email"/>
+      <div class="row q-my-md justify-center">
+        <q-btn color="primary" unelevated type="submit" :loading="loadingInvoice">
               Purchase {{moneyFormat(cartTotalPrice)}}
-            </span>
-          </q-btn>
+        </q-btn>
+      </div>
     </q-form>
-  </div>
+  </q-card>
 </template>
 
 <script>
 import {country_arr, s_a} from "../countries";
-import {BTCPAYSERVER_INVOICE_REQUEST} from "../store/actions";
 import {moneyFormat} from "../services/moneyUtils";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import {MERCH_INVOICE} from "src/store/actions";
 
+const testForm = {
+  firstName: "test",
+  lastName: "test",
+  address: "1234 main street",
+  address2: "",
+  zip: "90235",
+  state: "California",
+  country: "USA",
+  city: "Los Angeles",
+  email: "jchimien@gmail.com"
+}
+const blankForm = {
+  firstName: "",
+  lastName: "",
+  address: "",
+  address2: "",
+  zip: "",
+  state: "",
+  country: "USA",
+  city: "",
+  email: "",
+}
 export default {
   name: "ShippingForm",
   computed: {
-    ...mapGetters(['cartTotalPrice', 'cart', 'loadingBtcpayserverInvoice'])
+    ...mapGetters(['cartTotalPrice', 'cart'])
   },
-  data() { return {
+  data() {
+    const usaIndex = country_arr.findIndex(c => c === "USA")
+    const states = s_a[usaIndex + 1].split("|") || []
+    return {
+      loadingInvoice: false,
     countries: country_arr,
-    states: [],
-    purchaseForm: {
-      firstName: "",
-      lastName: "",
-      address: "",
-      address2: "",
-      zip: "",
-      state: "",
-      country: "",
-      city: "",
-      email: ""
-    }
+    states: states,
+    nameRules: [
+      val => (val && val.length > 0) || 'Please type something'
+    ],
+    purchaseForm: blankForm
+    // purchaseForm: testForm
   }},
   watch: {
     'purchaseForm.country': function(newVal) {
@@ -106,6 +79,7 @@ export default {
   },
   methods: {
     moneyFormat,
+    ...mapActions([MERCH_INVOICE]),
     submit() {
       const {
         firstName,
@@ -118,14 +92,22 @@ export default {
       })
       const swagInvoice = {
         buyer,
-        cart: this.cart.map(c => {
+        cart: this.cart.slice().map(c => {
           if (!c.isShirt) {
-            delete c.size;
+            return {
+              ...c,
+              size: null
+            }
           }
           return c
         })
       }
-      this.$store.dispatch(BTCPAYSERVER_INVOICE_REQUEST, swagInvoice)
+      this.loadingInvoice = true
+      this.MERCH_INVOICE(swagInvoice).then(() => {
+        setTimeout(() => {
+          this.loadingInvoice = false
+        }, 3000)
+      })
     },
   }
 }

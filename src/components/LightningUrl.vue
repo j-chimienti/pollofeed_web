@@ -39,7 +39,7 @@ export default {
     }
   },
   data() {
-    const url = process.env.VUE_APP_LNURL_PAY_URL
+    const url = process.env.LIGHTNING_URL
     return {
       url,
       displayUrl: "lightning:" + url.toUpperCase()

@@ -16,7 +16,9 @@
 
      </div>
      <q-input v-model="manualFeedToken" placeholder="enter token" class="q-my-md"/>
-   <q-btn @click="manualFeed" color="primary" label="Feed"/>
+   <q-btn @click="manualFeed" color="primary" label="Feed"
+    :disable="disabledButton"
+   />
 </div>
 </template>
 
@@ -28,9 +30,12 @@ import {exportFile} from "quasar";
 
 export default {
   name: "DelayFeeding",
-  data() { return { manualFeedToken: ""}},
+  data() { return { manualFeedToken: "", disabledBtn: false}},
   computed: {
-    ...mapGetters(['delayedFeedingResponse', 'websocket', 'feedTokens'])
+    ...mapGetters(['delayedFeedingResponse', 'websocket', 'feedTokens']),
+    disabledButton() {
+      return this.disabledBtn || !this.feedTokens.length && !this.manualFeedToken.length
+    }
   },
   methods: {
     exportToCsv() {
@@ -48,7 +53,10 @@ export default {
       else alert("invalid request")
     },
     feed(id) {
+      this.disabledBtn = true
+      setInterval(() => this.disabledBtn = false, 3000)
       return this.$store.dispatch(DELAY_FEEDING, id)
+
     }
   }
 }

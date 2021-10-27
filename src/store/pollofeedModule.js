@@ -1,6 +1,5 @@
 import {
   API_INVOICE,
-  BTCPAYSERVER_INVOICE_REQUEST,
   DELAY_FEEDING,
   INVOICE,
   OPEN_WEBSOCKET,
@@ -15,18 +14,19 @@ import {
   DELAYED_FEEDING_SUCCESS,
   FEEDER_DONE_SPINNING,
   FEEDER_SPINNING,
-  LOADING_BTCPAYSERVER_INVOICE,
   LOADING_INVOICE,
   OPEN_INVOICE_MODAL,
   REMOVE_FEED_TOKEN,
   SET_DELAYED_FEEDING,
-  SET_INVOICE, SET_PAYMENT_TYPE,
+  SET_INVOICE,
+  SET_PAYMENT_TYPE,
   WEBSOCKET_CLOSED,
   WEBSOCKET_OPEN
 } from "./mutations";
-const PAYMENT_TYPE_KEY = "PAYMENT_TYPE"
 import {WebsocketService} from "../services/WebsocketService";
 import {websocketMessageFactory} from "../services/Ws";
+
+const PAYMENT_TYPE_KEY = "PAYMENT_TYPE"
 
 export const pollofeedModule = {
   getters: {
@@ -34,7 +34,6 @@ export const pollofeedModule = {
     btc_usd: state => state.btc_usd,
     paymentType: state => state.paymentType,
     loadingInvoice: state => state.loadingInvoice,
-    loadingBtcpayserverInvoice: state => state.loadingBtcpayserverInvoice,
     invoice: state => state.invoice,
     payreq: state => state.invoice.payreq,
     qr: state => state.qr,
@@ -53,7 +52,6 @@ export const pollofeedModule = {
     delayFeeding: "not_delayed",
     feederSpinning: null,
     websocket: null,
-    loadingBtcpayserverInvoice: false,
     invoice: {},
     feedTokens: [],
     btc_usd: null,
@@ -96,7 +94,6 @@ export const pollofeedModule = {
     [DELAYED_FEEDING_FAILURE](state, message) { state.delayedFeedingResponse = message },
     [OPEN_INVOICE_MODAL](state) { state.modals.invoice.visible = true },
     [CLOSE_INVOICE_MODAL](state) { state.modals.invoice.visible = false },
-    [LOADING_BTCPAYSERVER_INVOICE](state, loading = true) { state.loadingBtcpayserverInvoice = loading }
   },
   actions: {
     [DELAY_FEEDING]({getters}, token) {
@@ -109,16 +106,11 @@ export const pollofeedModule = {
     [API_INVOICE]({getters, commit}, delayFeeding) {
       const body = JSON.stringify({WsRequestLightingInvoice: null, delayFeeding})
       commit(LOADING_INVOICE)
-      return fetch("/invoice", {method: "post", body, headers: {"content-type": "application/json"}})
+      return fetch("/api/invoice", {method: "post", body, headers: {"content-type": "application/json"}})
         .then(res => res.json())
         .then(invoice => {
           return websocketMessageFactory(this,{invoice})
         }).finally(() => commit(CLEAR_LOADING_INVOICE))
-    },
-    [BTCPAYSERVER_INVOICE_REQUEST]({getters, commit}, invoice) {
-      commit(LOADING_BTCPAYSERVER_INVOICE, true)
-      getters.websocket._send({WsBtcpayServerInvoiceRequest: null, invoice})
-      return router.push({name: "splash"})
     },
     [INVOICE]({getters, dispatch}, delayFeeding = false) {
       if (!(getters.connectedToWebsocket && getters.websocket.ws.readyState === 1)) {
@@ -127,9 +119,10 @@ export const pollofeedModule = {
         return dispatch(WEBSOCKET_INVOICE, delayFeeding)
       }
     },
-    [OPEN_WEBSOCKET](store) {
+    [OPEN_WEBSOCKET](store, adminSocket = false) {
       const {commit} = store
-      return new WebsocketService(store, process.env.VUE_APP_WS_PATH,  websocketMessageFactory).then((ws) => {
+      const path = adminSocket ? process.env.VUE_APP_WS_PATH_ADMIN : process.env.VUE_APP_WS_PATH
+      return new WebsocketService(store, path,  websocketMessageFactory).then((ws) => {
         commit(WEBSOCKET_OPEN, ws)
       }).catch(err => {
         console.error(err)

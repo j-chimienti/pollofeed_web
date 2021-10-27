@@ -1,5 +1,5 @@
 <template>
-<div class="d-flex justify-content-center align-items-center splash_screen">
+<div class="flex justify-center align-items-center splash_screen">
   <img :src="logo" width="200px" class="logo rounded-circle" />
 </div>
 </template>

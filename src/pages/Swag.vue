@@ -1,51 +1,40 @@
 <template>
-  <q-container>
-    <div class="row wrapper">
-      <div id="content" class="px-2">
-        <div v-if="isPaid" class="row d-flex justify-content-center mt-3">
-          <div class="alert alert-success">Thank you for the order!</div>
-        </div>
-        <div class="row d-flex justify-content-between align-items-center mx-1 p-2">
-          <router-link to="/">
-            <i class="fa fa-home fa-2x"></i>
-          </router-link>
+  <q-page>
+    <div class="row">
+      <div id="content" class="q-px-2">
+        <div class="row flex justify-between align-items-center mx-1 p-2">
           <img :src="pollofeed_logo" alt="Feed" width="100%" style="max-width: 300px">
-          <button id="toggleSidebarButton" v-on:click="toggleSidebar" class="btn btn-lg btn-success float-right">
+          <q-btn id="toggleSidebarButton" v-on:click="toggleSidebar" color="green">
             <i class="fa fa-shopping-basket"></i>
-            <span>{{cartItems()}}</span>
-          </button>
+            {{cartQuantity}}
+          </q-btn>
         </div>
-        <div class="card-deck my-3">
-          <div class="card pointer" v-for="(item, idx) in items" :key="item.title" v-on:click="item.isShirt ? null : ADD_ITEM_TO_CART(item, idx)">
-            <img class="card-img-top" :src="item.image" alt="" v-on:click="item.isShirt ? ADD_ITEM_TO_CART(item, idx) : null" width="90%">
-            <div class="card-body p-3">
-              <h3>{{item.title}}</h3>
-              <div v-if="item.isShirt">
-                <select class="custom-select" v-model="item.size">
-                  <option>s</option>
-                  <option>m</option>
-                  <option>l</option>
-                  <option>xl</option>
-                  <option>2 xl</option>
-                </select>
-                <button v-on:click="addToCart(item, idx)" class="btn btn-sm btn-success my-1">
-                  add
-                </button>
-              </div>
-            </div>
-            <div class="card-footer">
-              <h5 class="text-center">{{moneyFormat(item.price)}}</h5>
-            </div>
-          </div>
+        <div class="row flex">
+            <q-card class="pointer q-ma-md" v-for="(item, idx) in merchandise" :key="item.title" v-on:click="item.isShirt ? null : ADD_ITEM_TO_CART(item, idx)">
+              <img class="card-img-top" :src="item.image" alt="" v-on:click="item.isShirt ? ADD_ITEM_TO_CART(item, idx) : null" width="90%">
+              <q-card-section>
+                <div class="text-h5">{{item.title}}</div>
+                <div v-if="item.isShirt">
+                  <q-select
+                            @update:model-value="e => changeSize(e, idx)"
+                            :model-value="item.size"
+                            :options="shirtSizeOptions"/>
+                  <q-btn @click="ADD_ITEM_TO_CART(item, idx)" color="green" label="add"/>
+                </div>
+              </q-card-section>
+              <q-card-actions>
+                <h5 class="text-center">{{moneyFormat(item.price)}}</h5>
+              </q-card-actions>
+            </q-card>
         </div>
       </div>
-      <div id="sidebar" style="background-color: var(--dark_marine_blue);">
-        <div class="row mx-3 d-flex justify-content-center align-items-center" style="height: 50px">
-          <button v-on:click="emptyCart" class="btn btn-danger" v-if="cart.length"> Empty cart <i class="fa fa-trash"></i> </button>
+      <div id="sidebar">
+        <div class="row q-mx-3 flex justify-center align-items-center" style="height: 50px">
+          <q-btn v-on:click="emptyCart"  v-if="cart.length" icon="trash"> Empty cart </q-btn>
         </div>
         <div>
-          <button v-on:click="toggleSidebar" class="btn btn-sm text-white float-right mr-3 mb-2"> <i class="fa fa-2x fa-close"></i></button>
-          <table class="table mt-0 mb-0 bg-light">
+          <q-btn v-on:click="toggleSidebar" icon="close"/>
+          <q-markup-table>
             <thead>
             <tr>
               <th>Product</th>
@@ -60,8 +49,10 @@
                 <b>{{item.title}}</b>
                 <span v-if="item.isShirt" class="text-uppercase ml-2">{{item.size}}</span>
               </td>
-              <td class="align-middle px-0"> <a class="btn btn-link" v-on:click="REMOVE_ITEM_FROM_CART(idx)">
-                <i class="fa fa-trash text-muted"></i></a>
+              <td class="align-middle px-0">
+                <a class="btn btn-link" v-on:click="REMOVE_ITEM_FROM_CART(idx)">
+                  <i class="fa fa-trash text-muted"></i>
+                </a>
               </td>
               <td class="align-middle text-right">
                 {{item.quantity}}
@@ -69,8 +60,8 @@
               <td class="align-middle text-right">{{moneyFormat(item.price)}}</td>
             </tr>
             </tbody>
-          </table>
-          <table class="table bg-light">
+          </q-markup-table>
+          <q-markup-table>
             <tbody>
             <tr>
               <td>Total</td>
@@ -79,38 +70,47 @@
               </td>
             </tr>
             </tbody>
-          </table>
-          <q-btn v-q-modal.shippingModal
-                    :disabled="!cart.length"
-          >Confirm</q-btn>
+          </q-markup-table>
+          <q-btn @click="shippingFormVisible = true"
+                 color="green"
+                 :disable="!cart.length"
+                 label="Checkout"
+                 class="full-width"
+                 icon="cart"
+                 />
         </div>
         <div>
-          <img :src="LOGO" alt="" width="200" class="mt-3 mx-auto d-block">
+          <q-img :src="LOGO" fit="cover"/>
         </div>
       </div>
     </div>
-    <q-modal id="shippingModal" title="Shipping" header-bg-variant="dark" body-bg-variant="dark" hide-footer>
+    <q-dialog v-model="shippingFormVisible">
       <ShippingForm/>
-    </q-modal>
-  </q-container>
+    </q-dialog>
+    <InvoiceModal/>
+  </q-page>
 </template>
 
 <script>
-import {storeItems} from "../inventory";
 import ShippingForm from "../components/ShippingForm";
 import LOGO from "../assets/img/PF/pollofeed_logo.png"
 import pollofeed_logo from "../assets/img/PF/pollofeed_logo.png"
 import {moneyFormat} from "../services/moneyUtils";
 import {mapGetters, mapMutations} from "vuex";
-import {ADD_ITEM_TO_CART, CLEAR_CART, REMOVE_ITEM_FROM_CART} from "../store/mutations";
-
+import {
+  ADD_ITEM_TO_CART,
+  CLEAR_CART,
+  REMOVE_ITEM_FROM_CART,
+  SELECT_SHIRT_SIZE
+} from "../store/mutations";
+import InvoiceModal from "components/InvoiceModal";
 
 export default {
   name: "Swag",
-  components: {ShippingForm},
+  components: {InvoiceModal, ShippingForm},
 
   computed: {
-    ...mapGetters(['cartTotalPrice', 'cart'])
+    ...mapGetters(['cartTotalPrice', 'cart', 'merchandise', 'cartQuantity'])
   },
   mounted() {
     if (window.innerWidth <= 576) {
@@ -120,8 +120,11 @@ export default {
 
   },
   methods: {
+    changeSize(e, idx) {
+      this.SELECT_SHIRT_SIZE({size: e, idx})
+    },
     moneyFormat,
-    ...mapMutations([REMOVE_ITEM_FROM_CART, ADD_ITEM_TO_CART, CLEAR_CART]),
+    ...mapMutations([REMOVE_ITEM_FROM_CART, ADD_ITEM_TO_CART, CLEAR_CART, SELECT_SHIRT_SIZE]),
     clearQuantities() {
       this.items = this.items.map(i => ({...i, quantity: 1}))
     },
@@ -130,9 +133,6 @@ export default {
       document.getElementById("sidebar").classList.toggle("active")
     },
 
-    cartItems() {
-      return this.cart.map(i => i.quantity).reduce((a, t) => a + t, 0)
-    },
 
     emptyCart() {
       this.clearQuantities()
@@ -142,16 +142,17 @@ export default {
   data: function() {
     return {
       pollofeed_logo,
+      shirtSizeOptions: ['s', 'm', 'l', 'xl'],
       LOGO,
+      shippingFormVisible: false,
       isPaid: window.location.search.includes("paid"),
-      items: storeItems,
-
     };
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "src/css/quasar.variables";
 #content {
   width: calc(100% - 400px);
   min-height: 100vh;
@@ -165,6 +166,7 @@ export default {
   width: 400px;
   position: fixed;
   top: 0;
+  background: $dark_marine_blue;
   right: 0;
   height: 100vh;
   overflow-x: hidden;

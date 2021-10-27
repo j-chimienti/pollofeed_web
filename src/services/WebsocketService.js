@@ -13,8 +13,6 @@ export function WebsocketService(store, host, handleWebsocketMessage = console.l
     this.ws.send(MSG)
   }
 
-  this.ping = () => this._send({action: "ping"})
-
   this.ws.onmessage = e => {
     const {data} = e
     const json = JSON.parse(data)
@@ -23,18 +21,15 @@ export function WebsocketService(store, host, handleWebsocketMessage = console.l
 
   this.ws.onclose = e => {
     console.log("closed ws", e)
-    clearInterval(this.pingInterval)
   }
 
   return new Promise((resolve, reject) => {
     this.ws.onopen = () => {
       console.log("ws open")
-      this.pingInterval = setInterval(() => this.ping(), 45 * 1000)
       resolve(this)
     }
     this.ws.onerror = e => {
       console.error("Error in websocket", e)
-      clearInterval(this.pingInterval)
       reject(e)
     }
   })

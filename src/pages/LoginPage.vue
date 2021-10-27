@@ -1,21 +1,13 @@
 <template>
-<div>
-<SplashScreen v-if="loggingIn"/>
-  <Login v-else/>
-</div>
+  <Login />
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import SplashScreen from "components/SplashScreen";
 import Login from "components/Login";
 
 export default {
   name: "LoginPage",
-  components: {Login, SplashScreen},
-  computed: {
-    ...mapGetters(['loggingIn', 'loginError'])
-  }
+  components: {Login},
 }
 </script>
 

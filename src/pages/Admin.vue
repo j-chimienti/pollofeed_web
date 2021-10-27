@@ -1,23 +1,18 @@
 <template>
-<div>
-  <SplashScreen v-if="loggingIn"/>
-  <div v-else class="container">
-    <nav class="navbar mb-4">
-      <a @click="LOGOUT" class="nav-link">Logout</a>
-      <a :href="deployHost" class="nav-link text-uppercase">home</a>
-    </nav>
-    <div class="row d-flex justify-content-center align-items-center">
-      <Alerts/>
+<q-page>
+    <div class="row q-my-md">
+      <q-btn type="a" @click="LOGOUT"  >Logout</q-btn>
+      <q-btn type="a" :href="deployHost" >home</q-btn>
     </div>
-    <div>
-      <div class="row d-flex justify-content-around mb-4">
+<!--    <div>-->
+<!--      <div class="row flex justify-content-around mb-4">-->
         <q-card bg-variant="dark" style="max-width: 25rem;">
           <table>
             <tbody>
             <tr>
               <td>Today Orders</td>
-              <td class="text-right text-monospace">
-                {{todayOrderCount.toLocaleString()}}
+              <td class="text-right text-monospace" v-if="todayOrderCount">
+                {{ todayOrderCount.toLocaleString()}}
               </td>
             </tr>
             <tr>
@@ -42,28 +37,17 @@
         <q-card bg-variant="dark" style="max-width: 20rem;">
           <PollofeedConfig/>
         </q-card>
-      </div>
-      <div class="row d-flex justify-content-around">
-        <div>
-          <h3>Feedings</h3>
-          <FeedingList/>
-        </div>
-        <div>
-          <h3>Feedings By Day</h3>
-          <FeedingsByDay/>
-        </div>
-      </div>
-      <h3>Invoices</h3>
-      <h3>Merch sales</h3>
+        <h3>Feedings</h3>
+        <FeedingList/>
+        <h3>Feedings By Day</h3>
+        <FeedingsByDay/>
       <SwagInvoices/>
-    </div>
-  </div>
-</div>
+  </q-page>
 </template>
 
 <script>
 
-import {deployHost} from '@/constants';
+import {deployHost} from '../constants';
 import SwagInvoices from "components/SwagInvoices";
 import FeedingList from "components/FeedingList";
 import ClientCount from "components/ClientCount";
@@ -71,24 +55,26 @@ import ProcessingInvoices from "components/ProcessingInvoices";
 import PollofeedConfig from "components/PollofeedConfig";
 import FeedingsByDay from "components/FeedingsByDay";
 import {mapActions, mapGetters} from "vuex";
-import Alerts from "components/Alerts";
 import SplashScreen from "components/SplashScreen";
+import {LOGOUT, RESUME_SESSION} from "src/store/actions";
 
 export default {
   name: "Admin",
   data() { return {deployHost }},
+  mounted() {
+    this.RESUME_SESSION()
+  },
   computed: {
-    ...mapGetters(['totalOrderCount', 'todayOrderCount', 'isLoggedIn', 'loggingIn']),
+    ...mapGetters(['totalOrderCount', 'todayOrderCount']),
   },
   components: {
     SplashScreen,
-    Alerts,
     FeedingsByDay,
     PollofeedConfig,
     ProcessingInvoices, ClientCount, FeedingList, SwagInvoices
   },
   methods: {
-    ...mapActions(['LOGOUT']),
+    ...mapActions([LOGOUT, RESUME_SESSION]),
   }
 }
 </script>

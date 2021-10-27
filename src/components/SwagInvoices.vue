@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-dark table-borderless table-sticky" v-if="INVOICES.length">
+  <q-markup-table  v-if="INVOICES.length">
     <thead>
     <tr>
       <th></th>
@@ -12,7 +12,7 @@
     <tbody>
     <tr v-for="invoice in sortedInvoices()" :key="invoice.id">
       <td>
-        <router-link :to="{ name: 'swagInvoice', params: { id: invoice.id }}" class="nav-link">{{ invoice.id.slice(0, 4) }}</router-link>
+        <router-link :to="{ name: 'merch', params: { id: invoice.id }}" class="nav-link">{{ invoice.id.slice(0, 4) }}</router-link>
       </td>
       <td class="text-right text-monospace fmt_local_date">{{ invoice.createdAt.toLocaleString() }}</td>
       <td>{{ invoice.buyer.name }}</td>
@@ -35,15 +35,14 @@
         <h4>Total</h4>
       </td>
       <td colspan="4" class="text-right font-weight-bold text-monospace">
-        <h4>{{moneyFormat(sum)}}</h4>
+        <h4>{{(sum).toLocaleString()}}</h4>
       </td>
     </tr>
     </tfoot>
-  </table>
+  </q-markup-table>
 </template>
 
 <script>
-import {moneyFormat} from '@/services/moneyUtils'
 import {mapGetters} from "vuex";
 export default {
   name: "SwagInvoices",
@@ -62,13 +61,9 @@ export default {
     },
   },
   methods: {
-    moneyFormat,
     sortedInvoices() {
       return this.INVOICES.sort((a, b) => b.createdAt - a.createdAt)
     },
-    invoiceHref(invoice) {
-      return `invoice?id=${invoice.id}`
-    }
   }
 }
 </script>

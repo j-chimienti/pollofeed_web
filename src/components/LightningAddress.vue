@@ -39,7 +39,7 @@ export default {
     }
   },
   data() {
-    const address = "pollofeed@pollofeed.com"
+    const address = process.env.LIGHTNING_ADDRESS
     const url = 'lightning:' + address
     return {
       address,

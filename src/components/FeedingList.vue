@@ -1,6 +1,6 @@
 <template>
-<div class="tableWrapper mb-4">
-      <table class="table table-dark table-borderless table-sticky" style="max-width: 30rem;">
+<div class=" q-mb-4">
+      <q-markup-table>
         <thead>
         <tr class="text-capitalize">
           <th>id</th>
@@ -15,9 +15,9 @@
         <tbody>
         <tr v-for="order in ordersView"  :key="order.id" :class="{'text-muted': order.status === 'expired'}">
           <td>
-            <router-link :to="{ name: 'invoice', params: { id: order.id }}" >
+<!--            <router-link :to="{ name: 'merch', params: { id: order.id }}" >-->
               {{ order.id.slice(0, 8) }}
-            </router-link>
+<!--            </router-link>-->
           </td>
           <td>{{order.created_at.toLocaleString()}}</td>
           <td
@@ -38,7 +38,7 @@
           <td>{{order.hasOrder ? order.feedToken : "--"}}</td>
         </tr>
         </tbody>
-      </table>
+      </q-markup-table>
 </div>
 </template>
 

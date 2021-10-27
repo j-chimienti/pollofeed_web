@@ -46,25 +46,14 @@ module.exports = configure(function (ctx) {
       'material-icons', // optional, you are not bound to it
     ],
 
-    pages: {
-      index: {
-        entry: 'src/main.js',
-        title: 'PolloFeed',
-      },
-      admin: {
-        entry: 'src/admin/main.js',
-        title: 'Pollofeed | Admin',
-      }
-    },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
-        ...require('dotenv').config().parsed,
-        TEST: "HELLO"
+        ...require('dotenv').config({path: process.env.NODE_ENV === 'development' ? '.env.development' : ".env"}).parsed,
       },
       // env: ctx.dev ? devEnv : prodEnv,
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
 
       // transpile: false,
 
@@ -95,7 +84,8 @@ module.exports = configure(function (ctx) {
       https: false,
       vueDevtools: false,
       proxy: {
-        '*': "http://localhost:9000"
+        '/api': "http://localhost:9000",
+        '/ws': "http://localhost:9000"
       },
       port: 8080,
       open: false // opens browser window automatically
@@ -118,7 +108,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Dark', 'Notify']
+      plugins: ['Dark', 'Notify', 'Dialog']
     },
 
     // animations: 'all', // --- includes all animations
@@ -229,7 +219,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'pollofeed_web'
+        appId: 'pollofeed'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

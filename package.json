@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "fmtbtc": "^0.0.3",
+    "lodash.get": "^4.4.2",
     "qrcode.vue": "^3.3.2",
     "quasar": "^2.0.0",
     "vue-i18n": "^9.0.0",

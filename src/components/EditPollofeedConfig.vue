@@ -16,7 +16,7 @@
 <script>
 
 import {mapGetters} from "vuex";
-import {UPDATE_CONFIG} from "@/admin/store/actions";
+import {UPDATE_CONFIG} from "../store/actions";
 
 export default {
   name: "EditPollofeedConfig",

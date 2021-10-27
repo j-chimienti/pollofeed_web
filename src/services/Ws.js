@@ -3,17 +3,26 @@ import {
   ADD_FEED_TOKEN,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
+  CLIENT_COUNT,
   CLOSE_INVOICE_MODAL,
   DELAYED_FEEDING_FAILURE,
   DELAYED_FEEDING_SUCCESS,
   FEEDER_DONE_SPINNING,
   FEEDER_SPINNING,
+  MERCHANDISE,
   OPEN_INVOICE_MODAL,
+  ORDERS_BY_DAY,
+  ORDERS_VIEW,
+  POLLOFEED_CONFIG,
+  PROCESSING_INVOICES,
   REMOVE_FEED_TOKEN,
   SET_INVOICE,
-  SET_ORDERS
+  SET_ORDERS,
+  SWAG_INVOICES
 } from "../store/mutations";
 import {Notify} from 'quasar'
+import { Dialog } from 'quasar'
+
 
 let spinnerTimout = null
 export function websocketMessageFactory(store, json) {
@@ -40,9 +49,25 @@ export function websocketMessageFactory(store, json) {
     store.commit(SET_INVOICE, invoice)
     handleDelayed(invoice)
     store.commit(CLOSE_INVOICE_MODAL)
-    const delayed = isDelayed(invoice);
-    const msg = delayed ? `Invoice paid token=${delayed}` : "Invoice paid"
-    Notify.create(msg)
+    if (isMerchInvoice(invoice)) {
+      const id = isMerchInvoice(invoice)
+      const message = `id=${id} You will recieve an email shortly <a href="https://pollofeed.com/merch/${id}">view order</a>`
+      Dialog.create({
+        type: "positive",
+        title: invoice.description,
+        html: true,
+        message,
+      })
+    } else if (isDelayed(invoice)) {
+      const message =`Invoice paid token=${isDelayed(invoice)}`
+      Dialog.create({
+        title: "Delayed order paid.",
+        message,
+        type: "positive",
+      })
+    } else {
+      Notify.create("Invoice paid")
+    }
   }
 
 
@@ -58,12 +83,22 @@ export function websocketMessageFactory(store, json) {
     message = null,
     todayOrderCount = null,
     error = null,
+    merchandise = null,
     orders = null,
     invoiceUrl = null,
     feederSpinning = null,
     feedToken = null,
     delayedFeedingResponse = null,
-    btc_usd = null
+    btc_usd = null,
+
+      // ADMIN
+
+      clientCount = null,
+      swagInvoices = null,
+      processingInvoices = null,
+      pollofeedConfig = null,
+      ordersView = null,
+      ordersByDay = null
   } = json
   if (message && typeof message === "string" && message.includes("failed to create invoice")) {
     alert("Error creating invoice")
@@ -94,6 +129,16 @@ export function websocketMessageFactory(store, json) {
   if (delayedFeedingResponse) onDelayedFeedingResponse(delayedFeedingResponse)
 
   if (btc_usd) store.commit(BTC_USD, btc_usd)
+  if (merchandise) store.commit(MERCHANDISE, merchandise)
+
+  // admin
+
+  if (clientCount) store.commit(CLIENT_COUNT, clientCount)
+  if (swagInvoices) store.commit(SWAG_INVOICES, swagInvoices)
+  if (processingInvoices) store.commit(PROCESSING_INVOICES, processingInvoices)
+  if (ordersView) store.commit(ORDERS_VIEW, ordersView)
+  if (ordersByDay) store.commit(ORDERS_BY_DAY, ordersByDay)
+  if (pollofeedConfig) store.commit(POLLOFEED_CONFIG, pollofeedConfig)
 
 }
 
@@ -105,4 +150,10 @@ export function isDelayed(invoice) {
   } catch (e) {
     return null
   }
+}
+
+export function isMerchInvoice(invoice) {
+    if (invoice.description.includes("merch")) {
+      return invoice.description.replace("pollofeed merch -", "").trim()
+    } else return null
 }

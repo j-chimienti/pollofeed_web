@@ -8,8 +8,9 @@ import {OPEN_WEBSOCKET} from "src/store/actions";
 export default defineComponent({
   name: 'App',
   mounted() {
-    this.$q.dark.set(true)
-    this.$store.dispatch(OPEN_WEBSOCKET)
+    // set status
+    this.$q.dark.set(true) // or false or "auto"
+    this.$store.dispatch(OPEN_WEBSOCKET, false)
   }
 })
 </script>
