@@ -13,11 +13,11 @@ jobs:
       - uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: ansible
+      - name: deploy via ansible
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: deploy.yml
-          key: ${{secrets.SSH_PRIVATE_KEY}}
+#          key: ${{secrets.SSH_PRIVATE_KEY}}
           #          known_hosts: ${{env.SSH_KNOWN_HOSTS}}
           directory: playbooks
           #          vault_password: test
