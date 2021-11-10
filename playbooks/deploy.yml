@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  tags: build
+  gather_facts: no
+  tasks:
+    - name: npm install
+      npm:
+        path: ..
+    - name: npm run build:web
+      command: npm run build:web
+      args:
+        chdir: ..
+
+- hosts: pollofeed
+#  vars_files:
+#    - default.config.yml
+  tags: deploy
+#  become: yes
+  roles:
+    - pollofeed
+
+

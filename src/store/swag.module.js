@@ -33,14 +33,14 @@ const mutations = {
   [ADD_ITEM_TO_CART](state, item) {
     let cart = state.cart.slice()
     if (item.isShirt) {
-      cart = cart.concat(item)
+      cart = cart.concat({...item, quantity: 1})
     } else {
       const idx = cart.findIndex(i => i.title === item.title)
       if (idx !== -1)
         cart[idx] = Object.assign(cart[idx], {
           quantity: cart[idx].quantity + 1
         })
-      else cart = cart.concat(item)
+      else cart = cart.concat({...item, quantity: 1})
 
     }
     state.cart = cart
@@ -54,7 +54,7 @@ const mutations = {
     })
   },
   [MERCHANDISE](state, merchandise) { state.merchandise = merchandise.map(m => new StoreItem(m)) },
-  [REMOVE_ITEM_FROM_CART](state, index) { state.cart =  state.cart.splice(index, 1) },
+  [REMOVE_ITEM_FROM_CART](state, item) { state.cart =  state.cart.filter(i => i.title !== item.title) },
 }
 
 export const swagModule = {
