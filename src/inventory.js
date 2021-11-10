@@ -3,11 +3,8 @@ export function StoreItem({price, image, title, quantity = 1, id}) {
   this.title = title
   this.id = id
   this.image = getImage({image, id})
-  this.quantity = 1
   this.isShirt = title.toLowerCase().includes("shirt")
   this.size = "m"
-
-
 }
 
 const logoShirt = require("assets/img/PF/PF_tee_02.jpg")

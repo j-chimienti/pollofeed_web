@@ -10,8 +10,8 @@
           </q-btn>
         </div>
         <div class="row flex">
-            <q-card class="pointer q-ma-md" v-for="(item, idx) in merchandise" :key="item.title" v-on:click="item.isShirt ? null : ADD_ITEM_TO_CART(item, idx)">
-              <img class="card-img-top" :src="item.image" alt="" v-on:click="item.isShirt ? ADD_ITEM_TO_CART(item, idx) : null" width="90%">
+            <q-card class="pointer q-ma-md" v-for="(item, idx) in merchandise" :key="item.title" v-on:click="item.isShirt ? null : ADD_ITEM_TO_CART(item)">
+              <img class="card-img-top" :src="item.image" alt="" v-on:click="item.isShirt ? ADD_ITEM_TO_CART(item) : null" width="90%">
               <q-card-section>
                 <div class="text-h5">{{item.title}}</div>
                 <div v-if="item.isShirt">
@@ -19,7 +19,7 @@
                             @update:model-value="e => changeSize(e, idx)"
                             :model-value="item.size"
                             :options="shirtSizeOptions"/>
-                  <q-btn @click="ADD_ITEM_TO_CART(item, idx)" color="green" label="add"/>
+                  <q-btn @click="ADD_ITEM_TO_CART(item)" color="green" label="add"/>
                 </div>
               </q-card-section>
               <q-card-actions>
@@ -50,9 +50,9 @@
                 <span v-if="item.isShirt" class="text-uppercase ml-2">{{item.size}}</span>
               </td>
               <td class="align-middle px-0">
-                <a class="btn btn-link" v-on:click="REMOVE_ITEM_FROM_CART(idx)">
-                  <i class="fa fa-trash text-muted"></i>
-                </a>
+                <q-btn icon="delete" v-on:click="REMOVE_ITEM_FROM_CART(item)" >
+
+                </q-btn>
               </td>
               <td class="align-middle text-right">
                 {{item.quantity}}

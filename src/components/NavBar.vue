@@ -1,7 +1,7 @@
 <template>
   <q-header elevated bordered class="bg-dark">
     <q-toolbar class="q-my-md flex justify-between">
-      <router-link to="/">
+      <router-link :to="{name: 'home'}">
         <img :src="logo" alt="Feed" width="200">
       </router-link>
       <div>

@@ -4,8 +4,6 @@
       <q-btn type="a" @click="LOGOUT"  >Logout</q-btn>
       <q-btn type="a" :href="deployHost" >home</q-btn>
     </div>
-<!--    <div>-->
-<!--      <div class="row flex justify-content-around mb-4">-->
         <q-card bg-variant="dark" style="max-width: 25rem;">
           <table>
             <tbody>

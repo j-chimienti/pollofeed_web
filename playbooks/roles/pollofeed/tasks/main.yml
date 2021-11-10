@@ -1,0 +1,43 @@
+---
+
+- name: "~/fileserver exists"
+  tags: [ui, nginx]
+  file:
+    path: "~/fileserver"
+    state: directory
+
+- name: copy ui
+  tags: [start,files]
+  copy:
+    src: ../dist/spa
+    dest: ~/fileserver/
+
+
+- name: copy pollofeed.com vhost file
+  tags: [start]
+  copy:
+    src: pollofeed.com
+    dest: ~/fileserver/vhost.d/
+
+- name: copy pollofeed.com_location vhost file
+  tags: [start]
+  copy:
+    src: pollofeed.com_location
+    dest: ~/fileserver/vhost.d/
+
+- name: copy lightningAddr.json file
+  tags: [start]
+  copy:
+    src: lightningAddr.json
+    dest: ~/fileserver/spa/
+
+
+- name: start pollofeed
+  command: docker-compose up --build -d fileserver
+  tags: start
+  args:
+    chdir: "./{{APP_DIR}}"
+
+- name: reload nginx
+  tags: [start]
+  command: docker exec -it nginx nginx -s reload

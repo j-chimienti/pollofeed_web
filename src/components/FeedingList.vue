@@ -13,13 +13,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="order in ordersView"  :key="order.id" :class="{'text-muted': order.status === 'expired'}">
+        <tr v-for="order in data"  :key="order.id" :class="{'text-muted': order.status === 'expired'}">
           <td>
-<!--            <router-link :to="{ name: 'merch', params: { id: order.id }}" >-->
               {{ order.id.slice(0, 8) }}
-<!--            </router-link>-->
           </td>
-          <td>{{order.created_at.toLocaleString()}}</td>
+          <td class="text-right">{{order.created_at_time.toLocaleString()}}</td>
           <td
           >
             {{ order.status }}
@@ -50,7 +48,10 @@ import {mapGetters} from "vuex";
 export default {
   name: "FeedingList",
   computed: {
-    ...mapGetters(['ordersView'])
+    ...mapGetters(['ordersView']),
+    data() {
+      return this.ordersView.map(o => { return {...o, created_at_time: new Date(o.created_at)} })
+    }
   },
   methods: {
     paidAt(order) {
