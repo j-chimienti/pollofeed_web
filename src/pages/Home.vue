@@ -3,12 +3,18 @@
   <div class="home q-px-md q-py-lg q-px-lg">
      <div class="row justify-center q-ma-md q-pa-md">
          <q-card>
-           <iframe class="rounded shadow"
-                   id="live_stream"
-                   width="640"
-                   height="480"
-                   src="https://pollofeed.ngrok.io"
-           ></iframe>
+           <div class="text-h3">
+             We will be live 11/25 for Thanksgiving
+           </div>
+           <div>
+             Thanks for your patience
+           </div>
+<!--           <iframe class="rounded shadow"-->
+<!--                   id="live_stream"-->
+<!--                   width="640"-->
+<!--                   height="480"-->
+<!--                   src="https://pollofeed.ngrok.io"-->
+<!--           ></iframe>-->
          </q-card>
      </div>
       <div class="row q-ma-md justify-center">
