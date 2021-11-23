@@ -28,4 +28,4 @@ jobs:
           options: -v
           inventory: |
             [pollofeed]
-            pollofeed.com ansible_user=${{ secrets.SSH_USER }}
+            ${{ secrets.DEPLOY_HOST }} ansible_user=${{ secrets.SSH_USER }}

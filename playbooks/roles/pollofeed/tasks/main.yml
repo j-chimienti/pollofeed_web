@@ -33,7 +33,7 @@
 
 
 - name: start pollofeed
-  command: docker-compose up --build -d fileserver
+  command: docker-compose up -d fileserver
   tags: start
   args:
     chdir: "./{{APP_DIR}}"
