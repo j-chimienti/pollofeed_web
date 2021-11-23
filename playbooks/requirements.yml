@@ -1,6 +1,6 @@
 ---
 - collections:
-  - ansible.posix
+  - name: ansible.posix
 - roles:
-    - src: geerlingguy.pip
-    - src: geerlingguy.docker_arm
+    - name: geerlingguy.pip
+    - name: geerlingguy.docker_arm
