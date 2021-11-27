@@ -1,10 +1,6 @@
 <template>
   <footer >
     <div class="row flex flex-center">
-      <a  href="https://tip.pollofeed.com">
-        <q-icon name="thumb_up" size="lg"/>
-        tips
-      </a>
       <a  href="https://lightningchance.com">
         <img :src="wheel" alt="spin" width="100"/>
       </a>
