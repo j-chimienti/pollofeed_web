@@ -4,7 +4,7 @@
      <div class="row justify-center q-ma-md q-pa-md">
          <q-card>
            <div class="text-h3">
-             We will be live 11/25 for Thanksgiving
+             We will be live next week 🤞
            </div>
            <div>
              Thanks for your patience

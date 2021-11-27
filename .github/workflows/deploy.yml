@@ -28,4 +28,4 @@ jobs:
           options: -v
           inventory: |
             [pollofeed]
-            ${{ secrets.DEPLOY_HOST }} ansible_user=${{ secrets.SSH_USER }}
+            ${{ secrets.DEPLOY_HOST }} ansible_user=${{ secrets.SSH_USER }} ansible_port=${{ secrets.SSH_PORT }}
