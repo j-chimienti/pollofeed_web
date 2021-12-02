@@ -20,12 +20,14 @@ export function WebsocketService(store, host, handleWebsocketMessage = console.l
   }
 
   this.ws.onclose = e => {
-    console.log("closed ws", e)
+    console.log(`closed ws time=${openedTime} ${new Date()} ${openedTime - new Date()}`, e)
   }
 
+  let openedTime;
   return new Promise((resolve, reject) => {
     this.ws.onopen = () => {
       console.log("ws open")
+      openedTime = new Date()
       resolve(this)
     }
     this.ws.onerror = e => {

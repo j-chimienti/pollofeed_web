@@ -3,6 +3,7 @@ import {LOGIN, LOGOUT, OPEN_WEBSOCKET, RESUME_SESSION,} from './actions'
 // eslint-disable-next-line import/no-cycle
 import {Notify} from 'quasar'
 import {
+  AUTHENTICATED,
   CLIENT_COUNT, ORDERS_BY_DAY, ORDERS_VIEW,
   POLLOFEED_CONFIG,
   PROCESSING_INVOICES,
@@ -11,7 +12,8 @@ import {
 } from "src/store/mutations";
 
 async function onAuthSuccess({ commit, dispatch, $router}) {
-  await dispatch(OPEN_WEBSOCKET, true)
+  await dispatch(OPEN_WEBSOCKET)
+  commit(AUTHENTICATED, true)
   await $router.push({name: 'admin'})
 }
 
@@ -48,6 +50,7 @@ const actions = {
 
 const getters = {
   totalOrderCount: state => state.totalOrderCount,
+  authenticated: state => state.authenticated,
   todayOrderCount: state => state.todayOrderCount,
   pollofeedConfig: state => state.pollofeedConfig,
   ordersView: state => state.ordersView,
@@ -57,6 +60,7 @@ const getters = {
 }
 
 const state = {
+  authenticated: null,
   totalOrderCount: null,
   todayOrderCount: null,
   pollofeedConfig: null,
@@ -67,6 +71,7 @@ const state = {
 }
 
 const mutations = {
+  [AUTHENTICATED](state, a) { state.authenticated = a },
   [TOTAL_ORDER_COUNT](state, c) { state.totalOrderCount = c },
   [SWAG_INVOICES](state, i) { state.swagInvoices = i },
   [PROCESSING_INVOICES](state, p) { state.processingInvoices = p },

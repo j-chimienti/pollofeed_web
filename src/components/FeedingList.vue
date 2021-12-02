@@ -50,6 +50,7 @@ export default {
   computed: {
     ...mapGetters(['ordersView']),
     data() {
+      if (!this.ordersView) return []
       return this.ordersView.map(o => { return {...o, created_at_time: new Date(o.created_at)} })
     }
   },

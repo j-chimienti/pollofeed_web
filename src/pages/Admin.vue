@@ -60,10 +60,11 @@ export default {
   name: "Admin",
   data() { return {deployHost }},
   mounted() {
-    this.RESUME_SESSION()
+    if (!this.authenticated) this.$router.push({name: 'login'})
+    else this.RESUME_SESSION()
   },
   computed: {
-    ...mapGetters(['totalOrderCount', 'todayOrderCount']),
+    ...mapGetters(['totalOrderCount', 'todayOrderCount', 'authenticated']),
   },
   components: {
     SplashScreen,

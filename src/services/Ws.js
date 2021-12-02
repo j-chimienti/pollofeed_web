@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {
-  ADD_FEED_TOKEN,
+  ADD_FEED_TOKEN, AUTHENTICATED,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
   CLIENT_COUNT,
@@ -94,6 +94,7 @@ export function websocketMessageFactory(store, json) {
       // ADMIN
 
       clientCount = null,
+      authenticated = null,
       swagInvoices = null,
       processingInvoices = null,
       pollofeedConfig = null,
@@ -104,6 +105,7 @@ export function websocketMessageFactory(store, json) {
     alert("Error creating invoice")
     store.commit(CLEAR_LOADING_INVOICE)
   }
+  if (authenticated != null) store.commit(AUTHENTICATED, authenticated)
   if (!success) store.commit(CLEAR_LOADING_INVOICE)
   if (invoiceUrl) window.location = invoiceUrl
   if (invoice) {

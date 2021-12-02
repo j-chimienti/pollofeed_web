@@ -119,10 +119,9 @@ export const pollofeedModule = {
         return dispatch(WEBSOCKET_INVOICE, delayFeeding)
       }
     },
-    [OPEN_WEBSOCKET](store, adminSocket = false) {
+    [OPEN_WEBSOCKET](store) {
       const {commit} = store
-      const path = adminSocket ? process.env.VUE_APP_WS_PATH_ADMIN : process.env.VUE_APP_WS_PATH
-      return new WebsocketService(store, path,  websocketMessageFactory).then((ws) => {
+      return new WebsocketService(store, process.env.VUE_APP_WS_PATH,  websocketMessageFactory).then((ws) => {
         commit(WEBSOCKET_OPEN, ws)
       }).catch(err => {
         console.error(err)
