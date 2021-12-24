@@ -3,18 +3,12 @@
   <div class="home q-px-md q-py-lg q-px-lg">
      <div class="row justify-center q-ma-md q-pa-md">
          <q-card>
-           <div class="text-h3">
-             We will be live next week 🤞
-           </div>
-           <div>
-             Thanks for your patience
-           </div>
-<!--           <iframe class="rounded shadow"-->
-<!--                   id="live_stream"-->
-<!--                   width="640"-->
-<!--                   height="480"-->
-<!--                   src="https://pollofeed.ngrok.io"-->
-<!--           ></iframe>-->
+           <iframe class="rounded shadow"
+                   id="live_stream"
+                   width="640"
+                   height="480"
+                   src="https://stream.pollofeed.com"
+             ></iframe>
          </q-card>
      </div>
       <div class="row q-ma-md justify-center">

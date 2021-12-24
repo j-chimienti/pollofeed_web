@@ -7,7 +7,7 @@
     state: directory
 
 - name: copy ui
-  tags: [start,files]
+  tags: [start,files, copy_ui]
   copy:
     src: ../dist/spa
     dest: ~/fileserver/

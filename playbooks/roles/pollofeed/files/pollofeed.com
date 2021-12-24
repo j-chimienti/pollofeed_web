@@ -32,8 +32,23 @@ location /.well-known/lnurlp/pollofeed {
   try_files /lightningAddr.json =404;
 }
 
+location /health {
+  return 204;
+  # default_type text/html;
+  # return 200 'hello';
+}
 
-# eliminates copying into buffer
-sendfile on;
+
+etag on;
+gzip on;
+gzip_types text/css application/javascript application/json image/svg+xml;
+gzip_comp_level 9;
+
+location / {
+  root   /usr/share/nginx/html;
+  try_files $uri $uri/ /index.html;
+}
+
+
 
 # TODO: https://www.nginx.com/blog/rate-limiting-nginx/

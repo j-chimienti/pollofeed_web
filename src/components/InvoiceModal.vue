@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isVisible" position="top" @hide="CLOSE_INVOICE_MODAL">
+  <q-dialog v-model="isVisible" position="top" @hide="CLOSE_INVOICE_MODAL" id="invoice_modal">
     <q-card class="q-pa-md q-pt-lg q-mt-md text-center" style="width: 100%">
      <div class="text-h4">Pay with Lightning</div>
      <div class="row flex justify-between q-my-md">

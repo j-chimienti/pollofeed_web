@@ -20,6 +20,7 @@
   <q-tab-panels v-model="tab" animated style="min-height: 400px;" class="text-center">
     <q-tab-panel name="INVOICE">
       <q-btn
+          id="invoice_button"
           size="lg"
           push
           evelated
