@@ -39,16 +39,6 @@ location /health {
 }
 
 
-etag on;
-gzip on;
-gzip_types text/css application/javascript application/json image/svg+xml;
-gzip_comp_level 9;
-
-location / {
-  root   /usr/share/nginx/html;
-  try_files $uri $uri/ /index.html;
-}
-
 
 
 # TODO: https://www.nginx.com/blog/rate-limiting-nginx/
