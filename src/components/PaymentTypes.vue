@@ -9,7 +9,7 @@
         align="justify"
         narrow-indicator
     >
-      <q-tab name="INVOICE" label="INVOICE" />
+      <q-tab name="INVOICE" label="INVOICE" id="invoice-payment-selector" />
       <q-tab name="LNURL" label="LNURL" />
       <q-tab name="OFFER" label="OFFER" />
       <q-tab name="LNADDR" label="LNADDR" />
@@ -33,6 +33,7 @@
       <q-checkbox
           label="I want to delay feeding"
           v-model="delayFeeding"
+          id="delayed-order-selector"
           name="delayFeeding"
           value="delayed"
           unchecked-value="not_delayed"

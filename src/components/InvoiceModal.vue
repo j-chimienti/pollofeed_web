@@ -17,11 +17,11 @@
        <a v-bind:href="href" class="bg-white">
          <qrcode-vue
              margin="3"
-             :value="payreq"
+             :value="bolt11"
              :size="250" level="H"/>
        </a>
      </div>
-       <q-input class="pointer" readonly id="payreq" v-model="payreq" @click.prevent="copyPaymentRequest"/>
+       <q-input class="pointer" readonly id="bolt11" v-model="bolt11" @click.prevent="copyPaymentRequest"/>
        <q-input v-if="feedToken" class="pointer" readonly id="feedToken" v-model="feedToken"/>
       <div class="row q-my-md">
         <q-btn
@@ -41,7 +41,7 @@
 
 
 import {mapGetters, mapMutations} from "vuex";
-import {isDelayed} from "../services/Ws";
+import {isDelayed} from "../services/messageFactory";
 import QrcodeVue from "qrcode.vue";
 import {CLOSE_INVOICE_MODAL, OPEN_INVOICE_MODAL} from "src/store/mutations";
 const fmtbtc = require('fmtbtc')
@@ -53,7 +53,7 @@ export default {
     QrcodeVue,
   },
   name: "InvoiceModal",
-  async mounted() {
+  mounted() {
     this.updateDurationInterval = this.updateExp()
 
   },
@@ -66,7 +66,7 @@ export default {
     },
     ...mapMutations([CLOSE_INVOICE_MODAL]),
     copyPaymentRequest() {
-      copyToClipboard(this.payreq)
+      copyToClipboard(this.bolt11)
       this.$q.notify("Copied invoice")
     },
     updateExp  ()  {
@@ -92,7 +92,8 @@ export default {
         return this.$store.commit(value ? OPEN_INVOICE_MODAL : CLOSE_INVOICE_MODAL)
       }
     },
-    ...mapGetters(['feedTokens', 'invoice', 'payreq', 'qr', 'btc_usd', 'modals', 'loadingInvoice']),
+
+    ...mapGetters(['feedTokens', 'invoice', 'qr', 'bolt11', 'btc_usd', 'modals', 'loadingInvoice']),
     feedToken() {
       const invoiceId = isDelayed(this.invoice)
       return this.feedTokens.find(token => token === invoiceId)
@@ -101,8 +102,8 @@ export default {
     feedPriceUSD() {
       return this.btc_usd && this.invoice.msatoshi ?  (sat2btc(this.satoshi, false) * this.btc_usd).toPrecision(4) : null
     },
-    href() { return `lightning:${this.payreq}`.toLowerCase() },
-    expiresAt() { return new Date(this.invoice.expires_at).getTime() },
+    href() { return `lightning:${this.bolt11}`.toLowerCase() },
+    expiresAt() { return new Date(this.invoice.expires_at * 1000).getTime() },
 
   },
   data() {

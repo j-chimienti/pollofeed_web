@@ -24,7 +24,7 @@ import {
   WEBSOCKET_OPEN
 } from "./mutations";
 import {WebsocketService} from "../services/WebsocketService";
-import {websocketMessageFactory} from "../services/Ws";
+import {websocketMessageFactory} from "../services/messageFactory";
 
 const PAYMENT_TYPE_KEY = "PAYMENT_TYPE"
 
@@ -35,7 +35,7 @@ export const pollofeedModule = {
     paymentType: state => state.paymentType,
     loadingInvoice: state => state.loadingInvoice,
     invoice: state => state.invoice,
-    payreq: state => state.invoice.payreq,
+    bolt11: state => state.invoice.bolt11,
     qr: state => state.qr,
     ordersByDay: state => state.ordersByDay,
     feederSpinning : state => state.feederSpinning,

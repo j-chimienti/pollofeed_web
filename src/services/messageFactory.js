@@ -27,56 +27,6 @@ import { Dialog } from 'quasar'
 let spinnerTimout = null
 export function websocketMessageFactory(store, json) {
 
-  function onDelayedFeedingResponse(delayedFeedingResponse) {
-    const {success, token} = delayedFeedingResponse
-    if (success) store.commit( DELAYED_FEEDING_SUCCESS , "Used token " + token)
-    else store.commit(DELAYED_FEEDING_FAILURE, "Failed to use token " + token)
-    if (success) {
-      store.commit(REMOVE_FEED_TOKEN, token)
-      setTimeout(() => {
-      }, 2000)
-    }
-  }
-
-  async function handleInvoice( inv) {
-    store.commit(SET_INVOICE, inv)
-    store.commit(OPEN_INVOICE_MODAL)
-    return handleDelayed(inv)
-  }
-
-// todo: if feed token increase timeout with success_modal
-  function onPayment(invoice) {
-    store.commit(SET_INVOICE, invoice)
-    handleDelayed(invoice)
-    store.commit(CLOSE_INVOICE_MODAL)
-    if (isMerchInvoice(invoice)) {
-      const id = isMerchInvoice(invoice)
-      const message = `id=${id} You will recieve an email shortly <a href="https://pollofeed.com/merch/${id}">view order</a>`
-      Dialog.create({
-        type: "positive",
-        title: invoice.description,
-        html: true,
-        message,
-      })
-    } else if (isDelayed(invoice)) {
-      const message =`Invoice paid token=${isDelayed(invoice)}`
-      Dialog.create({
-        title: "Delayed order paid.",
-        message,
-        type: "positive",
-      })
-    } else {
-      Notify.create("Invoice paid")
-    }
-  }
-
-
-  function handleDelayed( invoice) {
-    const t = isDelayed(invoice);
-    if (t) {
-      store.commit(ADD_FEED_TOKEN, t)
-    }
-  }
   const {
     success = false,
     invoice = null,
@@ -142,16 +92,77 @@ export function websocketMessageFactory(store, json) {
   if (ordersByDay) store.commit(ORDERS_BY_DAY, ordersByDay)
   if (pollofeedConfig) store.commit(POLLOFEED_CONFIG, pollofeedConfig)
 
+  function onDelayedFeedingResponse(delayedFeedingResponse) {
+    const {success, token} = delayedFeedingResponse
+    if (success) store.commit( DELAYED_FEEDING_SUCCESS , "Used token " + token)
+    else store.commit(DELAYED_FEEDING_FAILURE, "Failed to use token " + token)
+    if (success) {
+      store.commit(REMOVE_FEED_TOKEN, token)
+      setTimeout(() => {
+      }, 2000)
+    }
+  }
+
+  async function handleInvoice( inv) {
+    store.commit(SET_INVOICE, inv)
+    store.commit(OPEN_INVOICE_MODAL)
+    return handleDelayed(inv)
+  }
+
+// todo: if feed token increase timeout with success_modal
+  function onPayment(invoice) {
+    store.commit(SET_INVOICE, invoice)
+    handleDelayed(invoice)
+    store.commit(CLOSE_INVOICE_MODAL)
+    if (isMerchInvoice(invoice)) {
+      const id = isMerchInvoice(invoice)
+      const message = `id=${id} You will recieve an email shortly <a href="https://pollofeed.com/merch/${id}">view order</a>`
+      Dialog.create({
+        type: "positive",
+        title: invoice.description,
+        html: true,
+        message,
+      })
+    } else if (isDelayed(invoice)) {
+      const message =`Invoice paid token=${isDelayed(invoice)}`
+      Dialog.create({
+        title: "Delayed order paid.",
+        message,
+        type: "positive",
+      })
+    } else {
+      Notify.create("Invoice paid")
+    }
+  }
+
+
+  function handleDelayed( invoice) {
+    const t = isDelayed(invoice);
+    if (t) {
+      store.commit(ADD_FEED_TOKEN, t)
+    }
+  }
+
 }
 
-
+/**
+ *
+ * @param invoice ListInvoice
+ * amount_msat: "55000msat"
+ bolt11: "lnbc550n1psumvaxpp5kpevk9aplsxghdjqtm68vn6mwpp8xa8n5u58e788mx5tydzta93qdrggejk2epqgd5xjcmtv4h8xgzqypcx7mrvdanx2ety9e3k7mfq95kjqar0ddjkugpaypjxyun0vfe85c6xg33y2nngxdf5cj6rffnyz0faxqzjccqpjsp57du2ywrwak4h37gz8yuhmxwxhhlmmy864t4tjmcklurj05c5vghsrzjqvgu458d7jkxw2vgqh85gp7egdvv5cxdgnewxcy9dua3czyte4rcyzym9uqqwqqqqqqqqqqpqqqqqlgq9q9qyyssqn0sqvm74z4qsn8ntfatpjzlnzuawnuh2esf92q6dd546jmxv26kspdpvn927y295ul3lsmv2dm90kh4tqewnsg2fu8ascgnvstnsfvqpmyf67u"
+ description: "Feed Chickens @ pollofeed.com -- token = dbrobrzcFDbENh3SLKCJfA=="
+ expires_at: 1640871422
+ label: "pollofeed.com-uGY-Isz7E3U="
+ msatoshi: 55000
+ payment_hash: "b072cb17a1fc0c8bb6405ef4764f5b70427374f3a7287cf8e7d9a8b2344be962"
+ status: "unpaid"
+ * @returns {null|*}
+ */
 export function isDelayed(invoice) {
-  // eslint-disable-next-line no-prototype-builtins
-  try {
-    return invoice.metadata.feedToken
-  } catch (e) {
-    return null
-  }
+    if (invoice.description.includes("-- token = ")) {
+      return invoice.description.split("token =").pop()
+    } else return null
+
 }
 
 export function isMerchInvoice(invoice) {
