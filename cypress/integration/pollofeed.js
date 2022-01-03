@@ -9,25 +9,24 @@ Cypress.on('uncaught:exception', (err) => {
   }
 })
 
+const invoice_button = "#invoice_button"
+const invoice_modal = "#invoice_modal"
+const invoice_payment_selector = "#invoice-payment-selector"
 
 describe("pollofeed", () => {
   it("can create invoice", () => {
-    const invoice_button = "#invoice_button"
     cy.visit(HOST)
-    cy.get("#invoice-payment-selector").click()
+    cy.get(invoice_payment_selector).click()
     cy.get(invoice_button).click();
-    const invoice_modal = "#invoice_modal"
-    cy.get(invoice_modal, {timeout: 5000}).should("be.visible")
+    cy.get(invoice_modal).should("be.visible")
   })
 
 
   it("can create delayed invoice", () => {
-    const invoice_button = "#invoice_button"
     cy.visit(HOST)
-    cy.get("#invoice-payment-selector").click()
+    cy.get(invoice_payment_selector).click()
     cy.get("#delayed-order-selector").click()
     cy.get(invoice_button).click();
-    const invoice_modal = "#invoice_modal"
-    cy.get(invoice_modal, {timeout: 5000}).should("be.visible")
+    cy.get(invoice_modal).should("be.visible")
   })
 })

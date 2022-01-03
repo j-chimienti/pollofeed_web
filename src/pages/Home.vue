@@ -1,12 +1,10 @@
 <template>
 <q-page >
-  <div class="home q-px-md q-py-lg q-px-lg">
+  <div class="home">
      <div class="row justify-center q-ma-md q-pa-md">
          <q-card>
            <iframe class="rounded shadow"
                    id="live_stream"
-                   width="640"
-                   height="480"
                    src="https://stream.pollofeed.com"
              ></iframe>
          </q-card>
@@ -14,9 +12,6 @@
       <div class="row q-ma-md justify-center">
         <PaymentTypes/>
       </div>
-    <div class="row">
-      <FeedSettings/>
-    </div>
   </div>
 
   <InvoiceModal/>
@@ -50,6 +45,8 @@ export default {
   height: 483px;
   width: 643px;
   border: 3px solid transparent;
+  max-height: 50vh;
+  max-width: 90vw;
 }
 
 
