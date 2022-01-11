@@ -3,6 +3,7 @@
     <q-toolbar class="q-my-md flex justify-around">
       <router-link :to="{name: 'home'}">
         <img :src="logo" alt="Feed" width="200">
+        <WebsocketConnectionStatus/>
       </router-link>
       <NavLinks class="gt-xs"/>
     </q-toolbar>
@@ -13,11 +14,14 @@
 import logo from 'assets/pollofeed_logo.png'
 import BtcUsd from "components/BtcUsd";
 import NavLinks from "components/NavLinks";
+import WebsocketConnectionStatus from "components/WebsocketConnectionStatus";
+
+const isDev = process.env.NODE_ENV === 'development'
 export default {
   name: "NavBar",
-  components: {NavLinks, BtcUsd},
+  components: {WebsocketConnectionStatus, NavLinks, BtcUsd},
   data() {
-    return { logo}
+    return { logo, isDev}
   }
 }
 </script>

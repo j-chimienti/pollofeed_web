@@ -16,9 +16,13 @@
 import wheel from "assets/wheel_inner.svg"
 import blackjack from "assets/blackjack.png"
 import NavLinks from "components/NavLinks";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Footer",
+  computed: {
+    ...mapGetters(['invoice', 'connectedToWebsocket', 'websocket'])
+  },
   components: {NavLinks},
   data() { return {  wheel, blackjack}}
 }

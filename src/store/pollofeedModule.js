@@ -26,7 +26,7 @@ import {
 import {WebsocketService} from "../services/WebsocketService";
 import {websocketMessageFactory} from "../services/messageFactory";
 import {LIGHTNING_INVOICE_STATUS} from "src/constants";
-
+import _get from 'lodash.get'
 const PAYMENT_TYPE_KEY = "PAYMENT_TYPE"
 const wsPath = process.env.VUE_APP_WS_PATH
 
@@ -42,7 +42,10 @@ export const pollofeedModule = {
     ordersByDay: state => state.ordersByDay,
     feederSpinning : state => state.feederSpinning,
     websocket: state => state.websocket,
-    connectedToWebsocket: state => state.websocket !== null && getters.websocket.ws.readyState === 1,
+    connectedToWebsocket: state => {
+      const readyState = _get(state.websocket, 'ws.readyState', 0)
+      return readyState === 1
+    },
     feedTokens: state => state.feedTokens,
     delayedFeedingResponse: state => state.delayedFeedingResponse,
     delayFeeding: state => state.delayFeeding,
@@ -99,13 +102,14 @@ export const pollofeedModule = {
   actions: {
     [GET_INVOICE]({getters, commit}, inv) {
       if (inv && inv.status && inv.status === LIGHTNING_INVOICE_STATUS.unpaid) {
-        if (!getters.connectedToWebsocket) {
-          getters.websocket._send({WsGetInvoice: null, id: inv.id})
-        } else {
-          return fetch("/api/invoice/" + inv.id, {method: "get"})
+        const id = inv.label || inv.id
+        if (getters.connectedToWebsocket)
+          getters.websocket._send({WsGetInvoice: null, id})
+         else
+          return fetch("/api/invoice/" + id, {method: "get"})
           .then(res => res.json())
           .then(res => websocketMessageFactory(this,res))
-        }
+
       }
     },
     [DELAY_FEEDING]({getters}, token) {

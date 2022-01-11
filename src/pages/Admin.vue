@@ -45,7 +45,6 @@
 
 <script>
 
-import {deployHost} from '../constants';
 import SwagInvoices from "components/SwagInvoices";
 import FeedingList from "components/FeedingList";
 import ClientCount from "components/ClientCount";
@@ -58,7 +57,7 @@ import {LOGOUT, RESUME_SESSION} from "src/store/actions";
 
 export default {
   name: "Admin",
-  data() { return {deployHost }},
+  data() { return {deployHost: process.env.VUE_APP_DEPLOY_HOST }},
   mounted() {
     if (!this.authenticated) this.$router.push({name: 'login'})
     else this.RESUME_SESSION()

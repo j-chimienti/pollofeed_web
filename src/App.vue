@@ -16,7 +16,7 @@ export default defineComponent({
     return { invoiceInterval: null }
   },
   computed: {
-    ...mapGetters(['invoice'])
+    ...mapGetters(['invoice', 'connectedToWebsocket', 'websocket'])
   },
   mounted() {
     this.$q.dark.set(true)
