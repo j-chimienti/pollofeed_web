@@ -12,6 +12,8 @@ Cypress.on('uncaught:exception', (err) => {
 const invoice_button = "#invoice_button"
 const invoice_modal = "#invoice_modal"
 const invoice_payment_selector = "#invoice-payment-selector"
+const feedToken = "#feedToken"
+const bolt11 = "#bolt11"
 
 describe("pollofeed", () => {
   it("can create invoice", () => {
@@ -19,6 +21,8 @@ describe("pollofeed", () => {
     cy.get(invoice_payment_selector).click()
     cy.get(invoice_button).click();
     cy.get(invoice_modal).should("be.visible")
+    cy.get(bolt11).should("be.visible") // and start with lnbc
+    cy.get(feedToken).should("not.be.visible") // and have some length
   })
 
 
@@ -28,5 +32,7 @@ describe("pollofeed", () => {
     cy.get("#delayed-order-selector").click()
     cy.get(invoice_button).click();
     cy.get(invoice_modal).should("be.visible")
+    cy.get(bolt11).should("be.visible") // and start with lnbc
+    cy.get(feedToken).should("be.visible") // and have some length
   })
 })
