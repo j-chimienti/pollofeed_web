@@ -4,7 +4,7 @@
       class="cursor-pointer"
       @click="copyAddr"
       :model-value="address"/>
-  <div class="row">
+  <div class="row q-py-md">
     <q-btn
         type="a"
         :href="url"
@@ -21,6 +21,9 @@
           margin="3"
           :value="address"/>
     </a>
+  </div>
+  <div class="row flex justify-center q-pt-md">
+    <a href="https://lightningaddress.com/">Learn about Lighting Address</a>
   </div>
 </template>
 

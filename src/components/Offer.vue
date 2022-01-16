@@ -1,5 +1,5 @@
 <template>
-<div class="max-width: 300px;">
+<div>
     <q-input readonly
              class="q-my-md pointer"
              label="Bolt12"
