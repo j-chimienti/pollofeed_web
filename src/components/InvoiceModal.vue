@@ -87,13 +87,13 @@ export default {
 
   computed: {
     isVisible: {
-      get: function () { return this.modals.invoice.visible },
+      get: function () { return this.invoiceModuleVisible },
       set: function(value) {
         return this.$store.commit(value ? OPEN_INVOICE_MODAL : CLOSE_INVOICE_MODAL)
       }
     },
 
-    ...mapGetters(['feedTokens', 'invoice', 'qr', 'bolt11', 'btc_usd', 'modals', 'loadingInvoice']),
+    ...mapGetters(['feedTokens', 'invoice', 'qr', 'bolt11', 'btc_usd', 'modals', 'loadingInvoice', 'invoiceModuleVisible']),
     feedToken() {
       const invoiceId = isDelayed(this.invoice)
       return this.feedTokens.find(token => token === invoiceId)

@@ -2,7 +2,7 @@
   <div>
     <btc-usd/>
     <q-btn class="q-mx-md" type="a" :to="{name: 'about'}">about</q-btn>
-    <q-btn class="q-mx-md" type="a" :to="{name: 'swag'}">swag</q-btn>
+<!--    <q-btn class="q-mx-md" type="a" :to="{name: 'swag'}">swag</q-btn>-->
   </div>
 </template>
 

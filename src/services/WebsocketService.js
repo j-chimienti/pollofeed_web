@@ -3,14 +3,21 @@
 export function WebsocketService(store, host, handleWebsocketMessage = console.log) {
   this.ws = new WebSocket(host)
   this._send = (msg) => {
+    return new Promise((resolve, reject) => {
+
     const MSG = typeof msg === "string" ?  JSON.stringify({action: msg}) :
       typeof msg === "object" ? JSON.stringify(msg) :
         msg
     // todo: reopen
     if (this.ws.readyState !== 1) {
       console.error("ws is not ready")
+       reject(new Error("ws not ready"))
     }
-    this.ws.send(MSG)
+    else {
+      this.ws.send(MSG)
+       resolve(MSG)
+    }
+    })
   }
 
   this.ws.onmessage = e => {

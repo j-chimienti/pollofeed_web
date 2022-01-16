@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.vue ./",
     "build:web": "quasar build",
     "cypress": "cypress open",
+    "cypress:invoice": "cypress run --spec cypress/integration/invoice.js",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
