@@ -27,20 +27,13 @@
         </q-checkbox>
       </div>
     </q-tab-panel>
-<!--    <q-tab-panel  name="OFFER"><offer/></q-tab-panel>-->
+    <q-tab-panel  name="OFFER"><offer/></q-tab-panel>
     <q-tab-panel  name="LNURL"><LightningUrl/></q-tab-panel>
     <q-tab-panel  name="LNADDR"><LightningAddress/></q-tab-panel>
     <q-tab-panel name="DELAYED"><DelayFeeding/></q-tab-panel>
 
   </q-tab-panels>
   <q-footer bordered class="bg-dark text-primary">
-<!--    <q-footer bordered class="bg-white text-primary">-->
-<!--      <q-tabs no-caps active-color="primary" indicator-color="transparent" class="text-grey" v-model="tab">-->
-<!--        <q-tab name="images" label="Images" />-->
-<!--        <q-tab name="videos" label="Videos" />-->
-<!--        <q-tab name="articles" label="Articles" />-->
-<!--      </q-tabs>-->
-<!--    </q-footer>-->
     <q-tabs
         v-model="tab"
         dense
@@ -49,6 +42,7 @@
         indicator-color="primary"
         align="justify"
         narrow-indicator
+        style="height: 50px;"
     >
       <q-tab name="INVOICE" label="INVOICE" id="invoice-payment-selector" />
       <q-tab name="LNURL" label="LNURL" />
