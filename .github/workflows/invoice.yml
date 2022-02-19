@@ -1,0 +1,18 @@
+name: build
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: install dependencies
+        run: npm i
+      - name: npm run cypress:invoice
+        run: npm run cypress:invoice
