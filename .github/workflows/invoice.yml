@@ -16,4 +16,6 @@ jobs:
       - name: install dependencies
         run: npm i
       - name: npm run cypress:invoice
+        env:
+          CYPRESS_HOST: https://pollofeed.com
         run: npm run cypress:invoice
