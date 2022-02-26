@@ -10,6 +10,8 @@
       command: npm run build:web
       args:
         chdir: ..
+#    - name: zip dist
+#      command: zip ../spa.zip ../dist/spa/
 
 - hosts: pollofeed
 #  vars_files:

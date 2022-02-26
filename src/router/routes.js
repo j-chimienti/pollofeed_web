@@ -13,16 +13,7 @@ const routes = [
       { path: '',  name: "about", component: () => import('pages/About.vue') }
     ],
    },
-  { path: '/swag', component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Swag.vue'), name: "swag" }
-    ]},
-  { path: '/merch/:id', component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/MerchItemPage.vue'), name: "merch"}
-    ]},
   { path: '/splash', component: () => import("components/SplashScreen"), name: "splash" },
-
   {path: '/login', component: () => import("pages/LoginPage"), name: "login" },
   {path: "/admin",
     component: () => import("layouts/SimpleLayout"),

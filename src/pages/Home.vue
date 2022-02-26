@@ -1,15 +1,15 @@
 <template>
 <q-page >
   <div class="home">
-     <div class="row justify-center q-ma-md q-pa-md">
+     <div class="row justify-center">
          <q-card>
-           <iframe class="rounded shadow"
+           <img
                    id="live_stream"
-                   src="https://stream.pollofeed.com"
-             ></iframe>
+                   :src="STREAM_URL"
+             />
          </q-card>
      </div>
-      <div class="row q-ma-md justify-center">
+      <div class="row justify-center">
         <PaymentTypes/>
       </div>
   </div>
@@ -30,6 +30,14 @@ import PaymentTypes from "components/PaymentTypes";
 
 export default {
   name: "Home",
+  mounted() {
+    const {paid} = this.$route.query
+    if (paid) this.$q.notify("Invoice paid ")
+  },
+  data () { return {
+      STREAM_URL: process.env.STREAM_URL,
+  }
+},
   components: {
     PaymentTypes,
     Footer, FeedSettings, SuccessModal, InvoiceModal},
@@ -45,8 +53,6 @@ export default {
   height: 483px;
   width: 643px;
   border: 3px solid transparent;
-  max-height: 50vh;
-  max-width: 90vw;
 }
 
 
