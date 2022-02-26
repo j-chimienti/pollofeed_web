@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isVisible" position="top" @hide="CLOSE_INVOICE_MODAL" id="invoice_modal">
+  <q-dialog v-model="isVisible" position="top" @hide="onCloseModal" data-cy="invoice_modal">
     <q-card class="q-pa-md q-pt-lg q-mt-md text-center" style="width: 100%">
      <div class="text-h4">Pay with Lightning</div>
      <div class="row flex justify-between q-my-md">
@@ -21,8 +21,8 @@
              :size="250" level="H"/>
        </a>
      </div>
-       <q-input class="pointer" readonly id="bolt11" v-model="bolt11" @click.prevent="copyPaymentRequest"/>
-       <q-input v-if="feedToken" class="pointer" readonly id="feedToken" v-model="feedToken"/>
+       <q-input class="pointer" readonly data-id="bolt11" v-model="bolt11" @click.prevent="copyPaymentRequest"/>
+       <q-input v-if="feedToken" class="pointer" readonly data-id="feedToken" v-model="feedToken"/>
       <div class="row q-my-md">
         <q-btn
             :href="href"
@@ -31,7 +31,7 @@
             icon="link"
             :loading="loadingInvoice"
         />
-        <q-btn v-close-popup="-1" flat color="grey" class="q-ml-auto">Close</q-btn>
+        <q-btn v-close-popup="-1" flat color="grey" class="q-ml-auto" data-cy="close-invoice-btn">Close</q-btn>
       </div>
     </q-card>
   </q-dialog>
@@ -43,7 +43,7 @@
 import {mapGetters, mapMutations} from "vuex";
 import {isDelayed} from "../services/messageFactory";
 import QrcodeVue from "qrcode.vue";
-import {CLOSE_INVOICE_MODAL, OPEN_INVOICE_MODAL} from "src/store/mutations";
+import {CLOSE_INVOICE_MODAL, OPEN_INVOICE_MODAL, SET_INVOICE} from "src/store/mutations";
 const fmtbtc = require('fmtbtc')
 const {msat2sat, sat2btc} = fmtbtc
 import {copyToClipboard, openURL} from 'quasar'
@@ -64,7 +64,10 @@ export default {
     open() {
       openURL(this.href)
     },
-    ...mapMutations([CLOSE_INVOICE_MODAL]),
+    onCloseModal() {
+      this.CLOSE_INVOICE_MODAL();
+    },
+    ...mapMutations([CLOSE_INVOICE_MODAL, SET_INVOICE]),
     copyPaymentRequest() {
       copyToClipboard(this.bolt11)
       this.$q.notify("Copied invoice")
@@ -98,9 +101,9 @@ export default {
       const invoiceId = isDelayed(this.invoice)
       return this.feedTokens.find(token => token === invoiceId)
     },
-    satoshi() { return msat2sat(this.invoice.msatoshi, true) },
+    satoshi() { return msat2sat(this.invoice.amount_msat, true) },
     feedPriceUSD() {
-      return this.btc_usd && this.invoice.msatoshi ?  (sat2btc(this.satoshi, false) * this.btc_usd).toPrecision(4) : null
+      return this.btc_usd && this.invoice.amount_msat ?  (sat2btc(this.satoshi, false) * this.btc_usd).toPrecision(4) : null
     },
     href() { return `lightning:${this.bolt11}`.toLowerCase() },
     expiresAt() { return new Date(this.invoice.expires_at * 1000).getTime() },

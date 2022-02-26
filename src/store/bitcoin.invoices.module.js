@@ -1,5 +1,8 @@
 import {
-  BTC_USD, CLEAR_LOADING_INVOICE, CLOSE_INVOICE_MODAL, LOADING_INVOICE,
+  BTC_USD,
+  CLEAR_LOADING_INVOICE,
+  CLOSE_INVOICE_MODAL,
+  LOADING_INVOICE,
   OPEN_INVOICE_MODAL,
   SET_INVOICE,
   SET_PAYMENT_TYPE
@@ -7,7 +10,7 @@ import {
 import {
   API_INVOICE,
   GET_INVOICE,
-  INVOICE,
+  INVOICE, PENDING_INVOICE_TIMEOUT,
   WEBSOCKET_INVOICE
 } from "src/store/actions";
 import {websocketMessageFactory} from "src/services/messageFactory";
@@ -19,7 +22,8 @@ const getters = {
   bolt11: state => state.invoice.bolt11,
   paymentType: state => state.paymentType,
   loadingInvoice: state => state.loadingInvoice,
-  invoiceModuleVisible: state => state.invoiceModuleVisible
+  invoiceModuleVisible: state => state.invoiceModuleVisible,
+  invoiceInterval: state => state.invoiceInterval,
 }
 
 const state = {
@@ -27,13 +31,16 @@ const state = {
   invoice: {},
   loadingInvoice: false,
   btc_usd: null,
-  invoiceModuleVisible: false
+  invoiceModuleVisible: false,
+  invoiceInterval: null
 }
 
 const mutations = {
   [LOADING_INVOICE](state) { state.loadingInvoice = true },
   [CLEAR_LOADING_INVOICE](state) { state.loadingInvoice = false },
-  [SET_INVOICE] (state, invoice) { state.invoice = invoice },
+  [SET_INVOICE] (state, invoice) {
+    state.invoice = invoice
+  },
   [BTC_USD] (state, btc_usd) { state.btc_usd = btc_usd },
   [SET_PAYMENT_TYPE] (state, paymentType) {
     localStorage.setItem(PAYMENT_TYPE_KEY, paymentType)
@@ -41,15 +48,20 @@ const mutations = {
   },
   [OPEN_INVOICE_MODAL](state) { state.invoiceModuleVisible = true },
   [CLOSE_INVOICE_MODAL](state) { state.invoiceModuleVisible = false },
-
+  ["PENDING_INVOICE_TIMEOUT"](state, to) { state.invoiceInterval = to },
+  ["CLEAR_PENDING_INVOICE_TIMEOUT"](state) {
+    clearInterval(state.invoiceInterval)
+    state.invoiceInterval = null
+  }
 }
 
 const actions = {
-  [GET_INVOICE]({getters, commit}, inv) {
-    if (inv && inv.status && inv.status === LIGHTNING_INVOICE_STATUS.unpaid) {
-      const id = inv.label || inv.id
+  [PENDING_INVOICE_TIMEOUT]({dispatch, commit}, inv) {  commit("PENDING_INVOICE_TIMEOUT", setTimeout(() => dispatch(GET_INVOICE, inv), 5000)) },
+  [GET_INVOICE]({getters, commit}) {
+    if (getters.invoice && getters.invoice.status && getters.invoice.status === LIGHTNING_INVOICE_STATUS.unpaid) {
+      const id = getters.invoice.payment_hash
       if (getters.connectedToWebsocket)
-        getters.websocket._send({WsGetInvoice: null, id})
+        getters.websocket._send({WsGetInvoice: null, payment_hash: id})
       else
         return fetch("/api/invoice/" + id, {method: "get"})
         .then(res => res.json())

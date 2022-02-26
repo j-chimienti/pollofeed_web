@@ -1,6 +1,5 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
-import {swagModule} from './swag.module'
 import adminModule from './admin.module'
 import {pollofeedModule} from "src/store/pollofeedModule";
 import {invoiceModule} from "src/store/bitcoin.invoices.module";
@@ -19,7 +18,6 @@ import {wsModule} from "src/store/ws.module";
 export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
-      merch: swagModule,
       pollofeed: pollofeedModule,
       admin: adminModule,
       invoices: invoiceModule,

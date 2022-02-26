@@ -6,9 +6,7 @@
              @click="copyBolt12"  :model-value="bolt12"/>
   <div class="row flex justify-between q-my-sm">
     <q-btn type="a" size="sm"  :href="href" icon="link" label="Open in wallet"/>
-    <a href="https://bolt12.org/">
-      learn about offers
-    </a>
+    <a href="https://bolt12.org/">learn about offers</a>
   </div>
     <a :href="href" class="bg-white">
       <qrcode-vue
@@ -17,7 +15,7 @@
     </a>
     <div class="text-left">
       <div class="text-h6">Example payment</div>
-      <code>lncli pay $(lncli fetchinvoice {{bolt12}} 2000 | jq '.invoice')</code>
+      <code>lncli pay $(lncli fetchinvoice {{bolt12}} | jq '.invoice')</code>
     </div>
 </div>
 </template>

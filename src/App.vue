@@ -5,8 +5,10 @@
 import { defineComponent } from 'vue';
 import {GET_INVOICE, OPEN_WEBSOCKET} from "src/store/actions";
 import {mapActions, mapGetters} from "vuex";
+import {LIGHTNING_INVOICE_STATUS} from "src/constants";
 
-const INVOICE_INTERVAL = 5000; /// 5 seconds
+const INVOICE_INTERVAL = 5000
+
 export default defineComponent({
   name: 'App',
   methods: {
@@ -21,9 +23,7 @@ export default defineComponent({
   mounted() {
     this.$q.dark.set(true)
     this.$store.dispatch(OPEN_WEBSOCKET)
-    this.invoiceInterval = setInterval(() => {
-      if (this.invoice) this.GET_INVOICE(this.invoice)
-    }, INVOICE_INTERVAL)
+
   },
   unmounted() {
     clearInterval(this.invoiceInterval)

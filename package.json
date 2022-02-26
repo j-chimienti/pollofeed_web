@@ -1,10 +1,10 @@
 {
   "name": "pollofeed_web",
-  "version": "0.0.1",
-  "description": "Bitcoin Lighning Chicken Feeder",
+  "version": "0.1.6",
+  "description": "Bitcoin Lightning Chicken Feeder",
   "productName": "Pollofeed",
   "author": "@pollofeed",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "quasar dev",
     "lint": "eslint --ext .js,.vue ./",

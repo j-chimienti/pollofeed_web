@@ -6,33 +6,33 @@
     path: "~/fileserver"
     state: directory
 
-- name: copy ui
+- name: copy ../dist/spa to ~/fileserver/
   tags: [start,files, copy_ui]
   copy:
     src: ../dist/spa
     dest: ~/fileserver/
 
 
-- name: copy pollofeed.com vhost file
+- name: copy pollofeed.com to ~/fileserver/vhost.d/
   tags: [start]
   copy:
     src: pollofeed.com
     dest: ~/fileserver/vhost.d/
 
-- name: copy pollofeed.com_location vhost file
+- name: copy pollofeed.com_location to ~/fileserver/vhost.d/
   tags: [start]
   copy:
     src: pollofeed.com_location
     dest: ~/fileserver/vhost.d/
 
-- name: copy lightningAddr.json file
+- name: copy lightningAddr.json to ~/fileserver/spa/
   tags: [start]
   copy:
     src: lightningAddr.json
     dest: ~/fileserver/spa/
 
 
-- name: start pollofeed
+- name: start nginx container
   command: docker-compose up -d fileserver
   tags: start
   args:

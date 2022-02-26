@@ -3,7 +3,7 @@
   <q-tab-panels v-model="tab" animated style="min-height: 400px; min-width: 200px; max-width: 600px;" class="text-center">
     <q-tab-panel name="INVOICE">
       <q-btn
-          id="invoice_button"
+          data-cy="invoice_button"
           size="lg"
           push
           evelated
@@ -16,7 +16,7 @@
         <q-checkbox
             label="I want to delay feeding"
             v-model="delayFeeding"
-            id="delayed-order-selector"
+            data-cy="delayed-order-selector"
             name="delayFeeding"
             value="delayed"
             unchecked-value="not_delayed"
@@ -44,10 +44,10 @@
         narrow-indicator
         style="height: 50px;"
     >
-      <q-tab name="INVOICE" label="INVOICE" id="invoice-payment-selector" />
+      <q-tab name="INVOICE" label="INVOICE" data-cy="invoice-payment-selector" />
       <q-tab name="LNURL" label="LNURL" />
-<!--      <q-tab name="OFFER" label="OFFER" />-->
       <q-tab name="LNADDR" label="LNADDR" />
+      <q-tab name="OFFER" label="OFFER" />
       <q-tab name="DELAYED" label="DELAYED" />
     </q-tabs>
   </q-footer>

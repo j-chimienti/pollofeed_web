@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
-  ADD_FEED_TOKEN, AUTHENTICATED,
+  ADD_FEED_TOKEN,
+  AUTHENTICATED,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
   CLIENT_COUNT,
@@ -20,9 +21,11 @@ import {
   SET_ORDERS,
   SWAG_INVOICES
 } from "../store/mutations";
-import {Notify} from 'quasar'
-import { Dialog } from 'quasar'
+import {Dialog, Notify} from 'quasar'
+import {LIGHTNING_INVOICE_STATUS} from "src/constants";
+import {PENDING_INVOICE_TIMEOUT} from "src/store/actions";
 
+let openedInvoicesState = []
 
 let spinnerTimout = null
 export function websocketMessageFactory(store, json) {
@@ -51,20 +54,30 @@ export function websocketMessageFactory(store, json) {
       ordersView = null,
       ordersByDay = null
   } = json
-  if (message && typeof message === "string" && message.includes("failed to create invoice")) {
+  if (message && typeof message === "string") {
+    if (message.includes("failed to create invoice")) {
     alert("Error creating invoice")
     store.commit(CLEAR_LOADING_INVOICE)
+    } else if (message === "Invoice paid") {
+      Notify.create("Invoice paid")
+    }
   }
   if (authenticated != null) store.commit(AUTHENTICATED, authenticated)
   if (!success) store.commit(CLEAR_LOADING_INVOICE)
   if (invoiceUrl) window.location = invoiceUrl
   if (invoice) {
     store.commit(CLEAR_LOADING_INVOICE)
-    if (invoice.status === "paid") {
+    if (invoice.status === LIGHTNING_INVOICE_STATUS.paid)
+    {
       onPayment(invoice)
-    } else if (invoice.status === "unpaid") {
-      handleInvoice(invoice)
+      store.commit("CLEAR_PENDING_INVOICE_TIMEOUT")
     }
+     else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid)
+      onUnpaidInvoice(invoice)
+    else if (invoice.status === LIGHTNING_INVOICE_STATUS.expired) {
+      store.commit("CLEAR_PENDING_INVOICE_TIMEOUT")
+    }
+
   }
   if (error) alert(error)
   if (orders)  store.commit(SET_ORDERS, orders)
@@ -103,28 +116,23 @@ export function websocketMessageFactory(store, json) {
     }
   }
 
-  async function handleInvoice( inv) {
+   function onUnpaidInvoice(inv) {
     store.commit(SET_INVOICE, inv)
-    store.commit(OPEN_INVOICE_MODAL)
-    return handleDelayed(inv)
+    if (!openedInvoicesState.includes(inv.payment_hash)) {
+      store.commit(OPEN_INVOICE_MODAL)
+     openedInvoicesState = openedInvoicesState.slice().concat(inv.payment_hash)
+    }
+    handleDelayed(inv)
+    return store.dispatch(PENDING_INVOICE_TIMEOUT, inv)
   }
 
 // todo: if feed token increase timeout with success_modal
   function onPayment(invoice) {
     store.commit(SET_INVOICE, invoice)
-    handleDelayed(invoice)
     store.commit(CLOSE_INVOICE_MODAL)
-    if (isMerchInvoice(invoice)) {
-      const id = isMerchInvoice(invoice)
-      const message = `id=${id} You will recieve an email shortly <a href="https://pollofeed.com/merch/${id}">view order</a>`
-      Dialog.create({
-        type: "positive",
-        title: invoice.description,
-        html: true,
-        message,
-      })
-    } else if (isDelayed(invoice)) {
-      const message =`Invoice paid token=${isDelayed(invoice)}`
+    const t = isDelayed(invoice)
+     if (t) {
+      const message =`Invoice paid token=${t}`
       Dialog.create({
         title: "Delayed order paid.",
         message,
@@ -165,8 +173,4 @@ export function isDelayed(invoice) {
 
 }
 
-export function isMerchInvoice(invoice) {
-    if (invoice.description.includes("merch")) {
-      return invoice.description.replace("pollofeed merch -", "").trim()
-    } else return null
-}
+

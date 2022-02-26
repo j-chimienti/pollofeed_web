@@ -1,6 +1,6 @@
 <template>
   <q-header elevated bordered class="bg-dark">
-    <q-toolbar class="q-my-md flex justify-around">
+    <q-toolbar class="flex justify-around">
       <router-link :to="{name: 'home'}">
         <img :src="logo" alt="Feed" width="200">
         <WebsocketConnectionStatus/>
