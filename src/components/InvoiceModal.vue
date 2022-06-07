@@ -48,7 +48,7 @@ import _get from "lodash.get"
 import AppMixin from "../mixins/AppMixin"
 
 const fmtbtc = require("fmtbtc")
-const { msat2sat, sat2btc } = fmtbtc
+const { msat2sat } = fmtbtc
 
 export default {
   components: {

@@ -38,16 +38,18 @@ export default {
     const { paid } = this.$route.query
     if (paid) this.$q.notify("Invoice paid")
 
-    const j = ""
-
     this.invoiceInterval = setInterval(() => {
       this.checkInvoice()
     }, 5000)
     this.checkInvoice()
   },
+  unmounted() {
+    if (this.invoiceInterval) clearInterval(this.invoiceInterval)
+  },
   data() {
     return {
       STREAM_URL: process.env.STREAM_URL,
+      invoiceInterval: null
     }
   },
   components: {

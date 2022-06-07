@@ -1,26 +1,15 @@
 import {
   BTC_USD,
   CLEAR_LOADING_INVOICE,
-  SET_USE_TOKEN_NOW,
   DELAYED_INVOICE_PAID,
   LOADING_INVOICE,
   OPEN_INVOICE_MODAL,
   SET_INVOICE,
-  SET_PAYMENT_TYPE,
+  SET_PAYMENT_TYPE
 } from "src/store/mutations"
-import {
-  API_INVOICE,
-  GET_INVOICE,
-  INVOICE,
-  INVOICE_PAID,
-  WEBSOCKET_INVOICE,
-} from "src/store/actions"
+import { API_INVOICE, GET_INVOICE, INVOICE, INVOICE_PAID, WEBSOCKET_INVOICE } from "src/store/actions"
 import { websocketMessageFactory } from "src/services/messageFactory"
-import {
-  LIGHTNING_INVOICE_STATUS,
-  LocalStorageKeys,
-  PAYMENT_TYPES,
-} from "src/constants"
+import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys, PAYMENT_TYPES } from "src/constants"
 import _get from "lodash.get"
 import { LocalStorage } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
@@ -29,11 +18,11 @@ const getters = {
   btc_usd: (state) => state.btc_usd,
   invoice: (state) => state.invoice,
   invoiceStatus: (state) => _get(state.invoice, "status", null),
-  invoicePaid: (state, getters, rootState, rootGetters) =>
+  invoicePaid: (state, getters) =>
     getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.paid,
-  invoiceUnpaid: (state, getters, rootState, rootGetters) =>
+  invoiceUnpaid: (state, getters) =>
     getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.unpaid,
-  invoiceExpired: (state, getters, rootState, rootGetters) =>
+  invoiceExpired: (state, getters) =>
     getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.expired,
   bolt11: (state) => _get(state.invoice, "bolt11", null),
   paymentType: (state) => state.paymentType,
@@ -111,7 +100,7 @@ const mutations = {
   [OPEN_INVOICE_MODAL](state) {
     state.invoiceModuleVisible = true
   },
-  [DELAYED_INVOICE_PAID](state, feedToken) {
+  [DELAYED_INVOICE_PAID](state) {
     state.paymentType = "DELAYED"
     state.loadingInvoice = false
     state.invoiceModuleVisible = false
@@ -123,7 +112,7 @@ const actions = {
     const tokenOpt = rootGetters.feedTokens.find((d) => d.label === label)
     if (tokenOpt) commit(DELAYED_INVOICE_PAID, tokenOpt)
   },
-  [GET_INVOICE]({ getters, commit }) {
+  [GET_INVOICE]({ getters }) {
     if (getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.unpaid) {
       const id = getters.invoice.payment_hash
       if (getters.connectedToWebsocket)
@@ -132,9 +121,9 @@ const actions = {
         return fetch("/api/invoice/" + id, { method: "get" })
           .then((res) => res.json())
           .then((res) => websocketMessageFactory(this, res))
-          .catch((err) => {
-            // should i clear invoice?
-          })
+          // .catch((err) => {
+          //   // should i clear invoice?
+          // })
     } else {
       // ignore expired and paid
     }
@@ -151,7 +140,7 @@ const actions = {
     commit(LOADING_INVOICE)
     getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding })
   },
-  [API_INVOICE]({ getters, commit }, delayFeeding) {
+  [API_INVOICE]({  commit }, delayFeeding) {
     const body = JSON.stringify({
       WsRequestLightingInvoice: null,
       delayFeeding,
