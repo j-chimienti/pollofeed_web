@@ -8,10 +8,8 @@
 
 <script>
 export default {
-  name: "SimpleLayout"
+  name: "SimpleLayout",
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

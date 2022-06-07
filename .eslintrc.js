@@ -6,12 +6,13 @@ module.exports = {
 
   parserOptions: {
     parser: '@babel/eslint-parser',
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module' // Allows for the use of imports
+    ecmaVersion: 2020,
+    sourceType: 'module'
   },
 
   env: {
-    browser: true
+    browser: true,
+    node: true
   },
 
   // Rules order is important, please avoid shuffling them
@@ -59,8 +60,14 @@ module.exports = {
   rules: {
     'prefer-promise-reject-errors': 'off',
     'vue/no-unused-components': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+  },
 
-    // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+  'extends': [
+    'plugin:vue/vue3-essential',
+    'prettier',
+    'eslint:recommended',
+    '@vue/prettier'
+  ]
 }

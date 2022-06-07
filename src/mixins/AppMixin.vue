@@ -1,0 +1,46 @@
+<script>
+import { satsToUsd } from "../services/moneyUtils"
+import { mapActions, mapGetters, mapMutations } from "vuex"
+import { DELAY_FEEDING, GET_INVOICE, INVOICE } from "../store/actions"
+import { PAYMENT_TYPES } from "../constants"
+import { SET_USE_TOKEN_NOW } from "../store/mutations"
+
+export default {
+  name: "AppMixin",
+  data() {
+    return {
+      PAYMENT_TYPES,
+      paymentTypes: PAYMENT_TYPES,
+    }
+  },
+  methods: {
+    satsToUsd,
+    ...mapActions([INVOICE, GET_INVOICE, DELAY_FEEDING]),
+    ...mapMutations([SET_USE_TOKEN_NOW]),
+  },
+  computed: {
+    ...mapGetters([
+      "invoiceUnpaid",
+      "invoiceStatus",
+      "invoiceExpired",
+      "invoicePaid",
+      "delayedFeedingResponse",
+      "websocket",
+      "showFeedNow",
+      "feedPriceUSD",
+      "feedTokens",
+      "invoice",
+      "qr",
+      "bolt11",
+      "btc_usd",
+      "modals",
+      "loadingInvoice",
+      "invoiceModuleVisible",
+      "buttonDisabled",
+      "paymentType",
+    ]),
+  },
+}
+</script>
+
+<style scoped></style>

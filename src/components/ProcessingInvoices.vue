@@ -1,18 +1,16 @@
 <template>
-<div v-if="processingInvoices !== null">{{processingInvoices.length}}</div>
+  <div v-if="processingInvoices !== null">{{ processingInvoices.length }}</div>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex"
 
 export default {
   name: "ProcessingInvoices",
   computed: {
-    ...mapGetters(['processingInvoices'])
-  }
+    ...mapGetters(["processingInvoices"]),
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

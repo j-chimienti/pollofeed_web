@@ -3,17 +3,15 @@
 </template>
 
 <script>
-import Login from "components/Login";
+import Login from "components/Login"
 
 export default {
   name: "LoginPage",
-  components: {Login},
+  components: { Login },
   mounted() {
-    if (this.$store.getters.authenticated) this.$router.push({name: 'admin'})
-  }
+    if (this.$store.getters.authenticated) this.$router.push({ name: "admin" })
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

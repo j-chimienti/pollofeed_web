@@ -1,5 +1,12 @@
 // app global css in SCSS form
+@import "../assets/fonts/luckiest-guy/luckiest-guy.css";
 
 .pointer {
   cursor: pointer;
+}
+
+
+body {
+  font-family: "LuckiestGuy", serif;
+  color: $dark_red;
 }
