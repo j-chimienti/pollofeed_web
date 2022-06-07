@@ -4,153 +4,112 @@ import {
   AUTHENTICATED,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
-  CLIENT_COUNT,
-  CLOSE_INVOICE_MODAL,
-  DELAYED_FEEDING_FAILURE,
-  DELAYED_FEEDING_SUCCESS,
-  FEEDER_DONE_SPINNING,
-  FEEDER_SPINNING,
-  MERCHANDISE,
   OPEN_INVOICE_MODAL,
-  ORDERS_BY_DAY,
-  ORDERS_VIEW,
-  POLLOFEED_CONFIG,
-  PROCESSING_INVOICES,
   REMOVE_FEED_TOKEN,
   SET_INVOICE,
   SET_ORDERS,
-  SWAG_INVOICES
-} from "../store/mutations";
-import {Dialog, Notify} from 'quasar'
-import {LIGHTNING_INVOICE_STATUS} from "src/constants";
-import {PENDING_INVOICE_TIMEOUT} from "src/store/actions";
+  SET_PAYMENT_TYPE,
+} from "../store/mutations"
+import { Notify } from "quasar"
+import { LIGHTNING_INVOICE_STATUS } from "src/constants"
+import { INVOICE_PAID } from "src/store/actions"
 
-let openedInvoicesState = []
+import _get from "lodash.get"
+import { SET_USE_TOKEN_NOW, CLOSE_INVOICE_MODAL } from "src/store/mutations"
+import { FeedToken } from "src/models/FeedToken"
 
-let spinnerTimout = null
 export function websocketMessageFactory(store, json) {
-
   const {
     success = false,
     invoice = null,
-    message = null,
     todayOrderCount = null,
     error = null,
-    merchandise = null,
     orders = null,
-    invoiceUrl = null,
-    feederSpinning = null,
     feedToken = null,
     delayedFeedingResponse = null,
     btc_usd = null,
+    invoicePaid = null, //  ListInvoice.label
 
-      // ADMIN
+    // ADMIN
 
-      clientCount = null,
-      authenticated = null,
-      swagInvoices = null,
-      processingInvoices = null,
-      pollofeedConfig = null,
-      ordersView = null,
-      ordersByDay = null
+    message = null,
+    // merchandise = null,
+    // invoiceUrl = null,
+    // feederSpinning = null,
+    //   clientCount = null,
+    authenticated = null,
+    //   swagInvoices = null,
+    //   processingInvoices = null,
+    //   pollofeedConfig = null,
+    //   ordersView = null,
+    //   ordersByDay = null
   } = json
-  if (message && typeof message === "string") {
-    if (message.includes("failed to create invoice")) {
-    alert("Error creating invoice")
-    store.commit(CLEAR_LOADING_INVOICE)
-    } else if (message === "Invoice paid") {
-      Notify.create("Invoice paid")
+
+  if (message !== null) {
+    //{"success":true,"message":"NOT_FOUND:2ad0d1624d046fb088bd4133761010eeb86cbf3bd0c772d78d47880a71c45f66"}
+    if (message.startsWith("NOT_FOUND:")) {
+      const [_, ph] = message.split(":")
+      store.commit(REMOVE_FEED_TOKEN, ph)
+      store.commit(SET_INVOICE, null)
     }
   }
-  if (authenticated != null) store.commit(AUTHENTICATED, authenticated)
-  if (!success) store.commit(CLEAR_LOADING_INVOICE)
-  if (invoiceUrl) window.location = invoiceUrl
+  if (error) store.commit(CLEAR_LOADING_INVOICE)
   if (invoice) {
     store.commit(CLEAR_LOADING_INVOICE)
-    if (invoice.status === LIGHTNING_INVOICE_STATUS.paid)
-    {
-      onPayment(invoice)
-      store.commit("CLEAR_PENDING_INVOICE_TIMEOUT")
+    store.commit(SET_INVOICE, invoice)
+    const tokenOpt = parseToken(invoice)
+    if (tokenOpt) store.commit(ADD_FEED_TOKEN, new FeedToken(invoice))
+    store.commit(SET_USE_TOKEN_NOW, tokenOpt)
+    if (invoice.status === LIGHTNING_INVOICE_STATUS.paid) {
+      Notify.create({
+        type: "positive",
+        message: "Invoice paid",
+      })
+      // if paid and has token show user t
+      if (tokenOpt) {
+        store.commit(SET_PAYMENT_TYPE, "DELAYED")
+      }
+    } else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid) {
+      store.commit(OPEN_INVOICE_MODAL)
+    } else if (invoice.status === LIGHTNING_INVOICE_STATUS.expired) {
+      store.commit(CLOSE_INVOICE_MODAL)
+      Notify.create("invoice expired")
     }
-     else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid)
-      onUnpaidInvoice(invoice)
-    else if (invoice.status === LIGHTNING_INVOICE_STATUS.expired) {
-      store.commit("CLEAR_PENDING_INVOICE_TIMEOUT")
-    }
-
   }
-  if (error) alert(error)
-  if (orders)  store.commit(SET_ORDERS, orders)
-  if (todayOrderCount) store.commit("todayOrderCount", todayOrderCount)
-  if (feederSpinning) {
-    Notify.create("Feeder spinning")
-    store.commit(FEEDER_SPINNING)
-    if (spinnerTimout !== null) clearInterval(spinnerTimout)
-    spinnerTimout = setTimeout(() => {
-      store.commit(FEEDER_DONE_SPINNING)
-    }, 1000 * 14) // todo: hardcode
+  if (invoicePaid) {
+    store.dispatch(INVOICE_PAID, invoicePaid)
   }
-  if (feedToken) store.commit(ADD_FEED_TOKEN, feedToken)
-  if (delayedFeedingResponse) onDelayedFeedingResponse(delayedFeedingResponse)
-
   if (btc_usd) store.commit(BTC_USD, btc_usd)
-  if (merchandise) store.commit(MERCHANDISE, merchandise)
+  // if (invoiceUrl) window.location = invoiceUrl
+  if (authenticated != null) store.commit(AUTHENTICATED, authenticated)
+  if (orders) store.commit(SET_ORDERS, orders)
+  if (todayOrderCount) store.commit("todayOrderCount", todayOrderCount)
+  if (feedToken) {
+    // todo: verify
+    alert("feed token sent")
+  }
+  // {"success":true,"delayedFeedingResponse":{"success":true,"token":" lfQ/5r7rkBNZOH8z+DBqHA==","message":"Used feed token"}}
+  if (delayedFeedingResponse) {
+    const { success, token, message } = delayedFeedingResponse
+    Notify.create({
+      type: success ? "positive" : "negative",
+      message,
+    })
+    if (success) {
+      store.commit(REMOVE_FEED_TOKEN, token)
+    }
+    store.commit(SET_USE_TOKEN_NOW, null)
+  }
 
   // admin
 
-  if (clientCount) store.commit(CLIENT_COUNT, clientCount)
-  if (swagInvoices) store.commit(SWAG_INVOICES, swagInvoices)
-  if (processingInvoices) store.commit(PROCESSING_INVOICES, processingInvoices)
-  if (ordersView) store.commit(ORDERS_VIEW, ordersView)
-  if (ordersByDay) store.commit(ORDERS_BY_DAY, ordersByDay)
-  if (pollofeedConfig) store.commit(POLLOFEED_CONFIG, pollofeedConfig)
-
-  function onDelayedFeedingResponse(delayedFeedingResponse) {
-    const {success, token} = delayedFeedingResponse
-    if (success) store.commit( DELAYED_FEEDING_SUCCESS , "Used token " + token)
-    else store.commit(DELAYED_FEEDING_FAILURE, "Failed to use token " + token)
-    if (success) {
-      store.commit(REMOVE_FEED_TOKEN, token)
-      setTimeout(() => {
-      }, 2000)
-    }
-  }
-
-   function onUnpaidInvoice(inv) {
-    store.commit(SET_INVOICE, inv)
-    if (!openedInvoicesState.includes(inv.payment_hash)) {
-      store.commit(OPEN_INVOICE_MODAL)
-     openedInvoicesState = openedInvoicesState.slice().concat(inv.payment_hash)
-    }
-    handleDelayed(inv)
-    return store.dispatch(PENDING_INVOICE_TIMEOUT, inv)
-  }
-
-// todo: if feed token increase timeout with success_modal
-  function onPayment(invoice) {
-    store.commit(SET_INVOICE, invoice)
-    store.commit(CLOSE_INVOICE_MODAL)
-    const t = isDelayed(invoice)
-     if (t) {
-      const message =`Invoice paid token=${t}`
-      Dialog.create({
-        title: "Delayed order paid.",
-        message,
-        type: "positive",
-      })
-    } else {
-      Notify.create("Invoice paid")
-    }
-  }
-
-
-  function handleDelayed( invoice) {
-    const t = isDelayed(invoice);
-    if (t) {
-      store.commit(ADD_FEED_TOKEN, t)
-    }
-  }
-
+  // if (merchandise) store.commit(MERCHANDISE, merchandise)
+  // if (clientCount) store.commit(CLIENT_COUNT, clientCount)
+  // if (swagInvoices) store.commit(SWAG_INVOICES, swagInvoices)
+  // if (processingInvoices) store.commit(PROCESSING_INVOICES, processingInvoices)
+  // if (ordersView) store.commit(ORDERS_VIEW, ordersView)
+  // if (ordersByDay) store.commit(ORDERS_BY_DAY, ordersByDay)
+  // if (pollofeedConfig) store.commit(POLLOFEED_CONFIG, pollofeedConfig)
 }
 
 /**
@@ -166,11 +125,9 @@ export function websocketMessageFactory(store, json) {
  status: "unpaid"
  * @returns {null|*}
  */
-export function isDelayed(invoice) {
-    if (invoice.description.includes("-- token = ")) {
-      return invoice.description.split("token =").pop()
-    } else return null
-
+export function parseToken(invoice) {
+  const d = _get(invoice, "description", null)
+  if (d && d.includes("-- token = ")) {
+    return d.split("token =").pop()
+  } else return null
 }
-
-

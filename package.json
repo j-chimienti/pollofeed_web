@@ -1,41 +1,49 @@
 {
   "name": "pollofeed_web",
-  "version": "0.1.6",
-  "description": "Bitcoin Lightning Chicken Feeder",
-  "productName": "Pollofeed",
-  "author": "@pollofeed",
+  "version": "0.2.9",
   "private": false,
+  "description": "Bitcoin Lightning Chicken Feeder",
+  "author": "@pollofeed",
   "scripts": {
-    "dev": "quasar dev",
-    "lint": "eslint --ext .js,.vue ./",
+    "build": "quasar build",
+    "lint": "vue-cli-service lint",
+    "build:pwa": "quasar build -m pwa",
     "build:web": "quasar build",
     "cypress": "cypress open",
     "cypress:invoice": "cypress run --spec cypress/integration/invoice.js",
+    "dev": "quasar dev",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
-    "@vue/devtools": "^5.3.4",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "fmtbtc": "^0.0.3",
     "lodash.get": "^4.4.2",
     "qrcode.vue": "^3.3.2",
     "quasar": "^2.0.0",
+    "vue": "^3.0.0",
     "vue-i18n": "^9.0.0",
+    "vue-router": "^4.0.0",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.13.14",
-    "@quasar/app": "^3.0.0",
+    "@babel/eslint-parser": "^7.18.2",
+    "@quasar/app": "^3.3.3",
+    "@vue/cli-plugin-eslint": "~4.5.4",
+    "@vue/devtools": "^5.3.4",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "cypress": "^9.2.0",
     "dotenv": "^10.0.0",
-    "electron": "^15.0.0",
+    "electron": "^19.0.3",
     "electron-packager": "^15.2.0",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^8.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
-    "eslint-webpack-plugin": "^2.4.0"
+    "lint-staged": "^9.5.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
+    "prettier": "^2.2.1",
+    "workbox-webpack-plugin": "^6.5.3"
   },
   "browserslist": [
     "last 10 Chrome versions",
@@ -52,5 +60,19 @@
     "node": ">= 12.22.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "productName": "Pollofeed",
+  "prettier": {
+    "semi": false,
+    "singleQuote": false
   }
 }

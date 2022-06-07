@@ -2,31 +2,14 @@
   <router-view />
 </template>
 <script>
-import { defineComponent } from 'vue';
-import {GET_INVOICE, OPEN_WEBSOCKET} from "src/store/actions";
-import {mapActions, mapGetters} from "vuex";
-import {LIGHTNING_INVOICE_STATUS} from "src/constants";
-
-const INVOICE_INTERVAL = 5000
+import { defineComponent } from "vue"
+import { OPEN_WEBSOCKET } from "src/store/actions"
 
 export default defineComponent({
-  name: 'App',
-  methods: {
-    ...mapActions([OPEN_WEBSOCKET, GET_INVOICE])
-  },
-  data() {
-    return { invoiceInterval: null }
-  },
-  computed: {
-    ...mapGetters(['invoice', 'connectedToWebsocket', 'websocket'])
-  },
+  name: "App",
   mounted() {
-    this.$q.dark.set(true)
+    this.$q.dark.set(false)
     this.$store.dispatch(OPEN_WEBSOCKET)
-
   },
-  unmounted() {
-    clearInterval(this.invoiceInterval)
-  }
 })
 </script>

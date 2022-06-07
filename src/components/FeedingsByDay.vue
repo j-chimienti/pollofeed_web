@@ -1,19 +1,25 @@
 <template>
-      <q-table v-if="ordersByDay && ordersByDay.length" dark :fields="fields" :items="ordersByDay" style="max-width: 20rem;"></q-table>
+  <q-table
+    v-if="ordersByDay && ordersByDay.length"
+    dark
+    :fields="fields"
+    :items="ordersByDay"
+    style="max-width: 20rem"
+  ></q-table>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex"
 
 export default {
   name: "FeedingsByDay",
-  data() { return { fields: [{key: "_id"} , {key: "orders", class: "text-right"}]}},
+  data() {
+    return { fields: [{ key: "_id" }, { key: "orders", class: "text-right" }] }
+  },
   computed: {
-    ...mapGetters(['ordersByDay'])
-  }
+    ...mapGetters(["ordersByDay"]),
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

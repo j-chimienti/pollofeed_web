@@ -1,9 +1,9 @@
-import { store } from 'quasar/wrappers'
-import { createStore } from 'vuex'
-import adminModule from './admin.module'
-import {pollofeedModule} from "src/store/pollofeedModule";
-import {invoiceModule} from "src/store/bitcoin.invoices.module";
-import {wsModule} from "src/store/ws.module";
+import { store } from "quasar/wrappers"
+import { createStore } from "vuex"
+import adminModule from "./admin.module"
+import { pollofeedModule } from "src/store/pollofeedModule"
+import { invoiceModule } from "src/store/bitcoin.invoices.module"
+import { wsModule } from "src/store/ws.module"
 // import example from './module-example'
 
 /*
@@ -27,7 +27,7 @@ export default store(function (/* { ssrContext } */) {
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
-    strict: process.env.DEBUGGING
+    strict: process.env.DEBUGGING,
   })
 
   return Store

@@ -1,35 +1,38 @@
 <template>
-  <q-input
-      readonly
-      class="cursor-pointer"
-      @click="copyAddr"
-      :model-value="address"/>
-  <div class="row q-py-md">
-    <q-btn
-        type="a"
-        :href="url"
-        size="sm"
-        icon="link"
-        label="Open in wallet"
-    />
-
-  </div>
-  <div class="row flex justify-center">
-    <a :href="url" class="bg-white">
-      <qrcode-vue
-          size="250"
-          margin="3"
-          :value="address"/>
-    </a>
-  </div>
-  <div class="row flex justify-center q-pt-md">
-    <a href="https://lightningaddress.com/">Learn about Lighting Address</a>
+  <div>
+    <p>Lightning Address</p>
+    <div class="row flex justify-center" style="overflow-y: scroll">
+      <div class="col-12 col-md-6">
+        <a :href="url">
+          <qrcode-vue
+            foreground="#8E1116"
+            background="#FFF6CE"
+            :value="address"
+            margin="3"
+            size="250"
+            level="H"
+          />
+        </a>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row justify-center">{{ address }}</div>
+        <div class="row justify-center">
+          <CopyBtn @click="copyAddr" label="copy" />
+          <a href="https://lightningaddress.com/">
+            <CopyBtn label="learn" />
+          </a>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import QrcodeVue from "qrcode.vue";
-import {copyToClipboard, openURL} from "quasar";
+import QrcodeVue from "qrcode.vue"
+import { copyToClipboard, openURL } from "quasar"
+import CopyBtn from "./CopyBtn"
+
 export default {
   name: "LightningAddress",
   methods: {
@@ -39,22 +42,21 @@ export default {
     copyAddr() {
       copyToClipboard(this.url)
       this.$q.notify("Copied address")
-    }
+    },
   },
   data() {
     const address = process.env.LIGHTNING_ADDRESS
-    const url = 'lightning:' + address
+    const url = "lightning:" + address
     return {
       address,
-      url
+      url,
     }
   },
   components: {
-    QrcodeVue
-  }
+    CopyBtn,
+    QrcodeVue,
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,33 +1,40 @@
 <template>
-  <footer >
+  <footer>
     <div class="row flex flex-center">
-      <a  href="https://lightningchance.com">
-        <img :src="wheel" alt="spin" width="100"/>
+      <a href="https://lightningchance.com" class="q-mr-md">
+        <img :src="wheel" alt="spin" width="100" />
       </a>
+      <a></a>
       <a href="https://btcblackjack.org">
-        <img :src="blackjack" width="100" alt="blackjack"/>
+        <img :src="blackjack" width="100" alt="blackjack" />
       </a>
     </div>
-    <NavLinks class="lt-sm"/>
   </footer>
 </template>
 
 <script>
 import wheel from "assets/wheel_inner.svg"
 import blackjack from "assets/blackjack.png"
-import NavLinks from "components/NavLinks";
-import {mapGetters} from "vuex";
+import NavLinks from "components/NavLinks"
+import { mapGetters } from "vuex"
 
 export default {
   name: "Footer",
   computed: {
-    ...mapGetters(['invoice', 'connectedToWebsocket', 'websocket'])
+    ...mapGetters(["invoice", "connectedToWebsocket", "websocket"]),
   },
-  components: {NavLinks},
-  data() { return {  wheel, blackjack}}
+  components: { NavLinks },
+  data() {
+    return { wheel, blackjack }
+  },
 }
 </script>
 
 <style scoped>
-
+img {
+  transition: transform 0.7s ease-in-out;
+}
+img:hover {
+  transform: rotate(360deg);
+}
 </style>

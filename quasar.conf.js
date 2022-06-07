@@ -7,9 +7,8 @@
 // https://v2.quasar.dev/quasar-cli/quasar-conf-js
 
 /* eslint-env node */
-const ESLintPlugin = require('eslint-webpack-plugin')
-const { configure } = require('quasar/wrappers');
-
+const ESLintPlugin = require("eslint-webpack-plugin");
+const { configure } = require("quasar/wrappers");
 
 module.exports = configure(function (ctx) {
   return {
@@ -22,15 +21,10 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: [
-      'i18n',
-      'axios',
-    ],
+    boot: ["i18n", "axios"],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-    css: [
-      'app.scss'
-    ],
+    css: ["app.scss"],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -42,18 +36,23 @@ module.exports = configure(function (ctx) {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
+      "roboto-font", // optional, you are not bound to it
+      "material-icons", // optional, you are not bound to it
     ],
 
-
+    // quasar.config.js
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       env: {
-        ...require('dotenv').config({path: process.env.NODE_ENV === 'development' ? '.env.development' : ".env"}).parsed,
+        ...require("dotenv").config({
+          path:
+            process.env.NODE_ENV === "development"
+              ? ".env.development"
+              : ".env",
+        }).parsed,
       },
       // env: ctx.dev ? devEnv : prodEnv,
-      vueRouterMode: 'history', // available values: 'hash', 'history'
+      vueRouterMode: "history", // available values: 'hash', 'history'
 
       // transpile: false,
 
@@ -73,9 +72,12 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpack (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
+      chainWebpack(chain) {
+        chain
+          .plugin("eslint-webpack-plugin")
+          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+        const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin");
+        chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin);
       },
     },
 
@@ -84,17 +86,17 @@ module.exports = configure(function (ctx) {
       https: false,
       vueDevtools: false,
       proxy: {
-        '/api': "http://localhost:9000",
-        '/ws': "http://localhost:9000"
+        "/api": "http://localhost:9000",
+        "/ws": "http://localhost:9000",
       },
       port: 8080,
-      open: false // opens browser window automatically
+      open: false, // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       config: {
-        dark: "true"
+        dark: "true",
       },
 
       // iconSet: 'material-icons', // Quasar icon set
@@ -108,7 +110,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Dark', 'Notify', 'Dialog']
+      plugins: ["Dark", "Notify", "Dialog"],
     },
 
     // animations: 'all', // --- includes all animations
@@ -123,70 +125,82 @@ module.exports = configure(function (ctx) {
       // manualPostHydrationTrigger: true,
 
       prodPort: 3000, // The default port that the production server should use
-                      // (gets superseded if process.env.PORT is specified at runtime)
+      // (gets superseded if process.env.PORT is specified at runtime)
 
       maxAge: 1000 * 60 * 60 * 24 * 30,
-        // Tell browser when a file from the server should expire from cache (in ms)
+      // Tell browser when a file from the server should expire from cache (in ms)
 
-      chainWebpackWebserver (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+      chainWebpackWebserver(chain) {
+        chain
+          .plugin("eslint-webpack-plugin")
+          .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       middlewares: [
-        ctx.prod ? 'compression' : '',
-        'render' // keep this as last one
-      ]
+        ctx.prod ? "compression" : "",
+        "render", // keep this as last one
+      ],
     },
 
     // https://v2.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
-      workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
+      workboxPluginMode: "GenerateSW", // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
 
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode
-      chainWebpackCustomSW (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+      chainWebpackCustomSW(chain) {
+        chain
+          .plugin("eslint-webpack-plugin")
+          .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       manifest: {
         name: `Pollofeed`,
         short_name: `Pollofeed`,
-        description: `Bitcoin Lighning Chicken Feeder`,
-        display: 'standalone',
-        orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
+        description: `Feed and View Chickens`,
+        display: "standalone",
+        orientation: "portrait",
+        background_color: "#fecf08",
+        theme_color: "#8E1116",
         icons: [
           {
-            src: 'icons/icon-128x128.png',
-            sizes: '128x128',
-            type: 'image/png'
+            src: "icons/icon-144x144.png",
+            sizes: "144x144",
+            type: "image/png",
           },
           {
-            src: 'icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
+            src: "icons/icon-765x765.png",
+            sizes: "765x765",
+            type: "image/png",
           },
-          {
-            src: 'icons/icon-256x256.png',
-            sizes: '256x256',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-384x384.png',
-            sizes: '384x384',
-            type: 'image/png'
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
+          // {
+          //   src: 'icons/icon-128x128.png',
+          //   sizes: '128x128',
+          //   type: 'image/png'
+          // },
+          // {
+          //   src: 'icons/icon-192x192.png',
+          //   sizes: '192x192',
+          //   type: 'image/png'
+          // },
+          // {
+          //   src: 'icons/icon-256x256.png',
+          //   sizes: '256x256',
+          //   type: 'image/png'
+          // },
+          // {
+          //   src: 'icons/icon-384x384.png',
+          //   sizes: '384x384',
+          //   type: 'image/png'
+          // },
+          // {
+          //   src: 'icons/icon-512x512.png',
+          //   sizes: '512x512',
+          //   type: 'image/png'
+          // }
+        ],
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
@@ -196,22 +210,20 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: true
+      hideSplashscreen: true,
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
     electron: {
-      bundler: 'packager', // 'packager' or 'builder'
+      bundler: "packager", // 'packager' or 'builder'
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
         // OS X / Mac App Store
         // appBundleId: '',
         // appCategoryType: '',
         // osxSign: '',
         // protocol: 'myapp://path',
-
         // Windows only
         // win32metadata: { ... }
       },
@@ -219,20 +231,22 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'pollofeed'
+        appId: "pollofeed",
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpackMain (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+      chainWebpackMain(chain) {
+        chain
+          .plugin("eslint-webpack-plugin")
+          .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpackPreload (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js' ] }])
+      chainWebpackPreload(chain) {
+        chain
+          .plugin("eslint-webpack-plugin")
+          .use(ESLintPlugin, [{ extensions: ["js"] }]);
       },
-    }
-  }
+    },
+  };
 });

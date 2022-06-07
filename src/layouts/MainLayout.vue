@@ -1,22 +1,31 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <NavBar/>
     <q-page-container>
+      <NavBarV2 class="gt-md" />
       <router-view />
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import {defineComponent} from 'vue'
-import logo from 'assets/pollofeed_logo.png'
-import NavBar from "components/NavBar";
+import { defineComponent } from "vue"
+import logo from "assets/pollofeed_logo.png"
+import NavBar from "components/NavBar"
+import NavBarV2 from "components/NavBarV2"
 
 export default defineComponent({
-  name: 'MainLayout',
-  components: {NavBar},
+  name: "MainLayout",
+  components: { NavBar, NavBarV2 },
   data() {
-    return { logo}
-  }
+    return { logo }
+  },
 })
 </script>
+
+<style>
+body {
+  background: url(../assets/img/background3.png);
+  background-size: cover;
+  font-family: "LuckiestGuy";
+}
+</style>
