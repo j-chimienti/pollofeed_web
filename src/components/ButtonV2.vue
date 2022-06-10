@@ -1,5 +1,10 @@
 <template>
-  <q-btn class="test" :label="label" />
+  <div class="position-relative d-inline main_btn">
+    <span class="position-absolute span_btn"></span>
+    <span class="position-absolute span_btn_two"></span>
+    <button class="feed_btn">{{ label }}</button>
+  </div>
+  <!--  <q-btn class="test" :label="label"/>-->
   <!--  <svg width="192" height="70" viewBox="0 0 192 70" fill="none" xmlns="http://www.w3.org/2000/svg">-->
   <!--    <g clip-path="url(#clip0_33_2153)">-->
   <!--      <path d="M172 24.0945V46.1486C172 54.8879 162.389 61.9565 150.549 61.9565H41.4506C29.611 61.9565 20 54.8622 20 46.1486V24.0945C20 15.3552 29.611 8.26086 41.4506 8.26086H150.584C162.424 8.26086 172 15.3552 172 24.0945Z" fill="#91181D"/>-->
@@ -62,14 +67,14 @@ svg {
 }
 
 .test {
+  border: 5px solid orange;
+  border-radius: 25px;
   color: #8e1116;
-  /* Red Pigment/700 */
-
-  min-width: 100px;
-  min-height: 37px;
-  border: 4px solid #8e1116;
-  border-radius: 54.9569px;
-  background: linear-gradient(
+  font-weight: 800;
+  padding: 15px 30px;
+  outline: 5px solid #91181d !important;
+  font-size: 24px;
+  background-image: linear-gradient(
     180deg,
     #f4e795 -1.79%,
     #f4b331 26.77%,
@@ -78,6 +83,57 @@ svg {
     #f48631 85.05%,
     #f46e31 98.22%,
     #f46531 106.3%
-  );
+  ) !important;
 }
+
+.feed_btn {
+  cursor: pointer;
+  border: 5px solid orange;
+  border-radius: 25px;
+  color: #8e1116;
+  font-weight: 800;
+  padding: 15px 30px;
+  outline: 5px solid #91181d !important;
+  font-size: 24px;
+  line-height: 24px;
+  background-image: linear-gradient(
+    180deg,
+    #f4e795 -1.79%,
+    #f4b331 26.77%,
+    #f4b331 66.38%,
+    #f4ad31 68.55%,
+    #f48631 85.05%,
+    #f46e31 98.22%,
+    #f46531 106.3%
+  ) !important;
+}
+
+.span_btn {
+  background: #ffffff;
+  opacity: 0.45;
+  height: 5.25px;
+  width: 12.06px;
+  content: "";
+  left: 10%;
+  top: 16%;
+  z-index: 2;
+  border-radius: 10px;
+}
+.span_btn_two {
+  background: #ffffff;
+  opacity: 0.45;
+  height: 5.35px;
+  width: 22.1px;
+  content: "";
+  left: 18%;
+  top: 16%;
+  z-index: 2;
+  border-radius: 10px;
+}
+/*.main_btn {*/
+/*  transition: all 0.4s ease-in-out;*/
+/*}*/
+/*.main_btn:hover {*/
+/*  transform: translateY(-8px);*/
+/*}*/
 </style>

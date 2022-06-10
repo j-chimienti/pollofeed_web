@@ -34,14 +34,6 @@ export const pollofeedModule = {
     delayFeeding: "not_delayed",
     feedTokens: makefeedTokens(),
     showFeedNow: null, // feed token to use now
-    modals: {
-      success: {
-        visible: false,
-      },
-      delayFeeding: {
-        visible: false,
-      },
-    },
     // admin
     delayedFeedingResponse: null,
   },
@@ -65,8 +57,10 @@ export const pollofeedModule = {
     // show = option[string]
     [SET_USE_TOKEN_NOW](state, show) {
       state.showFeedNow = show
-      if (show) {
-        state.paymentType = "DELAYED"
+      if (show !== null) {
+        console.log(this.state.paymentType)
+        this.state.paymentType = "DELAYED"
+        console.log(this.state.paymentType)
       }
     },
   },

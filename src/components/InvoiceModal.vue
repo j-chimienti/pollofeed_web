@@ -1,9 +1,10 @@
 <template>
-  <div class="text-center" style="width: 100%" v-if="this.bolt11">
+  <div class="text-center" style="width: 100%">
     <div class="row justify-center">
       <div class="col-12 col-md-6">
         <a v-bind:href="href" class="full-height">
           <qrcode-vue
+            :v-if="bolt11"
             foreground="#8E1116"
             background="#FFF6CE"
             :value="bolt11"
@@ -29,7 +30,7 @@
             <CopyBtn label="share" />
           </a>
         </p>
-        <p @click="copyPaymentRequest" class="bolt11">
+        <p @click="copyPaymentRequest" class="bolt11" id="bolt11" ref="bolt11">
           {{ bolt11.slice(0, 20) }}...
         </p>
       </div>
@@ -59,10 +60,12 @@ export default {
   name: "InvoiceModal",
   mounted() {
     this.updateDurationInterval = this.updateExp()
+    this.$refs.bolt11.scrollIntoView({ behavior: "smooth" })
   },
   unmounted() {
     if (this.updateDurationInterval) clearInterval(this.updateDurationInterval)
   },
+
   methods: {
     open() {
       openURL(this.href)

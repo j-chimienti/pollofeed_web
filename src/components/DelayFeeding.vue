@@ -111,14 +111,16 @@
       />
     </div>
     <div v-else>
-      <div class="row flex justify-around vertical-middle">
-        <div class="col-12 col-md-6 q-pr-md">
+      <div class="row flex justify-around">
+        <div class="col-md-8 q-pr-md">
           <div
-            class="row justify-between"
+            class="row justify-between items-center"
             v-for="feedToken in feedTokens"
             :key="feedToken"
           >
-            <div class="feedToken">{{ feedToken.token.slice(0, 20) }}</div>
+            <div class="feedToken items-center q-pa-md">
+              {{ feedToken.token }}
+            </div>
             <div>
               <q-btn @click="feed(feedToken.token)" class="red-btn">Use</q-btn>
               <q-btn
@@ -129,11 +131,12 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 q-pl-md">
+        <div class="col-md-4 q-pl-md">
           <q-input
             v-model="manualFeedToken"
             placeholder="enter token"
             class="q-my-md"
+            style="max-width: 100px"
           />
           <br />
           <ButtonV2 label="FEED" @click="manualFeed" />
@@ -175,21 +178,19 @@ export default {
 
 <style scoped>
 .feedToken {
-  width: 120px;
-  height: 37px;
+  /*width: 120px;*/
+  /*height: 37px;*/
   /* Red Pigment/700 */
+  background: white;
   border: 2px solid #8e1116;
   border-radius: 50px;
 }
 
 .red-btn {
-  width: 68.17px;
-  height: 35px;
-
   color: white;
   /* Red Pigment/700 */
 
   background: #8e1116;
-  border-radius: 54.9569px;
+  border-radius: 55px;
 }
 </style>

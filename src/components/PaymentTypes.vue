@@ -1,10 +1,13 @@
 <template>
-  <div style="background: #fff6ce; overflow-y: scroll">
+  <div>
     <div v-if="loadingInvoice">
       <h3 class="text-center">LOADING...</h3>
     </div>
     <div v-else>
-      <div class="view-text row justify-center wrap q-mt-sm" v-if="!invoice">
+      <div
+        class="view-text row justify-center wrap q-mt-sm gt-sm"
+        v-if="!invoice"
+      >
         <span style="width: 300px"> Feed chickens & View them live! </span>
       </div>
       <q-tab-panels
@@ -16,7 +19,7 @@
         <q-tab-panel name="INVOICE">
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
-            <p style="font-size: 1.25rem">Amount</p>
+            <!--            <p style="font-size: 1.25rem">Amount</p>-->
             <div class="row justify-center">
               <!--              <LeftArrow class="q-mr-lg"/>-->
               <span class="amount-txt">{{ feedPriceUSD }}</span>

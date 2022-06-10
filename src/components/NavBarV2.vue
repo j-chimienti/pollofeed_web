@@ -3,7 +3,9 @@
     <router-link :to="{ name: 'home' }">
       <img :src="logo" alt="Feed" width="200" />
     </router-link>
-    <WebsocketConnectionStatus />
+    <WebsocketConnectionStatus
+      style="position: absolute; left: 10px; top: 10px"
+    />
     <br />
     <br />
     <br />

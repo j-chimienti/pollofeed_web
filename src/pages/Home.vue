@@ -1,14 +1,16 @@
 <template>
   <q-page>
     <div class="home">
-      <div class="row justify-center">
-        <q-card class="card-stream">
+      <div class="row justify-center q-pa-md">
+        <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
-            <img
-              style="border: 0.375rem solid #8e1116; border-radius: 1rem"
-              id="live_stream"
+            <iframe
               :src="STREAM_URL"
-            />
+              frameborder="0"
+              width="640"
+              height="480"
+              id="live_stream"
+            ></iframe>
           </div>
           <PaymentTypes />
         </q-card>
@@ -34,9 +36,16 @@ export default {
       if (this.invoiceUnpaid) this.GET_INVOICE()
     },
   },
+
   mounted() {
-    const { paid } = this.$route.query
+    const { paid, token } = this.$route.query
     if (paid) this.$q.notify("Invoice paid")
+
+    if (token) {
+      this.SET_INVOICE(null)
+      this.SET_DELAYED_FEEDING(token)
+      this.SET_USE_TOKEN_NOW(token)
+    }
 
     this.invoiceInterval = setInterval(() => {
       this.checkInvoice()
@@ -49,7 +58,9 @@ export default {
   data() {
     return {
       STREAM_URL: process.env.STREAM_URL,
-      invoiceInterval: null
+      // STREAM_URL: "https://stream.pollofeed.com",
+      // STREAM_URL: "https://www.youtube.com/embed/k3_tw44QsZQ?rel=0",
+      invoiceInterval: null,
     }
   },
   components: {
@@ -69,21 +80,25 @@ export default {
 }
 
 #live_stream {
-  height: 483px;
-  width: 643px;
-  border: 3px solid transparent;
+  border: 0.375rem solid #8e1116;
+  border-radius: 1rem;
 }
 
 .card-stream {
   width: 800px;
-  height: 934px;
+  /*height: 934px;*/
   background: #fff6ce;
   /* Red Pigment/700 */
   border: 0.5rem solid #8e1116;
   border-radius: 36px;
   margin-top: 50px;
+  /*padding-left: 40px;*/
+  /*padding-right: 40px;*/
   padding-top: 2.625rem;
-  overflow-y: scroll;
+
+  /*border-top: 15px solid;*/
+  /*border-image-source: linear-gradient(116.32deg, #800C10 -18.47%, rgba(250, 78, 85, 0.85) 17.04%, #EFDE3B 50.33%, rgba(222, 56, 62, 0.85) 94.72%, #800C10 122.09%);*/
+
   /*border: 15px solid #8E1116;*/
   /*border-image-source: linear-gradient(116.32deg, #800C10 -18.47%, rgba(250, 78, 85, 0.85) 17.04%, #EFDE3B 50.33%, rgba(222, 56, 62, 0.85) 94.72%, #800C10 122.09%);*/
 }
@@ -92,6 +107,7 @@ export default {
   .card-stream {
     width: 90vw;
     min-width: 700px;
+    margin-top: 0;
   }
 }
 </style>

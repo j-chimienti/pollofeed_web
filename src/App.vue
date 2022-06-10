@@ -8,7 +8,6 @@ import { OPEN_WEBSOCKET } from "src/store/actions"
 export default defineComponent({
   name: "App",
   mounted() {
-    this.$q.dark.set(false)
     this.$store.dispatch(OPEN_WEBSOCKET)
   },
 })

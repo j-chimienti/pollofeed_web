@@ -3,9 +3,10 @@
   tags: build
   gather_facts: no
   tasks:
-    - name: npm install
-      npm:
-        path: ..
+    - name: yarn install
+      command: yarn install
+      args:
+        chdir: ..
     - name: npm run build:web
       command: npm run build:web
       args:

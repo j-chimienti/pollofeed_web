@@ -1,13 +1,8 @@
 <template>
-  <q-page class="column no-wrap items-center about">
+  <q-page class="about row justify-center">
     <q-card
-      class="q-my-md q-pa-lg"
-      style="
-        width: 80vw;
-        max-width: 600px;
-        background: #fff6ce;
-        border: 2px solid #8e1116;
-      "
+      class="column items-center q-pa-lg"
+      style="max-width: 50vw; background: #fff6ce; border: 2px solid #8e1116"
     >
       <q-card class="q-my-md" style="width: 80vw; max-width: 600px">
         <q-img loading="lazy" spinner-color="white" alt="" :src="KarenLori">
@@ -85,5 +80,9 @@ export default {
 <style scoped>
 .about {
   font-family: "LuckiestGuy";
+}
+
+p {
+  font-size: 1.5rem;
 }
 </style>

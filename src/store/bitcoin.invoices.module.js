@@ -5,13 +5,23 @@ import {
   LOADING_INVOICE,
   OPEN_INVOICE_MODAL,
   SET_INVOICE,
-  SET_PAYMENT_TYPE
+  SET_PAYMENT_TYPE,
 } from "src/store/mutations"
-import { API_INVOICE, GET_INVOICE, INVOICE, INVOICE_PAID, WEBSOCKET_INVOICE } from "src/store/actions"
+import {
+  API_INVOICE,
+  GET_INVOICE,
+  INVOICE,
+  INVOICE_PAID,
+  WEBSOCKET_INVOICE,
+} from "src/store/actions"
 import { websocketMessageFactory } from "src/services/messageFactory"
-import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys, PAYMENT_TYPES } from "src/constants"
+import {
+  LIGHTNING_INVOICE_STATUS,
+  LocalStorageKeys,
+  PAYMENT_TYPES,
+} from "src/constants"
 import _get from "lodash.get"
-import { LocalStorage } from "quasar"
+import { LocalStorage, Notify } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
 
 const getters = {
@@ -121,9 +131,6 @@ const actions = {
         return fetch("/api/invoice/" + id, { method: "get" })
           .then((res) => res.json())
           .then((res) => websocketMessageFactory(this, res))
-          // .catch((err) => {
-          //   // should i clear invoice?
-          // })
     } else {
       // ignore expired and paid
     }
@@ -140,7 +147,7 @@ const actions = {
     commit(LOADING_INVOICE)
     getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding })
   },
-  [API_INVOICE]({  commit }, delayFeeding) {
+  [API_INVOICE]({ commit }, delayFeeding) {
     const body = JSON.stringify({
       WsRequestLightingInvoice: null,
       delayFeeding,
@@ -154,6 +161,9 @@ const actions = {
       .then((res) => res.json())
       .then((invoice) => {
         return websocketMessageFactory(this, { invoice })
+      })
+      .catch(() => {
+        Notify.create({ type: "negative", message: "Error creating invoice" })
       })
       .finally(() => commit(CLEAR_LOADING_INVOICE))
   },

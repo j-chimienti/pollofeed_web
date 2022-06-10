@@ -2,7 +2,7 @@
   <div>
     <p>Lighting URL</p>
     <div class="row flex justify-center">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-sm-6">
         <a :href="url">
           <qrcode-vue
             foreground="#8E1116"
@@ -14,7 +14,7 @@
           />
         </a>
       </div>
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-sm-6">
         <div class="row flex justify-center q-my-lg">
           <q-checkbox
             label="I want to delay feeding"
@@ -27,12 +27,11 @@
             <q-tooltip> Pay now and feed later </q-tooltip>
           </q-checkbox>
         </div>
-        <div class="row flex justify-around">
-          <a :href="url"><CopyBtn label="share" /> </a>
+        <div class="row flex justify-center">
+          <a :href="url" class="q-pr-md"><CopyBtn label="share" /> </a>
           <CopyBtn label="copy" @click="copyUrl" />
         </div>
       </div>
-      <div class="col"></div>
     </div>
   </div>
 </template>

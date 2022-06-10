@@ -14,7 +14,7 @@ import { mapGetters } from "vuex"
 export default {
   name: "WebsocketConnectionStatus",
   computed: {
-    ...mapGetters(["invoice", "connectedToWebsocket", "websocket"]),
+    ...mapGetters(["connectedToWebsocket"]),
   },
 }
 </script>

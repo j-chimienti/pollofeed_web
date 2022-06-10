@@ -8,8 +8,8 @@
             foreground="#8E1116"
             background="#FFF6CE"
             :value="address"
-            margin="3"
-            size="250"
+            margin=3
+            size=250
             level="H"
           />
         </a>
