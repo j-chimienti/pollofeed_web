@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <p style="font-size: 1.25rem">My Tokens</p>
     <div v-if="showFeedNow">
       <div @click="feed(showFeedNow)" class="row cursor-pointer justify-center">
@@ -112,7 +112,7 @@
     </div>
     <div v-else>
       <div class="row flex justify-around">
-        <div class="col-md-8 q-pr-md">
+        <div v-if="feedTokens?.length" class="col-md-8 q-pa-md feedTokens-container">
           <div
             class="row justify-between items-center"
             v-for="feedToken in feedTokens"
@@ -134,12 +134,14 @@
         <div class="col-md-4 q-pl-md">
           <q-input
             v-model="manualFeedToken"
+            clearable
             placeholder="enter token"
-            class="q-my-md"
-            style="max-width: 100px"
-          />
-          <br />
-          <ButtonV2 label="FEED" @click="manualFeed" />
+            outlined
+          >
+          </q-input>
+          <div class="row q-my-md">
+          <ButtonV2 label="use now" @click="manualFeed" />
+          </div>
         </div>
       </div>
     </div>
@@ -178,11 +180,9 @@ export default {
 
 <style scoped>
 .feedToken {
-  /*width: 120px;*/
-  /*height: 37px;*/
-  /* Red Pigment/700 */
-  background: white;
-  border: 2px solid #8e1116;
+  min-width: 108px;
+  height: 37px;
+  border: 2px solid #8E1116;
   border-radius: 50px;
 }
 
@@ -193,4 +193,21 @@ export default {
   background: #8e1116;
   border-radius: 55px;
 }
+
+  .feedTokens-container {
+
+    width: 411px;
+    height: 159px;
+
+    overflow-y: scroll;
+
+    /* Bright Saffron/50 */
+
+    background: #FFFAE7;
+    /* Red Pigment/700 */
+
+    border: 2px solid #8E1116;
+    border-radius: 12px;
+  }
+
 </style>

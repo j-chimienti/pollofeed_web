@@ -1,5 +1,4 @@
 export const INVOICE = "INVOICE"
-export const MERCH_INVOICE = "MERCH_INVOICE"
 export const OPEN_WEBSOCKET = "OPEN_WEBSOCKET"
 export const API_INVOICE = "API_INVOICE"
 export const WEBSOCKET_INVOICE = "WEBSOCKET_INVOICE"

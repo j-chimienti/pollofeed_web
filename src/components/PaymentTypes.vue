@@ -6,9 +6,8 @@
     <div v-else>
       <div
         class="view-text row justify-center wrap q-mt-sm gt-sm"
-        v-if="!invoice"
       >
-        <span style="width: 300px"> Feed chickens & View them live! </span>
+        <span >View chickens and feed over lightning</span>
       </div>
       <q-tab-panels
         v-model="tab"
@@ -17,13 +16,11 @@
         style="background: #fff6ce; min-height: 300px"
       >
         <q-tab-panel name="INVOICE">
+
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
-            <!--            <p style="font-size: 1.25rem">Amount</p>-->
             <div class="row justify-center">
-              <!--              <LeftArrow class="q-mr-lg"/>-->
               <span class="amount-txt">{{ feedPriceUSD }}</span>
-              <!--              <RightArrow class="q-ml-lg"/>-->
             </div>
             <div class="row justify-center">
               <ButtonV2 label="invoice" @click.prevent="invoiceRequest()" />
@@ -31,22 +28,40 @@
 
             <div class="q-gutter-sm q-my-md">
               <q-checkbox
-                label="I want to delay feeding"
+                label="Give me token to feed"
                 v-model="delayFeeding"
                 data-cy="delayed-order-selector"
                 name="delayFeeding"
                 value="delayed"
                 unchecked-value="not_delayed"
               >
-                <q-tooltip> Pay now and feed later </q-tooltip>
+                <q-tooltip
+                  >Token is in invoice description, when paid it's valid for 1 time use whenever.</q-tooltip
+                >
               </q-checkbox>
+            </div>
+            <div class="row justify-evenly">
+                <q-expansion-item
+                  expand-separator
+                  label="lightning address"
+                  :caption="lightningAddress"
+                >
+                 <p>Lightning address can be used to easily pay invoices.</p>
+                 <p>The Lightning address never changes so store the address</p>
+                 <p>in your wallet and pay invoices like sending emails</p>
+                 <p><a href="https://lightningaddress.com/">learn more here</a></p>
+              </q-expansion-item>
+              <q-expansion-item
+                label="lnurl"
+                caption="lightning url"
+              >
+
+
+              </q-expansion-item>
             </div>
           </div>
         </q-tab-panel>
-        <q-tab-panel name="OFFER"><offer /></q-tab-panel>
-        <q-tab-panel name="LNURL"><LightningUrl /></q-tab-panel>
-        <q-tab-panel name="LNADDR"><LightningAddress /></q-tab-panel>
-        <q-tab-panel name="DELAYED"><DelayFeeding /></q-tab-panel>
+        <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>
       </q-tab-panels>
       <div class="row justify-center">
         <q-tabs

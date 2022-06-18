@@ -59,7 +59,7 @@ export const pollofeedModule = {
       state.showFeedNow = show
       if (show !== null) {
         console.log(this.state.paymentType)
-        this.state.paymentType = "DELAYED"
+        this.state.paymentType = "TOKENS"
         console.log(this.state.paymentType)
       }
     },

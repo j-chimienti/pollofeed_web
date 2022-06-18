@@ -15,6 +15,7 @@ export default {
     return {
       PAYMENT_TYPES,
       paymentTypes: PAYMENT_TYPES,
+      lightningAddress: process.env.LIGHTNING_ADDRESS
     }
   },
   methods: {

@@ -12,10 +12,10 @@ export const FEED_TOKEN_KEY = "FEED_TOKEN_KEY"
 
 export const PAYMENT_TYPES = [
   { type: "INVOICE", label: "INVOICE" },
-  { type: "DELAYED", label: "TOKENS" },
-  { type: "LNURL", label: "LNURL" },
-  { type: "OFFER", label: "OFFER" },
-  { type: "LNADDR", label: "LNADDR" },
+  { type: "TOKENS", label: "TOKENS" },
+  // { type: "LNURL", label: "LNURL" },
+  // { type: "OFFER", label: "OFFER" },
+  // { type: "LNADDR", label: "LNADDR" },
 ]
 
 export const LocalStorageKeys = {

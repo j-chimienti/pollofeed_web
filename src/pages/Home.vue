@@ -4,13 +4,13 @@
       <div class="row justify-center q-pa-md">
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
-            <iframe
-              :src="STREAM_URL"
-              frameborder="0"
-              width="640"
-              height="480"
-              id="live_stream"
-            ></iframe>
+            <div class="col" style="max-width: 640px;">
+              <q-img
+                :src="STREAM_URL"
+                :ratio="4/3"
+                id="live_stream"
+              ></q-img>
+            </div>
           </div>
           <PaymentTypes />
         </q-card>
@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import InvoiceModal from "../components/InvoiceModal"
-import FeedSettings from "components/FeedSettings"
-import Footer from "components/Footer"
-import PaymentTypes from "components/PaymentTypes"
-import NavBarV2 from "../components/NavBarV2"
-import ActiveButtonV2 from "../components/ActiveButtonV2"
-import AppMixin from "../mixins/AppMixin"
+  import InvoiceModal from "../components/InvoiceModal"
+  import FeedSettings from "components/FeedSettings"
+  import Footer from "components/Footer"
+  import PaymentTypes from "components/PaymentTypes"
+  import ActiveButtonV2 from "../components/ActiveButtonV2"
+  import AppMixin from "../mixins/AppMixin"
+  import SocialShare from "../components/social/SocialShare"
 
-export default {
+  export default {
   name: "Home",
   mixins: [AppMixin],
   methods: {
@@ -57,15 +57,15 @@ export default {
   },
   data() {
     return {
-      STREAM_URL: process.env.STREAM_URL,
+      // STREAM_URL: process.env.STREAM_URL,
       // STREAM_URL: "https://stream.pollofeed.com",
-      // STREAM_URL: "https://www.youtube.com/embed/k3_tw44QsZQ?rel=0",
+      STREAM_URL: "https://via.placeholder.com/640x480.png?text=pollofeed",
       invoiceInterval: null,
     }
   },
   components: {
+    SocialShare,
     ActiveButtonV2,
-    NavBarV2,
     PaymentTypes,
     Footer,
     FeedSettings,
@@ -105,8 +105,7 @@ export default {
 
 @media all and (max-width: 1000px) {
   .card-stream {
-    width: 90vw;
-    min-width: 700px;
+    width: 100%;
     margin-top: 0;
   }
 }

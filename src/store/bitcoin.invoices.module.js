@@ -111,7 +111,7 @@ const mutations = {
     state.invoiceModuleVisible = true
   },
   [DELAYED_INVOICE_PAID](state) {
-    state.paymentType = "DELAYED"
+    state.paymentType = "TOKENS"
     state.loadingInvoice = false
     state.invoiceModuleVisible = false
   },
