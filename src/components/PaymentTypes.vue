@@ -39,8 +39,10 @@
                   :caption="lightningAddress"
                 >
                  <div style="max-width: 300px">
-                   <p>Lightning address can be used to easily pay invoices.</p>
-                   <p>Enter address into compatable wallet and pay invoices like you would send emails</p>
+                   <div class="row justify-evenly">
+                     <span>lightning address:</span>
+                     <span>{{lightningAddress}}</span>
+                   </div>
                    <p><a href="https://lightningaddress.com/">learn more here</a></p>
                    <qrcode-vue
                      foreground="#8E1116"
