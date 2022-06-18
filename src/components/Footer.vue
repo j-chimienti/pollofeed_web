@@ -1,11 +1,11 @@
 <template>
   <footer>
     <div class="row flex flex-center">
-      <a href="https://lightningchance.com" class="q-mr-md">
+      <a href="https://spinnie.space" class="q-mr-md">
         <img :src="wheel" alt="spin" width="100" />
       </a>
       <a></a>
-      <a href="https://btcblackjack.org">
+      <a href="https://blakjak.app">
         <img :src="blackjack" width="100" alt="blackjack" />
       </a>
     </div>
