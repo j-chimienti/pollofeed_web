@@ -12,7 +12,13 @@ import {
 export default {
   name: "AppMixin",
   data() {
+    const url = process.env.LIGHTNING_URL
+    const urlD = process.env.LIGHTNING_URL_DELAYED
     return {
+      lnurl: url,
+      lnurlDelayed: urlD,
+      displayUrl: "lightning:" + url.toUpperCase(),
+      displayUrlDelayed: "lightning:" + urlD.toUpperCase(),
       PAYMENT_TYPES,
       paymentTypes: PAYMENT_TYPES,
       lightningAddress: process.env.LIGHTNING_ADDRESS

@@ -4,11 +4,6 @@
       <h3 class="text-center">LOADING...</h3>
     </div>
     <div v-else>
-      <div
-        class="view-text row justify-center wrap q-mt-sm gt-sm"
-      >
-        <span >View chickens and feed over lightning</span>
-      </div>
       <q-tab-panels
         v-model="tab"
         animated
@@ -20,10 +15,7 @@
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
             <div class="row justify-center">
-              <span class="amount-txt">{{ feedPriceUSD }}</span>
-            </div>
-            <div class="row justify-center">
-              <ButtonV2 label="invoice" @click.prevent="invoiceRequest()" />
+              <ButtonV2 :label="'invoice ' + feedPriceUSD" @click.prevent="invoiceRequest()" />
             </div>
 
             <div class="q-gutter-sm q-my-md">
@@ -46,15 +38,45 @@
                   label="lightning address"
                   :caption="lightningAddress"
                 >
-                 <p>Lightning address can be used to easily pay invoices.</p>
-                 <p>The Lightning address never changes so store the address</p>
-                 <p>in your wallet and pay invoices like sending emails</p>
-                 <p><a href="https://lightningaddress.com/">learn more here</a></p>
+                 <div style="max-width: 300px">
+                   <p>Lightning address can be used to easily pay invoices.</p>
+                   <p>Enter address into compatable wallet and pay invoices like you would send emails</p>
+                   <p><a href="https://lightningaddress.com/">learn more here</a></p>
+                   <qrcode-vue
+                     foreground="#8E1116"
+                     background="#FFF6CE"
+                     :value="lightningAddress"
+                     margin="3"
+                     size="250"
+                     level="H"
+                   />
+                 </div>
               </q-expansion-item>
               <q-expansion-item
                 label="lnurl"
-                caption="lightning url"
+                expand-separator
+                :caption="lnurl.slice(0,20) + '...'"
               >
+               <h4>lnurl</h4>
+                <qrcode-vue
+                  foreground="#8E1116"
+                  background="#FFF6CE"
+                  :value="lnurl"
+                  margin="3"
+                  size="250"
+                  level="H"
+                />
+                <br/>
+                <div class="text-h5">With token</div>
+                <qrcode-vue
+                  foreground="#8E1116"
+                  background="#FFF6CE"
+                  :value="lnurlDelayed"
+                  margin="3"
+                  size="250"
+                  level="H"
+                />
+
 
 
               </q-expansion-item>

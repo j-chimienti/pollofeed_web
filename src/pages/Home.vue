@@ -57,9 +57,9 @@
   },
   data() {
     return {
-      // STREAM_URL: process.env.STREAM_URL,
+      STREAM_URL: process.env.STREAM_URL,
       // STREAM_URL: "https://stream.pollofeed.com",
-      STREAM_URL: "https://via.placeholder.com/640x480.png?text=pollofeed",
+      // STREAM_URL: "https://via.placeholder.com/640x480.png?text=pollofeed",
       invoiceInterval: null,
     }
   },
