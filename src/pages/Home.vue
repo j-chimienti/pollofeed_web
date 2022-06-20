@@ -5,11 +5,19 @@
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
             <div class="col" style="max-width: 640px;">
-              <q-img
+              <q-responsive :ratio="4/3">
+              <img
                 :src="STREAM_URL"
-                :ratio="4/3"
+                alt="live stream"
                 id="live_stream"
-              ></q-img>
+              />
+              </q-responsive>
+<!--              <q-img-->
+<!--                :src="STREAM_URL"-->
+<!--                :ratio="4/3"-->
+<!--                id="live_stream"-->
+<!--              ></q-img>-->
+
             </div>
           </div>
           <PaymentTypes />
@@ -57,8 +65,8 @@
   },
   data() {
     return {
-      STREAM_URL: process.env.STREAM_URL,
-      // STREAM_URL: "https://stream.pollofeed.com",
+      // STREAM_URL: process.env.STREAM_URL,
+      STREAM_URL: "https://stream.pollofeed.com",
       // STREAM_URL: "https://via.placeholder.com/640x480.png?text=pollofeed",
       invoiceInterval: null,
     }

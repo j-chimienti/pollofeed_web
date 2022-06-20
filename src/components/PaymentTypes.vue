@@ -32,57 +32,58 @@
                 >
               </q-checkbox>
             </div>
-            <div class="row justify-evenly">
-                <q-expansion-item
-                  expand-separator
-                  label="lightning address"
-                  :caption="lightningAddress"
-                >
-                 <div style="max-width: 300px">
-                   <div class="row justify-evenly">
-                     <span>lightning address:</span>
-                     <span>{{lightningAddress}}</span>
-                   </div>
-                   <p><a href="https://lightningaddress.com/">learn more here</a></p>
-                   <qrcode-vue
-                     foreground="#8E1116"
-                     background="#FFF6CE"
-                     :value="lightningAddress"
-                     margin="3"
-                     size="250"
-                     level="H"
-                   />
-                 </div>
-              </q-expansion-item>
-              <q-expansion-item
-                label="lnurl"
-                expand-separator
-                :caption="lnurl.slice(0,20) + '...'"
-              >
-               <h4>lnurl</h4>
+
+          </div>
+          <div class="row justify-evenly">
+            <q-expansion-item
+              expand-separator
+              label="lightning address"
+              :caption="lightningAddress"
+            >
+              <div style="max-width: 300px">
+                <div class="row justify-evenly">
+                  <span>lightning address:</span>
+                  <span>{{lightningAddress}}</span>
+                </div>
+                <p><a href="https://lightningaddress.com/">learn more here</a></p>
                 <qrcode-vue
                   foreground="#8E1116"
                   background="#FFF6CE"
-                  :value="lnurl"
+                  :value="lightningAddress"
                   margin="3"
                   size="250"
                   level="H"
                 />
-                <br/>
-                <div class="text-h5">With token</div>
-                <qrcode-vue
-                  foreground="#8E1116"
-                  background="#FFF6CE"
-                  :value="lnurlDelayed"
-                  margin="3"
-                  size="250"
-                  level="H"
-                />
+              </div>
+            </q-expansion-item>
+            <q-expansion-item
+              label="lnurl"
+              expand-separator
+              :caption="lnurl.slice(0,20) + '...'"
+            >
+              <h4>lnurl</h4>
+              <qrcode-vue
+                foreground="#8E1116"
+                background="#FFF6CE"
+                :value="lnurl"
+                margin="3"
+                size="250"
+                level="H"
+              />
+              <br/>
+              <div class="text-h5">With token</div>
+              <qrcode-vue
+                foreground="#8E1116"
+                background="#FFF6CE"
+                :value="lnurlDelayed"
+                margin="3"
+                size="250"
+                level="H"
+              />
 
 
 
-              </q-expansion-item>
-            </div>
+            </q-expansion-item>
           </div>
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>

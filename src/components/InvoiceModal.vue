@@ -61,7 +61,7 @@ export default {
   name: "InvoiceModal",
   mounted() {
     this.updateDurationInterval = this.updateExp()
-    this.$refs.bolt11qrcode.scrollIntoView({ behavior: "smooth" })
+    // this.$refs.bolt11qrcode.scrollIntoView({ behavior: "smooth" })
   },
   unmounted() {
     if (this.updateDurationInterval) clearInterval(this.updateDurationInterval)
