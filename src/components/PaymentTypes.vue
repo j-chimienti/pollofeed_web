@@ -16,9 +16,7 @@
           <div v-else>
             <div class="row justify-center">
               <ButtonV2 :label="'invoice ' + feedPriceUSD" @click.prevent="invoiceRequest()" />
-            </div>
 
-            <div class="q-gutter-sm q-my-md">
               <q-checkbox
                 label="Give me token to feed"
                 v-model="delayFeeding"
@@ -34,17 +32,12 @@
             </div>
 
           </div>
-          <div class="row justify-evenly">
+          <div class="row justify-center q-my-lg">
             <q-expansion-item
               expand-separator
-              label="lightning address"
-              :caption="lightningAddress"
+              label="lnaddr"
             >
-              <div style="max-width: 300px">
-                <div class="row justify-evenly">
-                  <span>lightning address:</span>
-                  <span>{{lightningAddress}}</span>
-                </div>
+              <div>
                 <p><a href="https://lightningaddress.com/">learn more here</a></p>
                 <qrcode-vue
                   foreground="#8E1116"
@@ -59,9 +52,8 @@
             <q-expansion-item
               label="lnurl"
               expand-separator
-              :caption="lnurl.slice(0,20) + '...'"
             >
-              <h4>lnurl</h4>
+              <div class="text-h5">scan to feed</div>
               <qrcode-vue
                 foreground="#8E1116"
                 background="#FFF6CE"
@@ -71,7 +63,8 @@
                 level="H"
               />
               <br/>
-              <div class="text-h5">With token</div>
+              <p>or</p>
+              <div class="text-h5">give token and feed later</div>
               <qrcode-vue
                 foreground="#8E1116"
                 background="#FFF6CE"

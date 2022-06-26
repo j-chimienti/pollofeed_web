@@ -73,8 +73,7 @@ export function websocketMessageFactory(store, json) {
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid) {
       store.commit(OPEN_INVOICE_MODAL)
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.expired) {
-      store.commit(CLOSE_INVOICE_MODAL)
-      Notify.create("invoice expired")
+      // ignore
     }
   }
   if (invoicePaid) {

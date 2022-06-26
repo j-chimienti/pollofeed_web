@@ -12,15 +12,20 @@
     <div class="row justify-center q-my-lg">
       <SocialShare/>
     </div>
-    <div class="row justify-center q-my-lg">
-      <a href="https://lightningchance.com" class="q-mr-md">
-        <img :src="wheel" alt="spin" width="100" />
-      </a>
-      <a href="https://btcblackjack.org">
-        <img :src="blackjack" width="100" alt="blackjack" />
+    <div class="row justify-center items-center q-my-lg">
+      <a href="https://spinnie.space" class="column">
+        <span class="text-primary">spinnie.space</span>
+        <img :src="wheel" alt="spinnie.space" width="100" />
       </a>
     </div>
-  </div>
+    <div class="row justify-center q-my-lg">
+      <a href="https://bjack.space" class="column">
+        <span class="text-primary">bjack.space</span>
+        <img :src="blackjack" width="100" alt="bjack.space" />
+
+      </a>
+    </div>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="delay-feeding" >
     <p style="font-size: 1.25rem">My Tokens</p>
     <div v-if="showFeedNow">
       <div @click="feed(showFeedNow)" class="row cursor-pointer justify-center">
@@ -179,6 +179,7 @@ export default {
 </script>
 
 <style scoped>
+
 .feedToken {
   min-width: 108px;
   height: 37px;

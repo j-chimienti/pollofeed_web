@@ -5,18 +5,11 @@
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
             <div class="col" style="max-width: 640px;">
-              <q-responsive :ratio="4/3">
-              <img
+              <q-img
                 :src="STREAM_URL"
-                alt="live stream"
+                :ratio="4/3"
                 id="live_stream"
-              />
-              </q-responsive>
-<!--              <q-img-->
-<!--                :src="STREAM_URL"-->
-<!--                :ratio="4/3"-->
-<!--                id="live_stream"-->
-<!--              ></q-img>-->
+              ></q-img>
 
             </div>
           </div>
