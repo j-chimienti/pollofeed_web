@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+
     <q-page-container>
       <router-view />
       <NavBarV2 />
@@ -22,9 +23,8 @@ export default defineComponent({
 </script>
 
 <style>
-body {
-  background: url(../assets/img/background3.png);
-  background-size: cover;
-  font-family: "LuckiestGuy";
-}
+
+
+
+
 </style>

@@ -1,6 +1,6 @@
 {
   "name": "pollofeed_web",
-  "version": "0.2.9",
+  "version": "0.2.10-rc-1",
   "private": false,
   "description": "Bitcoin Lightning Chicken Feeder",
   "author": "@pollofeed",
@@ -20,6 +20,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "fmtbtc": "^0.0.3",
+    "hls.js": "^1.1.5",
     "lodash.get": "^4.4.2",
     "qrcode.vue": "^3.3.2",
     "quasar": "^2.0.0",
@@ -60,7 +61,7 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "node": ">= 12",
+    "node": ">= 12.22.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   },
