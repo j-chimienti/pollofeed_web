@@ -34,15 +34,7 @@ export default defineComponent({
 
 <style>
 
-  /*img {*/
-  /*  width: 100%;*/
-  /*  height: auto;*/
-  /*}*/
   body {
-    /*background: url(../assets/img/background3/background3_gg2mxc_c_scale_w_1400.png);*/
-    /*background-repeat:no-repeat;*/
-    /*background-size:contain;*/
-    /*background-position:center;*/
     font-family: "LuckiestGuy", serif;
   }
   .bg {
