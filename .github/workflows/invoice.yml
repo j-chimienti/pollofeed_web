@@ -3,7 +3,7 @@ name: invoice
 on:
   workflow_dispatch:
    schedule:
-     - cron: "0 * * * *"
+     - cron: "0 * * * *" # every hour at min 0
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '12'
+          node-version: '12.22.6'
       - name: install dependencies
         run: npm i
       - name: npm run cypress:invoice

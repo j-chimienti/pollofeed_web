@@ -15,7 +15,7 @@
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
             <div class="row justify-center">
-              <ButtonV2 :label="'invoice ' + feedPriceUSD" @click.prevent="invoiceRequest()" />
+              <ButtonV2 data-cy="invoice_button" :label="'invoice ' + feedPriceUSD" @click.prevent="invoiceRequest()" />
 
               <q-checkbox
                 label="Give me token to feed"
