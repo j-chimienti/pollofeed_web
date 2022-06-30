@@ -46,7 +46,6 @@
       </clipPath>
     </defs>
   </svg>
-
 </template>
 
 <script>
@@ -55,15 +54,10 @@ export default {
   props: ["label"],
   methods: {
     makeUrl(label) {
-      return `#url(${label})`
+      return `#url(${this.makeLabel(label)})`
     },
     makeLabel(label) {
-      const rand = []
-
-      for (let i = 0; i < 10; i++) {
-        rand.push(Math.random())
-      }
-      return rand + label
+      return label + this.props.label.replace(" ", "_")
     }
   }
 }
