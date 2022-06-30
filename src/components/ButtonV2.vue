@@ -54,7 +54,7 @@ export default {
   props: ["label"],
   methods: {
     makeUrl(label) {
-      return `#url(${this.makeLabel(label)})`
+      return `url(#${this.makeLabel(label)})`
     },
     makeLabel(label) {
       return label + this.props.label.replace(" ", "_")
