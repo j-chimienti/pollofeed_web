@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link type="a" :to="{ name: 'about' }">
-      <ButtonV2 label="about" />
+      About
     </router-link>
 
     <!--    <router-link type="a" :to="{name: 'about'}">-->

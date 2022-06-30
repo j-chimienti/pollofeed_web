@@ -104,7 +104,6 @@
   },
   components: {
     SocialShare,
-    ActiveButtonV2,
     PaymentTypes,
     Footer,
     FeedSettings,

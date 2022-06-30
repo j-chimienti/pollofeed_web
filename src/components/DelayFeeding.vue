@@ -140,7 +140,7 @@
           >
           </q-input>
           <div class="row q-my-md">
-          <ButtonV2 label="use now" @click="manualFeed" />
+          <q-btn label="use now" @click="manualFeed" />
           </div>
         </div>
       </div>
