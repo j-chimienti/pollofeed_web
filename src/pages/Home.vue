@@ -7,7 +7,7 @@
           <div class="row justify-center">
             <div class="col" style="max-width: 640px;">
 
-<!--              <q-responsive :ratio="4/3">-->
+              <q-responsive :ratio="4/3">
 
 <!--                <iframe-->
 <!--                  id="live_stream"-->
@@ -16,13 +16,14 @@
 <!--                <div>-->
 <!--                  <iframe src="https://iframe.videodelivery.net/a57070b12b6442e1090939805b36287a?autoplay=true&poster=https%3A%2F%2Fvideodelivery.net%2Fa57070b12b6442e1090939805b36287a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>-->
 <!--                </div>-->
-              <q-img
+              <img
                 :src="STREAM_URL"
+                alt="live stream"
                 id="live_stream"
-                :ratio="4/3"
+
                 :loading="false"
-              ></q-img>
-<!--              </q-responsive>-->
+              />
+              </q-responsive>
 
             </div>
           </div>
