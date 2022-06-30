@@ -38,7 +38,6 @@
   import FeedSettings from "components/FeedSettings"
   import Footer from "components/Footer"
   import PaymentTypes from "components/PaymentTypes"
-  import ActiveButtonV2 from "../components/ActiveButtonV2"
   import AppMixin from "../mixins/AppMixin"
   import SocialShare from "../components/social/SocialShare"
 
