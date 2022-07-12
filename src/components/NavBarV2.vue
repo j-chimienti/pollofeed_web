@@ -55,11 +55,8 @@
 .navbar-v2 {
   position: absolute;
   width: 303px;
-  height: 100%;
-  max-height: 1100px;
   left: 36px;
   top: 35px;
-
   z-index: 1000;
   background: #fff6ce;
   /* Red Pigment/700 */

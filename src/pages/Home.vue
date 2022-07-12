@@ -129,7 +129,6 @@
   /* Red Pigment/700 */
   border: 0.5rem solid #8e1116;
   border-radius: 36px;
-  margin-top: 50px;
   /*padding-left: 40px;*/
   /*padding-right: 40px;*/
   padding-top: 2.625rem;

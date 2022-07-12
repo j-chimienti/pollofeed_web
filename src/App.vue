@@ -34,9 +34,7 @@ export default defineComponent({
 
 <style>
 
-  body {
-    font-family: "LuckiestGuy", serif;
-  }
+
   .bg {
     position: absolute;
     top: 0;
