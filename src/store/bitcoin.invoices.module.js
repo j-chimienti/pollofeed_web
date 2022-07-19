@@ -33,7 +33,7 @@ const getters = {
     return msat2sat(_get(state.invoice, "amount_msat", 0), true)
   },
   feedPriceUSD: (_, getters) => {
-    return satsToUsd(getters.satoshi)
+    return satsToUsd(getters.satoshi, getters.btc_usd)
   },
 }
 
