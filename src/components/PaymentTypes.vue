@@ -34,6 +34,7 @@
               </q-checkbox>
               <q-input
                 label="feedings"
+                max="50"
                 type="number" v-model.number="feedings" style="max-width: 100px" filled/>
             </div>
 
