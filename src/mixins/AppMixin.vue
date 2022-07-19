@@ -4,9 +4,10 @@ import { mapActions, mapGetters, mapMutations } from "vuex"
 import { DELAY_FEEDING, GET_INVOICE, INVOICE } from "../store/actions"
 import { PAYMENT_TYPES } from "../constants"
 import {
+  FEEDINGS,
   SET_DELAYED_FEEDING,
   SET_INVOICE,
-  SET_USE_TOKEN_NOW,
+  SET_USE_TOKEN_NOW
 } from "../store/mutations"
 
 export default {
@@ -27,11 +28,18 @@ export default {
   methods: {
     satsToUsd,
     ...mapActions([INVOICE, GET_INVOICE, DELAY_FEEDING]),
-    ...mapMutations([SET_USE_TOKEN_NOW, SET_INVOICE, SET_DELAYED_FEEDING]),
+    ...mapMutations([SET_USE_TOKEN_NOW, SET_INVOICE, SET_DELAYED_FEEDING, FEEDINGS]),
   },
   computed: {
+    feedings: {
+      get() {
+        return this.$store.getters.feedings
+      },
+      set(f) {
+        this.FEEDINGS(f)
+      }
+    },
     ...mapGetters([
-      'feedings',
       "invoiceUnpaid",
       "invoiceStatus",
       "invoiceExpired",

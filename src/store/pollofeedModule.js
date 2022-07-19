@@ -2,6 +2,7 @@ import { DELAY_FEEDING } from "./actions"
 import { ADD_FEED_TOKEN, REMOVE_FEED_TOKEN, SET_DELAYED_FEEDING, SET_USE_TOKEN_NOW } from "./mutations"
 import { FEED_TOKEN_KEY } from "src/constants"
 import { LocalStorage, Notify } from "quasar"
+import { FEEDINGS } from "src/store/mutations"
 
 const makefeedTokens = () => {
   try {
@@ -33,6 +34,7 @@ export const pollofeedModule = {
     delayedFeedingResponse: null,
   },
   mutations: {
+    [FEEDINGS](s, f) { s.feedings = f},
     [SET_DELAYED_FEEDING](state, delayFeeding) {
       state.delayFeeding = delayFeeding
     },
