@@ -16,6 +16,7 @@ const makefeedTokens = () => {
 
 export const pollofeedModule = {
   getters: {
+    feedings: state => state.feedings,
     ordersByDay: (state) => state.ordersByDay,
     feedTokens: (state) => state.feedTokens,
     delayedFeedingResponse: (state) => state.delayedFeedingResponse,
@@ -24,6 +25,7 @@ export const pollofeedModule = {
     showFeedNow: (state) => state.showFeedNow,
   },
   state: {
+    feedings: 1,
     delayFeeding: "not_delayed",
     feedTokens: makefeedTokens(),
     showFeedNow: null, // feed token to use now

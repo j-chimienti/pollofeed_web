@@ -31,6 +31,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'feedings',
       "invoiceUnpaid",
       "invoiceStatus",
       "invoiceExpired",

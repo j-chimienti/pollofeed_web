@@ -41,16 +41,13 @@
 </template>
 
 <script>
-import { parseToken } from "../services/messageFactory"
-import QrcodeVue from "qrcode.vue"
-import { copyToClipboard, openURL } from "quasar"
-import CopyBtn from "./CopyBtn"
-import ButtonV2 from "./ButtonV2"
-import _get from "lodash.get"
-import AppMixin from "../mixins/AppMixin"
-
-const fmtbtc = require("fmtbtc")
-const { msat2sat } = fmtbtc
+  import { parseToken } from "../services/messageFactory"
+  import QrcodeVue from "qrcode.vue"
+  import { copyToClipboard, openURL } from "quasar"
+  import CopyBtn from "./CopyBtn"
+  import ButtonV2 from "./ButtonV2"
+  import _get from "lodash.get"
+  import AppMixin from "../mixins/AppMixin"
 
 export default {
   components: {
@@ -106,14 +103,7 @@ export default {
       const invoiceId = parseToken(this.invoice)
       return this.feedTokens.find((token) => token === invoiceId)
     },
-    satoshi() {
-      return msat2sat(this.invoice.amount_msat, true)
-    },
-    feedPriceUSD() {
-      return this.btc_usd && this.invoice.amount_msat
-        ? this.satsToUsd(this.satoshi, this.btc_usd)
-        : null
-    },
+
     href() {
       return `lightning:${this.bolt11}`.toLowerCase()
     },

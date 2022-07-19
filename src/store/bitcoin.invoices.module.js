@@ -12,6 +12,8 @@ import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys, PAYMENT_TYPES } from "src/c
 import _get from "lodash.get"
 import { LocalStorage } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
+const fmtbtc = require("fmtbtc")
+const { msat2sat } = fmtbtc
 
 const getters = {
   btc_usd: (state) => state.btc_usd,
@@ -27,7 +29,12 @@ const getters = {
   paymentType: (state) => state.paymentType,
   loadingInvoice: (state) => state.loadingInvoice,
   invoiceModuleVisible: (state) => state.invoiceModuleVisible,
-  feedPriceUSD: (state) => satsToUsd(state.feedPriceSats, state.btc_usd),
+  satoshi: state => {
+    return msat2sat(_get(state.invoice, "amount_msat", 0), true)
+  },
+  feedPriceUSD: (_, getters) => {
+    return satsToUsd(getters.satoshi)
+  },
 }
 
 const loadIvoiceFromStorage = () => {

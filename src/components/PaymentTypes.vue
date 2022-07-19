@@ -16,7 +16,7 @@
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
             <div class="row justify-center">
-              <ButtonV2 data-cy="invoice_button" :label="'invoice ' + invoicePrice" @click.prevent="invoiceRequest()" />
+              <ButtonV2 data-cy="invoice_button" label="create invoice" @click.prevent="invoiceRequest()" />
             </div>
             <div class="row justify-center">
               <q-checkbox
@@ -141,13 +141,9 @@ export default {
   data() {
     return {
       delayFeeding: false,
-      feedings: 1,
     }
   },
   computed: {
-    invoicePrice() {
-      return this.feedPriceUSD
-    },
     tab: {
       get() {
         return this.paymentType
