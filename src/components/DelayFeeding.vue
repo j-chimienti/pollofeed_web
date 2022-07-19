@@ -119,10 +119,10 @@
             :key="feedToken"
           >
             <div class="feedToken items-center q-pa-md">
-              {{ feedToken.token }}
+              {{ feedToken }}
             </div>
             <div>
-              <q-btn @click="feed(feedToken.token)" class="red-btn">Use</q-btn>
+              <q-btn @click="feed(feedToken)" class="red-btn">Use</q-btn>
               <q-btn
                 @click="removeToken(feedToken)"
                 label="Delete"

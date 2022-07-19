@@ -5,23 +5,12 @@ import {
   LOADING_INVOICE,
   OPEN_INVOICE_MODAL,
   SET_INVOICE,
-  SET_PAYMENT_TYPE,
+  SET_PAYMENT_TYPE
 } from "src/store/mutations"
-import {
-  API_INVOICE,
-  GET_INVOICE,
-  INVOICE,
-  INVOICE_PAID,
-  WEBSOCKET_INVOICE,
-} from "src/store/actions"
-import { websocketMessageFactory } from "src/services/messageFactory"
-import {
-  LIGHTNING_INVOICE_STATUS,
-  LocalStorageKeys,
-  PAYMENT_TYPES,
-} from "src/constants"
+import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
+import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys, PAYMENT_TYPES } from "src/constants"
 import _get from "lodash.get"
-import { LocalStorage, Notify } from "quasar"
+import { LocalStorage } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
 
 const getters = {
@@ -92,12 +81,7 @@ const mutations = {
   [SET_INVOICE](state, invoice) {
     state.invoice = invoice
     state.loadingInvoice = false
-    if (
-      invoice &&
-      typeof invoice === "object" &&
-      _get(invoice, "status", null) !== null
-    )
-      LocalStorage.set(LocalStorageKeys.LIGHTNING_INVOICE, invoice)
+    LocalStorage.set(LocalStorageKeys.LIGHTNING_INVOICE, invoice)
   },
   [BTC_USD](state, btc_usd) {
     state.btc_usd = btc_usd
@@ -125,48 +109,17 @@ const actions = {
   [GET_INVOICE]({ getters }) {
     if (getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.unpaid) {
       const id = getters.invoice.payment_hash
-      if (getters.connectedToWebsocket)
-        getters.websocket._send({ WsGetInvoice: null, payment_hash: id })
-      else
-        return fetch("/api/invoice/" + id, { method: "get" })
-          .then((res) => res.json())
-          .then((res) => websocketMessageFactory(this, res))
+      getters.websocket._send({ WsGetInvoice: null, payment_hash: id })
     } else {
       // ignore expired and paid
     }
   },
-  [INVOICE]({ getters, dispatch, commit }, delayFeeding = false) {
+  [INVOICE]({getters,  commit }, req) {
+    const {delayFeeding, feedings} = req
     commit(LOADING_INVOICE)
-    if (!getters.connectedToWebsocket) {
-      return dispatch(API_INVOICE, delayFeeding)
-    } else {
-      return dispatch(WEBSOCKET_INVOICE, delayFeeding)
-    }
+    getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
   },
-  [WEBSOCKET_INVOICE]({ getters, commit }, delayFeeding) {
-    commit(LOADING_INVOICE)
-    getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding })
-  },
-  [API_INVOICE]({ commit }, delayFeeding) {
-    const body = JSON.stringify({
-      WsRequestLightingInvoice: null,
-      delayFeeding,
-    })
-    commit(LOADING_INVOICE)
-    return fetch("/api/invoice", {
-      method: "post",
-      body,
-      headers: { "content-type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((invoice) => {
-        return websocketMessageFactory(this, { invoice })
-      })
-      .catch(() => {
-        Notify.create({ type: "negative", message: "Error creating invoice" })
-      })
-      .finally(() => commit(CLEAR_LOADING_INVOICE))
-  },
+
 }
 
 export const invoiceModule = { getters, state, mutations, actions }

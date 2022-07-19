@@ -1,22 +1,20 @@
 /* eslint-disable no-unused-vars */
 import {
   ADD_FEED_TOKEN,
-  AUTHENTICATED,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
   OPEN_INVOICE_MODAL,
   REMOVE_FEED_TOKEN,
   SET_INVOICE,
   SET_ORDERS,
-  SET_PAYMENT_TYPE,
+  SET_PAYMENT_TYPE
 } from "../store/mutations"
 import { Notify } from "quasar"
 import { LIGHTNING_INVOICE_STATUS } from "src/constants"
 import { INVOICE_PAID } from "src/store/actions"
 
 import _get from "lodash.get"
-import { SET_USE_TOKEN_NOW, CLOSE_INVOICE_MODAL } from "src/store/mutations"
-import { FeedToken } from "src/models/FeedToken"
+import { SET_USE_TOKEN_NOW } from "src/store/mutations"
 
 export function websocketMessageFactory(store, json) {
   const {
@@ -38,7 +36,6 @@ export function websocketMessageFactory(store, json) {
     // invoiceUrl = null,
     // feederSpinning = null,
     //   clientCount = null,
-    authenticated = null,
     //   swagInvoices = null,
     //   processingInvoices = null,
     //   pollofeedConfig = null,
@@ -58,16 +55,16 @@ export function websocketMessageFactory(store, json) {
   if (invoice) {
     store.commit(CLEAR_LOADING_INVOICE)
     store.commit(SET_INVOICE, invoice)
-    const tokenOpt = parseToken(invoice)
-    if (tokenOpt) store.commit(ADD_FEED_TOKEN, new FeedToken(invoice))
-    store.commit(SET_USE_TOKEN_NOW, tokenOpt)
+    const tokens = parseToken(invoice)
+    tokens.forEach(t => store.commit(ADD_FEED_TOKEN, t))
+    if (tokens.length) store.commit(SET_USE_TOKEN_NOW, tokens[0])
     if (invoice.status === LIGHTNING_INVOICE_STATUS.paid) {
       Notify.create({
         type: "positive",
         message: "your transaction was successful!",
       })
       // if paid and has token show user t
-      if (tokenOpt) {
+      if (tokens.length) {
         store.commit(SET_PAYMENT_TYPE, "TOKENS")
       }
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid) {
@@ -80,8 +77,6 @@ export function websocketMessageFactory(store, json) {
     store.dispatch(INVOICE_PAID, invoicePaid)
   }
   if (btc_usd) store.commit(BTC_USD, btc_usd)
-  // if (invoiceUrl) window.location = invoiceUrl
-  if (authenticated != null) store.commit(AUTHENTICATED, authenticated)
   if (orders) store.commit(SET_ORDERS, orders)
   if (todayOrderCount) store.commit("todayOrderCount", todayOrderCount)
   if (feedToken) {
@@ -132,11 +127,16 @@ export function websocketMessageFactory(store, json) {
  msatoshi: 55000
  payment_hash: "b072cb17a1fc0c8bb6405ef4764f5b70427374f3a7287cf8e7d9a8b2344be962"
  status: "unpaid"
- * @returns {null|*}
+ * @returns []String
  */
 export function parseToken(invoice) {
-  const d = _get(invoice, "description", null)
-  if (d && d.includes("-- token = ")) {
-    return d.split("token =").pop()
-  } else return null
+  const d = _get(invoice, "description", "")
+  let j = ""
+  try {
+    j = JSON.parse(d)
+  } catch (e) {
+    console.error("error parsing description", e)
+  }
+  return  _get(j, "token", [])
+
 }

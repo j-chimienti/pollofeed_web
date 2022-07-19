@@ -1,5 +1,6 @@
 <template>
   <div>
+    <q-btn v-if="invoice" @click="SET_INVOICE(null)" label="clear invoice"/>
     <div v-if="loadingInvoice">
       <h3 class="text-center">LOADING...</h3>
     </div>
@@ -15,8 +16,9 @@
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
             <div class="row justify-center">
-              <ButtonV2 data-cy="invoice_button" :label="'invoice ' + feedPriceUSD" @click.prevent="invoiceRequest()" />
-
+              <ButtonV2 data-cy="invoice_button" :label="'invoice ' + invoicePrice" @click.prevent="invoiceRequest()" />
+            </div>
+            <div class="row justify-center">
               <q-checkbox
                 label="Give me token to feed"
                 v-model="delayFeeding"
@@ -24,11 +26,15 @@
                 name="delayFeeding"
                 value="delayed"
                 unchecked-value="not_delayed"
+                class="q-pr-md"
               >
                 <q-tooltip
-                  >Token is in invoice description, when paid it's valid for 1 time use whenever.</q-tooltip
+                >Token is in invoice description, when paid it's valid for 1 time use whenever.</q-tooltip
                 >
               </q-checkbox>
+              <q-input
+                label="feedings"
+                type="number" v-model.number="feedings" style="max-width: 100px" filled/>
             </div>
 
           </div>
@@ -135,9 +141,13 @@ export default {
   data() {
     return {
       delayFeeding: false,
+      feedings: 1,
     }
   },
   computed: {
+    invoicePrice() {
+      return this.feedPriceUSD
+    },
     tab: {
       get() {
         return this.paymentType
@@ -149,7 +159,10 @@ export default {
   },
   methods: {
     invoiceRequest() {
-      return this.INVOICE(this.delayFeeding)
+      return this.INVOICE({
+        delayFeeding: this.delayFeeding,
+        feedings: this.feedings
+      })
     },
     ...mapMutations([SET_DELAYED_FEEDING, SET_PAYMENT_TYPE]),
   },
