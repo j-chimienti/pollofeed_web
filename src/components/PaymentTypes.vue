@@ -39,52 +39,52 @@
             </div>
 
           </div>
-<!--          <div class="row justify-center q-my-lg">-->
-<!--            <q-expansion-item-->
-<!--              expand-separator-->
-<!--              label="lnaddr"-->
-<!--            >-->
-<!--              <div>-->
-<!--                <p><a href="https://lightningaddress.com/">learn more here</a></p>-->
-<!--                <qrcode-vue-->
-<!--                  foreground="#8E1116"-->
-<!--                  background="#FFF6CE"-->
-<!--                  :value="lightningAddress"-->
-<!--                  margin="3"-->
-<!--                  size="250"-->
-<!--                  level="H"-->
-<!--                />-->
-<!--              </div>-->
-<!--            </q-expansion-item>-->
-<!--            <q-expansion-item-->
-<!--              label="lnurl"-->
-<!--              expand-separator-->
-<!--            >-->
-<!--              <div class="text-h5">scan to feed</div>-->
-<!--              <qrcode-vue-->
-<!--                foreground="#8E1116"-->
-<!--                background="#FFF6CE"-->
-<!--                :value="lnurl"-->
-<!--                margin="3"-->
-<!--                size="250"-->
-<!--                level="H"-->
-<!--              />-->
-<!--              <br/>-->
-<!--              <p>or</p>-->
-<!--              <div class="text-h5">give token and feed later</div>-->
-<!--              <qrcode-vue-->
-<!--                foreground="#8E1116"-->
-<!--                background="#FFF6CE"-->
-<!--                :value="lnurlDelayed"-->
-<!--                margin="3"-->
-<!--                size="250"-->
-<!--                level="H"-->
-<!--              />-->
+          <div class="row justify-center q-my-lg">
+            <q-expansion-item
+              expand-separator
+              label="lnaddr"
+            >
+              <div>
+                <p><a href="https://lightningaddress.com/">learn more here</a></p>
+                <qrcode-vue
+                  foreground="#8E1116"
+                  background="#FFF6CE"
+                  :value="lightningAddress"
+                  margin="3"
+                  size="250"
+                  level="H"
+                />
+              </div>
+            </q-expansion-item>
+            <q-expansion-item
+              label="lnurl"
+              expand-separator
+            >
+              <div class="text-h5">scan to feed</div>
+              <qrcode-vue
+                foreground="#8E1116"
+                background="#FFF6CE"
+                :value="lnurl"
+                margin="3"
+                size="250"
+                level="H"
+              />
+              <br/>
+              <p>or</p>
+              <div class="text-h5">give token and feed later</div>
+              <qrcode-vue
+                foreground="#8E1116"
+                background="#FFF6CE"
+                :value="lnurlDelayed"
+                margin="3"
+                size="250"
+                level="H"
+              />
 
 
 
-<!--            </q-expansion-item>-->
-<!--          </div>-->
+            </q-expansion-item>
+          </div>
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>
       </q-tab-panels>

@@ -55,7 +55,7 @@ export const pollofeedModule = {
     [SET_USE_TOKEN_NOW](state, show) {
       state.showFeedNow = show
       if (show !== null) {
-        this.state.paymentType = "TOKENS"
+        state.paymentType = "TOKENS"
 
       }
     },
