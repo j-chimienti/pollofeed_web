@@ -45,7 +45,6 @@
               label="lnaddr"
             >
               <div>
-                <p>{{lightningAddress}}</p>
                 <qrcode-vue
                   foreground="#8E1116"
                   background="#FFF6CE"
@@ -54,6 +53,7 @@
                   size="250"
                   level="H"
                 />
+                <p>{{lightningAddress}}</p>
                 <p><a href="https://lightningaddress.com/">learn more here</a></p>
               </div>
             </q-expansion-item>
@@ -61,7 +61,6 @@
               label="lnurl"
               expand-separator
             >
-              <div class="text-h5">scan to feed</div>
               <qrcode-vue
                 foreground="#8E1116"
                 background="#FFF6CE"
@@ -70,17 +69,20 @@
                 size="250"
                 level="H"
               />
+              <p>
+                <a class="text-small" :href="'lightning:' + lnurl">{{lnurl}}</a>
+              </p>
               <br/>
-              <p>or</p>
-              <div class="text-h5">give token and feed later</div>
-              <qrcode-vue
-                foreground="#8E1116"
-                background="#FFF6CE"
-                :value="lnurlDelayed"
-                margin="3"
-                size="250"
-                level="H"
-              />
+<!--              <p>or</p>-->
+<!--              <div class="text-h5">give token and feed later</div>-->
+<!--              <qrcode-vue-->
+<!--                foreground="#8E1116"-->
+<!--                background="#FFF6CE"-->
+<!--                :value="lnurlDelayed"-->
+<!--                margin="3"-->
+<!--                size="250"-->
+<!--                level="H"-->
+<!--              />-->
 
 
 
