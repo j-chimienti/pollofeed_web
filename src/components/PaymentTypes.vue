@@ -45,7 +45,7 @@
               label="lnaddr"
             >
               <div>
-                <p><a href="https://lightningaddress.com/">learn more here</a></p>
+                <p>{{lightningAddress}}</p>
                 <qrcode-vue
                   foreground="#8E1116"
                   background="#FFF6CE"
@@ -54,6 +54,7 @@
                   size="250"
                   level="H"
                 />
+                <p><a href="https://lightningaddress.com/">learn more here</a></p>
               </div>
             </q-expansion-item>
             <q-expansion-item
