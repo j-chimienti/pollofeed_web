@@ -55,7 +55,6 @@ export default {
       "btc_usd",
       "modals",
       "loadingInvoice",
-      "invoiceModuleVisible",
       "buttonDisabled",
       "paymentType",
     ]),

@@ -18,7 +18,6 @@ const makefeedTokens = () => {
 export const pollofeedModule = {
   getters: {
     feedings: state => state.feedings,
-    ordersByDay: (state) => state.ordersByDay,
     feedTokens: (state) => state.feedTokens,
     delayedFeedingResponse: (state) => state.delayedFeedingResponse,
     delayFeeding: (state) => state.delayFeeding,
@@ -56,9 +55,8 @@ export const pollofeedModule = {
     [SET_USE_TOKEN_NOW](state, show) {
       state.showFeedNow = show
       if (show !== null) {
-        console.log(this.state.paymentType)
         this.state.paymentType = "TOKENS"
-        console.log(this.state.paymentType)
+
       }
     },
   },
