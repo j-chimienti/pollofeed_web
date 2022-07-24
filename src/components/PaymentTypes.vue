@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn v-if="invoice" @click="SET_INVOICE(null)" label="clear invoice"/>
+
     <div v-if="loadingInvoice">
       <h3 class="text-center">LOADING...</h3>
     </div>
@@ -108,6 +108,7 @@
         </q-tabs>
       </div>
     </div>
+    <q-btn v-if="invoice" @click="SET_INVOICE(null)" label="clear invoice"/>
   </div>
 </template>
 
