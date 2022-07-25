@@ -7,9 +7,9 @@ const json = {
   "descriptionHash" : "c72ce92000e806d42aa1ac1dead6fe62bce2099a07531b4c45f715032505364d",
   "commentAllowed" : 240
 }
-const res = JSON.stringify(json)
+const body = JSON.stringify(json)
 export async function onRequest(context) {
-  return new Response(res, {
+  return new Response(body, {
     headers: {
       'content-type': "application/json"
     }

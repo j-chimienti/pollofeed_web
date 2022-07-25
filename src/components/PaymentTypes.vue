@@ -41,24 +41,7 @@
           </div>
           <div class="row justify-center q-my-lg">
             <q-expansion-item
-              expand-separator
-              label="lnaddr"
-            >
-              <div>
-                <qrcode-vue
-                  foreground="#8E1116"
-                  background="#FFF6CE"
-                  :value="lightningAddress"
-                  margin="3"
-                  size="250"
-                  level="H"
-                />
-                <p>{{lightningAddress}}</p>
-                <p><a href="https://lightningaddress.com/">learn more here</a></p>
-              </div>
-            </q-expansion-item>
-            <q-expansion-item
-              label="lnurl"
+              label="lnurl & lnaddr"
               expand-separator
             >
               <qrcode-vue
@@ -69,8 +52,9 @@
                 size="250"
                 level="H"
               />
+              <p>lnaddr: {{lightningAddress}}</p>
               <p>
-                <a class="text-small" :href="'lightning:' + lnurl">{{lnurl}}</a>
+                lnurl: <a class="text-small" :href="'lightning:' + lnurl">{{lnurl}}</a>
               </p>
               <br/>
 <!--              <p>or</p>-->
