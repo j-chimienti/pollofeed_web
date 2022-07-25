@@ -1,5 +1,5 @@
 const json = {
-  "callback" : "https://api.pollofeed.com/lnurl/pay/invoice",
+  "callback" : "https://pollofeed.com/lnurl/pay/invoice",
   "minSendable" : 300000,
   "maxSendable" : 100000000,
   "tag" : "payRequest",
@@ -7,10 +7,13 @@ const json = {
   "descriptionHash" : "c72ce92000e806d42aa1ac1dead6fe62bce2099a07531b4c45f715032505364d",
   "commentAllowed" : 240
 }
+const res = JSON.stringify(json)
 export async function onRequest(context) {
-  return new Response(JSON.stringify(json), {
+  return new Response(res, {
     headers: {
       'content-type': "application/json"
     }
   });
 }
+
+
