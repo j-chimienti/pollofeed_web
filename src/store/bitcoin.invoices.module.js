@@ -81,8 +81,9 @@ const actions = {
   },
   [GET_INVOICE]({ getters }) {
     if (getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.unpaid) {
-      const id = getters.invoice.payment_hash
-      getters.websocket._send({ WsGetInvoice: null, payment_hash: id })
+      const label = getters.invoice.label
+      if (getters.websocket) getters.websocket._send({ WsGetInvoice: null, label })
+      else console.log("ws not connected")
     } else {
       // ignore expired and paid
     }

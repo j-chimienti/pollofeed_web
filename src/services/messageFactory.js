@@ -79,10 +79,6 @@ export function websocketMessageFactory(store, json) {
   if (btc_usd) store.commit(BTC_USD, btc_usd)
   if (orders) store.commit(SET_ORDERS, orders)
   if (todayOrderCount) store.commit("todayOrderCount", todayOrderCount)
-  if (feedToken) {
-    // todo: verify
-    alert("feed token sent")
-  }
   // {"success":true,"delayedFeedingResponse":{"success":true,"token":" lfQ/5r7rkBNZOH8z+DBqHA==","message":"Used feed token"}}
   if (delayedFeedingResponse) {
     const { success, token, message } = delayedFeedingResponse

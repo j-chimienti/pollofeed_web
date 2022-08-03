@@ -44,19 +44,19 @@ export const pollofeedModule = {
       LocalStorage.set(FEED_TOKEN_KEY, state.feedTokens)
     },
     [REMOVE_FEED_TOKEN](state, labelOrTokenOrPaymentHash) {
-      state.feedTokens = state.feedTokens
+      const ft = state.feedTokens
         .filter((ft) => ft.label !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft.token !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft.payment_hash !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft !== labelOrTokenOrPaymentHash)
-      LocalStorage.set(FEED_TOKEN_KEY, state.feedTokens)
+      state.feedTokens = ft
+      LocalStorage.set(FEED_TOKEN_KEY, ft)
     },
     // show = option[string]
     [SET_USE_TOKEN_NOW](state, show) {
       state.showFeedNow = show
       if (show !== null) {
         state.paymentType = "TOKENS"
-
       }
     },
   },
