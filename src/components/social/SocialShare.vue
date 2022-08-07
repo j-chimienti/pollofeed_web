@@ -68,7 +68,7 @@
         linkedinNetwork,
         sharing: {
           url: 'https://pollofeed.com',
-          title: 'Feeding chickens over bitcoin lightning',
+          title: 'Feeding chickens over bitcoin lightning is so much fun!',
           // description: '',
           // quote: 'The hot reload is so fast it\'s near instant. - Evan You',
           hashtags: 'bitcoin,lightning',

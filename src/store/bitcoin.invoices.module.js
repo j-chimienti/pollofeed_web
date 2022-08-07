@@ -45,7 +45,7 @@ const state = {
   paymentType,
   invoice: loadIvoiceFromStorage(),
   loadingInvoice: false,
-  btc_usd: 30000
+  btc_usd: 1
 }
 
 const mutations = {
