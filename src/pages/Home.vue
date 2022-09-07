@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
   import InvoiceModal from "../components/InvoiceModal"
   import FeedSettings from "components/FeedSettings"
   import Footer from "components/Footer"
@@ -62,7 +63,7 @@
 
     this.invoiceInterval = setInterval(() => {
       this.checkInvoice()
-    }, 5000)
+    }, CHECK_INVOICE_INTERVAL)
     this.checkInvoice()
 
     //
