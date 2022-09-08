@@ -1,4 +1,5 @@
 import {
+  BITCOIN_ADDRESS,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
   DELAYED_INVOICE_PAID,
@@ -21,6 +22,7 @@ const paymentType = loadPaymentTypeFromStorage()
 
 const getters = {
   btc_usd: (state) => state.btc_usd,
+  bitcoinAddress: (state) => state.bitcoinAddress,
   invoice: (state) => state.invoice,
   invoiceStatus: (state) => _get(state.invoice, "status", null),
   invoicePaid: (state, getters) =>
@@ -45,7 +47,8 @@ const state = {
   paymentType,
   invoice: loadIvoiceFromStorage(),
   loadingInvoice: false,
-  btc_usd: 1
+  btc_usd: 1,
+  bitcoinAddress: null
 }
 
 const mutations = {
@@ -72,6 +75,7 @@ const mutations = {
     state.paymentType = "TOKENS"
     state.loadingInvoice = false
   },
+  [BITCOIN_ADDRESS](s, addr) { s.bitcoinAddress = addr }
 }
 
 const actions = {

@@ -44,6 +44,7 @@ export const pollofeedModule = {
       LocalStorage.set(FEED_TOKEN_KEY, state.feedTokens)
     },
     [REMOVE_FEED_TOKEN](state, labelOrTokenOrPaymentHash) {
+      console.log(state.feedTokens)
       const ft = state.feedTokens
         .filter((ft) => ft.label !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft.token !== labelOrTokenOrPaymentHash)

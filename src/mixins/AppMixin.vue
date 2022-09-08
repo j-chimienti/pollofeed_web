@@ -40,6 +40,7 @@ export default {
       }
     },
     ...mapGetters([
+      "bitcoinAddress",
       "invoiceUnpaid",
       "invoiceStatus",
       "invoiceExpired",

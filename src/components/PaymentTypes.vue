@@ -40,6 +40,7 @@
 
           </div>
           <div class="row justify-center q-my-lg">
+
             <q-expansion-item
               label="lnurl & lnaddr"
               expand-separator
@@ -72,6 +73,7 @@
 
             </q-expansion-item>
           </div>
+          <BitcoinPayment/>
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>
       </q-tab-panels>
@@ -92,9 +94,11 @@
             :label="t.label"
           />
         </q-tabs>
+
       </div>
     </div>
-    <q-btn v-if="invoice" @click="SET_INVOICE(null)" label="clear invoice"/>
+
+    <q-btn v-if="invoice" @click="SET_INVOICE(null)" label="clear invoice" size="sm" color="primary"/>
   </div>
 </template>
 
@@ -111,12 +115,14 @@ import AppMixin from "../mixins/AppMixin"
 import LeftArrow from "./LeftArrow"
 import RightArrow from "./RightArrow"
 import TransactionSuccess from "./TransactionSuccess"
+import BitcoinPayment from "./BitcoinPayment"
 
 export default {
   name: "PaymentTypes",
   mixins: [AppMixin],
   // eslint-disable-next-line vue/no-unused-components
   components: {
+    BitcoinPayment,
     TransactionSuccess,
     RightArrow,
     LeftArrow,

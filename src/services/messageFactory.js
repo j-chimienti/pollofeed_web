@@ -14,7 +14,7 @@ import { LIGHTNING_INVOICE_STATUS } from "src/constants"
 import { INVOICE_PAID } from "src/store/actions"
 
 import _get from "lodash.get"
-import { SET_USE_TOKEN_NOW } from "src/store/mutations"
+import { BITCOIN_ADDRESS, SET_USE_TOKEN_NOW } from "src/store/mutations"
 
 export function websocketMessageFactory(store, json) {
   const {
@@ -24,6 +24,7 @@ export function websocketMessageFactory(store, json) {
     error = null,
     orders = null,
     feedToken = null,
+    bitcoinAddress = null,
     delayedFeedingResponse = null,
     btc_usd = null,
     invoicePaid = null, //  ListInvoice.label
@@ -51,6 +52,7 @@ export function websocketMessageFactory(store, json) {
       store.commit(SET_INVOICE, null)
     }
   }
+  if (bitcoinAddress) store.commit(BITCOIN_ADDRESS, bitcoinAddress)
   if (error) store.commit(CLEAR_LOADING_INVOICE)
   if (invoice) {
     store.commit(CLEAR_LOADING_INVOICE)
