@@ -63,6 +63,7 @@ export function websocketMessageFactory(store, json) {
     if (invoice.status === LIGHTNING_INVOICE_STATUS.paid) {
       Notify.create({
         type: "positive",
+        group: `invoice-paid-${inv.label}`,
         message: "your transaction was successful!",
       })
       // if paid and has token show user t
@@ -96,13 +97,7 @@ export function websocketMessageFactory(store, json) {
 
   //{"status":"success","debit":{"bolt11":"lnbc20n1p323zrcsp5eexee9h0epx4q2udnfd4q7x5qt8hxu8cfxpf7v68rvj8dneldzuspp5t60qc2cefwx6xvflenn66znm0rld72urlwgycgtyjp94mds7rvssdq9u2d2zxqr3jscqpjrzjqdm9ng9v36em3598yqg5alyxr5afgquzmnapgqm5dd8c76ew3qgt5zc30gqqdwsqqqqqqqlgqqqqqqgq9q9qyysgq4yr7mz6xtv83vytuqkgjahh02jwwja5s7xm00slq3mdphv29rmzr07swymyfanw6fc32cy5a9yaghawn5ls8q2e85a2afqma5j2k2ycqettmh9","created_at":"2022-06-14T13:09:28.754974Z","satoshi":2,"label":"blackjack,google-oauth2|105041674665757088596,tymmGjDPsPg=","status":"complete"}}
 
-  if (debit) {
-    const type = debit.status === "complete" ? "positive" : "negative"
-    Notify.create({
-      type,
-      message: `Payment status=${debit.status}`,
-    })
-  }
+
   // admin
 
   // if (merchandise) store.commit(MERCHANDISE, merchandise)
