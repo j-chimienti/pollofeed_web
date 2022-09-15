@@ -64,12 +64,22 @@
   border-radius: 36px;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 1700px) {
   .navbar-v2 {
-    left: 0px;
-    bottom: 35px;
-    width: 100%;
+    width: 200px;
+  }
+}
+
+@media all and (max-width: 1400px) {
+  .navbar-v2 {
+    width: 180px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .navbar-v2 {
     position: relative;
+    margin-top: -50px;
   }
 }
 </style>

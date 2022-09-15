@@ -13,11 +13,6 @@ const routes = [
       { path: "", name: "about", component: () => import("pages/About.vue") },
     ],
   },
-  {
-    path: "/splash",
-    component: () => import("components/SplashScreen"),
-    name: "splash",
-  },
 
   // Always leave this as last one,
   // but you can also remove it

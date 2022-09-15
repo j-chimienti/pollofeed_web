@@ -6,7 +6,6 @@
 <!--          <div style="position: relative; padding-top: 100%;"><iframe src="https://iframe.videodelivery.net/69cdddecdfb14ec63b653cf47db95ba4?autoplay=true&poster=https%3A%2F%2Fvideodelivery.net%2F96bb44974f6b1a14bab8ee78ad4f3945%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&primaryColor=%23ed1c27" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow=" autoplay; encrypted-media;  " allowfullscreen="true"></iframe></div>-->
           <div class="row justify-center">
             <div class="col" style="max-width: 640px;">
-
               <q-responsive :ratio="4/3">
 
 <!--                <iframe-->
@@ -22,7 +21,6 @@
                 :loading="false"
               />
               </q-responsive>
-
             </div>
           </div>
           <PaymentTypes />
@@ -33,9 +31,9 @@
 </template>
 
 <script>
+  import NavBarV2 from "../components/NavBarV2"
   const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
   import InvoiceModal from "../components/InvoiceModal"
-  import FeedSettings from "components/FeedSettings"
   import Footer from "components/Footer"
   import PaymentTypes from "components/PaymentTypes"
   import AppMixin from "../mixins/AppMixin"
@@ -102,19 +100,17 @@
     }
   },
   components: {
+    NavBarV2,
     SocialShare,
     PaymentTypes,
     Footer,
-    FeedSettings,
     InvoiceModal,
   },
 }
 </script>
 
 <style scoped>
-.home {
-  min-height: 80vh;
-}
+
 
 #live_stream {
   border: 0.375rem solid #8e1116;
@@ -142,6 +138,7 @@
 @media all and (max-width: 1000px) {
   .card-stream {
     width: 100%;
+    max-width: 700px;
     margin-top: 0;
   }
 }

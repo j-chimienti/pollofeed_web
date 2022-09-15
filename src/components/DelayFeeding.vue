@@ -151,13 +151,12 @@
 <script>
 import { REMOVE_FEED_TOKEN } from "../store/mutations"
 import AppMixin from "../mixins/AppMixin"
-import TransactionSuccess from "./TransactionSuccess"
 import ButtonV2 from "./ButtonV2"
 import get from "lodash.get"
 
 export default {
   name: "DelayFeeding",
-  components: { ButtonV2, TransactionSuccess },
+  components: { ButtonV2 },
   mixins: [AppMixin],
   data() {
     return { manualFeedToken: "", disabledBtn: false }

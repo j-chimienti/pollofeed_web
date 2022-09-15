@@ -9,10 +9,13 @@
     "lint_broken": "vue-cli-service lint",
     "lint": "eslint --fix --ext .js,.vue src",
     "build:pwa": "quasar build -m pwa",
+    "build:electron": "quasar build -m electron",
     "build:web": "quasar build",
+    "build:ios": "quasar build --mode capacitor --target ios --ide",
     "cypress": "cypress open",
     "cypress:invoice": "cypress run --spec cypress/integration/invoice.js",
     "dev": "quasar dev",
+    "dev:electron": "quasar dev -m electron",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {

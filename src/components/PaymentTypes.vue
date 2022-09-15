@@ -114,7 +114,6 @@ import InvoiceModal from "./InvoiceModal"
 import AppMixin from "../mixins/AppMixin"
 import LeftArrow from "./LeftArrow"
 import RightArrow from "./RightArrow"
-import TransactionSuccess from "./TransactionSuccess"
 import BitcoinPayment from "./BitcoinPayment"
 
 export default {
@@ -123,7 +122,6 @@ export default {
   // eslint-disable-next-line vue/no-unused-components
   components: {
     BitcoinPayment,
-    TransactionSuccess,
     RightArrow,
     LeftArrow,
     InvoiceModal,

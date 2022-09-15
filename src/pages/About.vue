@@ -1,5 +1,6 @@
 <template>
-  <q-page class="about row justify-center">
+  <q-page>
+    <div class="about row justify-center">
     <q-card
       class="column items-center q-pa-lg"
       style="max-width: 50vw; background: #fff6ce; border: 2px solid #8e1116"
@@ -59,6 +60,7 @@
       <p>They just eat a lot!</p>
       <p>Let's feed some chickens?</p>
     </q-card>
+    </div>
   </q-page>
 </template>
 
