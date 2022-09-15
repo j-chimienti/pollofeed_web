@@ -26,7 +26,7 @@
           </span>
         </p>
         <p>
-          <CopyBtn label="copy" @click="copyPaymentRequest" />
+          <CopyBtn :label="copyText" @click="copyPaymentRequest" />
           <a :href="href">
             <CopyBtn label="share" />
           </a>
@@ -70,7 +70,10 @@ export default {
     },
     copyPaymentRequest() {
       copyToClipboard(this.bolt11)
-      this.$q.notify("Copied invoice")
+      this.copyText = "copied"
+      setTimeout(() => {
+        this.copyText = "copy"
+      }, 2000)
     },
     updateExp() {
       return setInterval(() => {
@@ -115,6 +118,7 @@ export default {
   data() {
     return {
       updateDurationInterval: null,
+      copyText: "copy"
     }
   },
 }

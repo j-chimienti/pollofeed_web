@@ -3,7 +3,6 @@ import {
   ADD_FEED_TOKEN,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
-  OPEN_INVOICE_MODAL,
   REMOVE_FEED_TOKEN,
   SET_INVOICE,
   SET_ORDERS,
@@ -14,8 +13,7 @@ import { LIGHTNING_INVOICE_STATUS } from "src/constants"
 import { INVOICE_PAID } from "src/store/actions"
 
 import _get from "lodash.get"
-import { BITCOIN_ADDRESS, SET_USE_TOKEN_NOW } from "src/store/mutations"
-
+import { SET_USE_TOKEN_NOW } from "src/store/mutations"
 
 
 export function websocketMessageFactory(store, json) {
@@ -63,17 +61,22 @@ export function websocketMessageFactory(store, json) {
     if (invoice.status === LIGHTNING_INVOICE_STATUS.paid) {
       Notify.create({
         type: "positive",
+        icon: "fas fa-thumbs-up",
         group: `invoice-paid-${invoice.label}`,
-        message: "your transaction was successful!",
+        message: "Invoice paid",
       })
       // if paid and has token show user t
       if (tokens.length) {
         store.commit(SET_PAYMENT_TYPE, "TOKENS")
       }
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid) {
-      store.commit(OPEN_INVOICE_MODAL)
+      // ignore unpaid
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.expired) {
       // remove feed tokens if expired
+      Notify.create({
+        group: `invoice-expired-${invoice.label}`,
+        message: "invoice expired",
+      })
       tokens.forEach(t => store.commit(REMOVE_FEED_TOKEN, t))
     }
   }
@@ -86,8 +89,10 @@ export function websocketMessageFactory(store, json) {
   // {"success":true,"delayedFeedingResponse":{"success":true,"token":" lfQ/5r7rkBNZOH8z+DBqHA==","message":"Used feed token"}}
   if (delayedFeedingResponse) {
     const { success, token, message } = delayedFeedingResponse
+    const icon = success ? "fas fa-thumbs-up" : "fas fa-thumbs-down"
     Notify.create({
-      type: success ? "positive" : "negative",
+      icon,
+      type: success ? "positive" : "warning",
       message,
     })
     if (success) {

@@ -32,10 +32,11 @@ const actions = {
     return new WebsocketService(store, wsPath, websocketMessageFactory)
       .then((ws) => {
         commit(WEBSOCKET_OPEN, ws)
+        return ws
       })
-      .catch((err) => {
-        console.error(err)
+      .catch(() => {
         commit(WEBSOCKET_CLOSED)
+        return null;
       })
   },
 }

@@ -7,7 +7,7 @@ import {
   SET_INVOICE,
   SET_PAYMENT_TYPE
 } from "src/store/mutations"
-import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
+import { GET_INVOICE, INVOICE, INVOICE_PAID, OPEN_WEBSOCKET } from "src/store/actions"
 import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys } from "src/constants"
 import _get from "lodash.get"
 import { LocalStorage, Notify } from "quasar"
@@ -92,18 +92,30 @@ const actions = {
       // ignore expired and paid
     }
   },
-  [INVOICE]({getters,  commit }, req) {
+  [INVOICE]({getters,  commit, dispatch }, req) {
     const {delayFeeding, feedings} = req
 
+    function notify() {
+      Notify.create({
+        type: "negative",
+        icon: "fas fa-sad-cry",
+        message: "websocket not connected"
+      })
+    }
     if (getters.websocket)
       {
         commit(LOADING_INVOICE)
       getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
       }
-    else Notify.create({
-      type: "negative",
-      message: "Cannot create invoice websocket disconnected"
-    })
+    else {
+      return dispatch(OPEN_WEBSOCKET).then(websocket => {
+        if (websocket) websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
+        else notify()
+      }).catch(() => {
+        notify()
+      })
+
+    }
   },
 
 }
