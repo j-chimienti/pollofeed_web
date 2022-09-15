@@ -16,6 +16,8 @@ import { INVOICE_PAID } from "src/store/actions"
 import _get from "lodash.get"
 import { BITCOIN_ADDRESS, SET_USE_TOKEN_NOW } from "src/store/mutations"
 
+
+
 export function websocketMessageFactory(store, json) {
   const {
     success = false,
@@ -23,13 +25,11 @@ export function websocketMessageFactory(store, json) {
     todayOrderCount = null,
     error = null,
     orders = null,
-    feedToken = null,
     bitcoinAddress = null,
     delayedFeedingResponse = null,
     btc_usd = null,
     invoicePaid = null, //  ListInvoice.label
 
-    debit = null,
     // ADMIN
 
     message = null,
@@ -52,7 +52,7 @@ export function websocketMessageFactory(store, json) {
       store.commit(SET_INVOICE, null)
     }
   }
-  if (bitcoinAddress) store.commit(BITCOIN_ADDRESS, bitcoinAddress)
+  // if (bitcoinAddress) store.commit(BITCOIN_ADDRESS, bitcoinAddress)
   if (error) store.commit(CLEAR_LOADING_INVOICE)
   if (invoice) {
     store.commit(CLEAR_LOADING_INVOICE)
@@ -73,7 +73,8 @@ export function websocketMessageFactory(store, json) {
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.unpaid) {
       store.commit(OPEN_INVOICE_MODAL)
     } else if (invoice.status === LIGHTNING_INVOICE_STATUS.expired) {
-      // ignore
+      // remove feed tokens if expired
+      tokens.forEach(t => store.commit(REMOVE_FEED_TOKEN, t))
     }
   }
   if (invoicePaid) {

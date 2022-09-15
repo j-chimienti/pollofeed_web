@@ -50,6 +50,7 @@ export const pollofeedModule = {
         .filter((ft) => ft.token !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft.payment_hash !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft !== labelOrTokenOrPaymentHash)
+        .filter((ft) => ft.trim() !== labelOrTokenOrPaymentHash.trim())
 
       if (ft.length === state.feedTokens.length) {
         console.log("failed to remove token", labelOrTokenOrPaymentHash)
