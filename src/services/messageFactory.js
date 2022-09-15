@@ -63,7 +63,7 @@ export function websocketMessageFactory(store, json) {
     if (invoice.status === LIGHTNING_INVOICE_STATUS.paid) {
       Notify.create({
         type: "positive",
-        group: `invoice-paid-${inv.label}`,
+        group: `invoice-paid-${invoice.label}`,
         message: "your transaction was successful!",
       })
       // if paid and has token show user t
