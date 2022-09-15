@@ -1,5 +1,8 @@
 <template>
   <div>
+    <iframe style="height:0px;width:0px;visibility:hidden" src="about:blank">
+      this frame prevents back forward cache
+    </iframe>
     <img
       class="bg"
       sizes="(max-width: 1400px) 100vw, 1400px"
