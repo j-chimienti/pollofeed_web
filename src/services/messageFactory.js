@@ -53,7 +53,7 @@ export function websocketMessageFactory(store, json) {
     }
   }
   if (feedingStarted !== null) {
-    const timeout = new Date(feedingStarted.time * 1000 + (feedingStarted.seconds)).getTime() - new Date().getTime()
+    const timeout = new Date(feedingStarted.time * 1000 + (feedingStarted.seconds * 1000)).getTime() - new Date().getTime()
     Notify.create({
       type: 'positive',
       message: `feeding for ${feedingStarted.seconds} seconds`,
