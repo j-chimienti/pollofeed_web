@@ -94,28 +94,13 @@ const actions = {
   },
   [INVOICE]({getters,  commit, dispatch }, req) {
     const {delayFeeding, feedings} = req
-
-    function notify() {
-      Notify.create({
-        type: "negative",
-        icon: "fas fa-sad-cry",
-        message: "websocket not connected"
-      })
-    }
     if (getters.websocket)
-      {
-        commit(LOADING_INVOICE)
-      getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
-      }
-    else {
-      return dispatch(OPEN_WEBSOCKET).then(websocket => {
-        if (websocket) websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
-        else notify()
-      }).catch(() => {
-        notify()
-      })
-
-    }
+       getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
+    else Notify.create({
+      type: "negative",
+      icon: "fas fa-sad-cry",
+      message: "websocket not connected"
+    })
   },
 
 }
