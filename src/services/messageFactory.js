@@ -26,6 +26,8 @@ export function websocketMessageFactory(store, json) {
     bitcoinAddress = null,
     delayedFeedingResponse = null,
     btc_usd = null,
+    // {"time": 1663758020.2687995, "label": "pollofeed.com,pollofeed,OCS1b0-Gg9g=", "seconds": 10}
+    feedingStarted = null,
     invoicePaid = null, //  ListInvoice.label
 
     // ADMIN
@@ -49,6 +51,16 @@ export function websocketMessageFactory(store, json) {
       store.commit(REMOVE_FEED_TOKEN, ph)
       store.commit(SET_INVOICE, null)
     }
+  }
+  if (feedingStarted !== null) {
+    const timeout = new Date(feedingStarted.time * 1000 + (feedingStarted.seconds)).getTime()
+    Notify.create({
+      message: `feeding for ${feedingStarted.seconds} seconds`,
+      spinner: true,
+      closeBtn: true,
+      timeout,
+      group: `feeding-${feedingStarted.label}`
+    })
   }
   // if (bitcoinAddress) store.commit(BITCOIN_ADDRESS, bitcoinAddress)
   if (error) store.commit(CLEAR_LOADING_INVOICE)
