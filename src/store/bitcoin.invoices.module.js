@@ -7,7 +7,7 @@ import {
   SET_INVOICE,
   SET_PAYMENT_TYPE
 } from "src/store/mutations"
-import { GET_INVOICE, INVOICE, INVOICE_PAID, OPEN_WEBSOCKET } from "src/store/actions"
+import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
 import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys } from "src/constants"
 import _get from "lodash.get"
 import { LocalStorage, Notify } from "quasar"
@@ -92,7 +92,7 @@ const actions = {
       // ignore expired and paid
     }
   },
-  [INVOICE]({getters,  commit, dispatch }, req) {
+  [INVOICE]({getters }, req) {
     const {delayFeeding, feedings} = req
     if (getters.websocket)
        getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })

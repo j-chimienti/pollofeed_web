@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: "/callback",
-    component: () => import("auth/SocialCallbackPage.vue"),
+    component: () => import("../auth/SocialCallbackPage.vue"),
     name: "callback",
   },
 
