@@ -19,7 +19,7 @@ const routes = [
     name: "callback",
   },
   {
-    path: "test",
+    path: "/test",
     name: "test",
     component: () => import("../auth/TestPage.vue")
   },
