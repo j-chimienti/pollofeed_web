@@ -1,5 +1,5 @@
 
-const proxyUrl = "https://pf-cors.jchimien2085.workers.dev/corsproxy/"
+const proxyUrl = "https://pf-cors.jchimien2085.workers.dev/corsproxy/?apiurl=https://api.pollofeed.com"
 // https://pf-cors.jchimien2085.workers.dev/corsproxy/?apiurl=https://api.pollofeed.com/api/logout
 
 export async function oauthLogin(provider, params) {
@@ -8,19 +8,19 @@ export async function oauthLogin(provider, params) {
 }
 
 export async function resumeSession() {
-  return fetch(proxyUrl + "/?apiurl=https://api.pollofeed.com" +  "/api/resumeSession")
+  return fetch(proxyUrl +  "/api/resumeSession")
 }
 
 export async function signup(email, password) {
-  const p = proxyUrl + "/?apiurl=https://api.pollofeed.com" + "/api/signup"
+  const p = proxyUrl + "/api/signup"
   return fetch(p, { method: 'post',
     body: JSON.stringify({ password: password, email }), headers: { 'content-type': 'application/json' } })
 }
 
 export async function login(body) {
-  return fetch(proxyUrl + "/?apiurl=https://api.pollofeed.com" + "/api/login", { method: 'post', body: JSON.stringify(body), headers: { 'content-type': 'application/json' } })
+  return fetch(proxyUrl +  "/api/login", { method: 'post', body: JSON.stringify(body), headers: { 'content-type': 'application/json' } })
 }
 
 export async function logout() {
-  return fetch(proxyUrl + "/?apiurl=https://api.pollofeed.com" + "/api/logout", { method: 'get' })
+  return fetch(proxyUrl +  "/api/logout", { method: 'get' })
 }
