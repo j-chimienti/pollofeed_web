@@ -11,7 +11,7 @@ const getters = {
   user: (state) => state.user,
   isSessionUser: state => _get(state.user, "email", "").includes("session"),
   loggingIn: (state) => state.loggingIn,
-  loginModuleVisible: (state) => state.loginModuleVisible,
+  loginModalVisible: (state) => state.loginModalVisible,
   authenticated: (state) => state.authenticated,
   authError: (state) => state.authError,
   requestingSession: (state) => state.requestingSession,
@@ -24,7 +24,7 @@ const getters = {
 const getInitialState = () => {
   return {
     authenticated: false,
-    loginModuleVisible: false,
+    loginModalVisible: false,
       user: null, //{playerAccount, session}
   }
 }

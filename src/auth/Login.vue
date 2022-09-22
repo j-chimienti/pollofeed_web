@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="loginModuleVisible">
+  <q-dialog v-model="loginModalVisible">
     <q-card class="q-px-lg loginCard" dark>
       <SocialAuth />
       <hr/>
