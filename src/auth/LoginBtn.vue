@@ -1,5 +1,5 @@
 <template>
-<q-btn @click="commit('LOGIN_MODAL_VISIBLE', true)">login</q-btn>
+<q-btn @click="$store.commit('LOGIN_MODAL_VISIBLE', true)">login</q-btn>
 </template>
 
 <script>
