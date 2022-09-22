@@ -4,7 +4,7 @@ const proxyUrl = "https://pf-cors.jchimien2085.workers.dev/corsproxy/?apiurl=htt
 
 export async function oauthLogin(provider, params) {
 
-  return fetch(`/api/callback/${provider}${params}`).then((res) => res.json())
+  return fetch( proxyUrl + `/api/callback/${provider}${params}`).then((res) => res.json())
 }
 
 export async function resumeSession() {
