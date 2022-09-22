@@ -1,0 +1,6 @@
+export const LOGIN = "LOGIN"
+export const SIGNUP = "SIGNUP"
+export const LOGOUT = "LOGOUT"
+export const RESUME_SESSION = "RESUME_SESSION"
+export const OAUTH_AUTHORIZE_CALLBACK = "OAUTH_AUTHORIZE_CALLBACK"
+export const OPEN_WEBSOCKET = "OPEN_WEBSOCKET"

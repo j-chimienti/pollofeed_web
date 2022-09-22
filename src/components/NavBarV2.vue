@@ -25,6 +25,7 @@
 
       </a>
     </div>
+    <SocialAuth/>
     </div>
 </template>
 
@@ -36,10 +37,12 @@
   import wheel from "assets/wheel_inner.svg"
   import blackjack from "assets/blackjack.png"
   import SocialShare from "./social/SocialShare"
+  import SocialAuth from "../auth/SocialAuth"
 
   export default {
   name: "NavBarV2",
   components: {
+    SocialAuth,
     SocialShare,
     WebsocketConnectionStatus,
     NavLinks,

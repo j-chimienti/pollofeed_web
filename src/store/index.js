@@ -3,7 +3,10 @@ import { createStore } from "vuex"
 import { pollofeedModule } from "src/store/pollofeedModule"
 import { invoiceModule } from "src/store/bitcoin.invoices.module"
 import { wsModule } from "src/store/ws.module"
-// import example from './module-example'
+
+import authModule from "src/auth/auth.module"
+
+ // import example from './module-example'
 
 /*
  * If not building with SSR mode, you can
@@ -20,6 +23,7 @@ export default store(function (/* { ssrContext } */) {
       pollofeed: pollofeedModule,
       invoices: invoiceModule,
       ws: wsModule,
+      auth: authModule,
       // example
     },
 

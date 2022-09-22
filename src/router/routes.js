@@ -13,6 +13,11 @@ const routes = [
       { path: "", name: "about", component: () => import("pages/About.vue") },
     ],
   },
+  {
+    path: "/callback",
+    component: () => import("auth/SocialCallbackPage.vue"),
+    name: "callback",
+  },
 
   // Always leave this as last one,
   // but you can also remove it
