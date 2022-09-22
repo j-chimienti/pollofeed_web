@@ -1,5 +1,5 @@
 
-const proxyUrl = "https://testc.pollofeed.com/corsproxy/?apiurl=https://api.pollofeed.com"
+const proxyUrl = window.location.origin +  "/api/?apiurl=https://api.pollofeed.com"
 // https://pf-cors.jchimien2085.workers.dev/corsproxy/?apiurl=https://api.pollofeed.com/api/logout
 
 export async function oauthLogin(provider, params) {

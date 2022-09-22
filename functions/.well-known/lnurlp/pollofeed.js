@@ -8,12 +8,13 @@ const json = {
   "commentAllowed" : 240
 }
 const body = JSON.stringify(json)
+const opts = {
+  headers: {
+    'content-type': "application/json"
+  }
+}
 export async function onRequest(context) {
-  return new Response(body, {
-    headers: {
-      'content-type': "application/json"
-    }
-  });
+  return new Response(body, opts);
 }
 
 
