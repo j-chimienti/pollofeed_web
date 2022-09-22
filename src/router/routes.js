@@ -18,6 +18,11 @@ const routes = [
     component: () => import("../auth/SocialCallbackPage.vue"),
     name: "callback",
   },
+  {
+    path: "test",
+    name: "test",
+    component: () => import("../auth/TestPage.vue")
+  },
 
   // Always leave this as last one,
   // but you can also remove it
