@@ -26,10 +26,13 @@
 <script>
 import { defineComponent } from "vue"
 import { OPEN_WEBSOCKET } from "src/store/actions"
+import { RESUME_SESSION } from "./auth/actions"
 
 export default defineComponent({
   name: "App",
   mounted() {
+
+    this.$store.dispatch(RESUME_SESSION)
     this.$store.dispatch(OPEN_WEBSOCKET)
   },
 })

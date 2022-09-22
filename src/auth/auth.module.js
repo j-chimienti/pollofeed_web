@@ -54,8 +54,9 @@ async function onAuthSuccess({ commit, dispatch }, user) {
   if (_get(user, "playerAccount.email", "").includes("session")) {
     // commit(PLAYING_FOR_FREE, true)
   }
-
-  return await dispatch(OPEN_WEBSOCKET);
+  return user;
+  //
+  // return await dispatch(OPEN_WEBSOCKET);
 }
 
 const actions = {
