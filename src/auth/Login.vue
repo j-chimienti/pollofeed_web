@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-if="loginModuleVisible">
+  <q-dialog v-model="loginModuleVisible">
     <q-card class="q-px-lg loginCard" dark>
       <SocialAuth />
       <hr/>
@@ -38,7 +38,7 @@
 <script>
   import { mapActions, mapGetters, mapMutations } from "vuex"
   import { LOGIN, SIGNUP } from "./actions"
-  import { CLEAR_REQUESTING_SESSION } from "./mutations"
+  import { CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE } from "./mutations"
   import SocialAuth from "./SocialAuth"
 
   export default {
@@ -49,11 +49,19 @@
   },
 
   computed: {
-    ...mapGetters(["requestingSession", "authError", 'loginModuleVisible']),
+    ...mapGetters(["requestingSession", "authError"]),
+    loginModalVisible: {
+      get() {
+        return this.$store.getters.loginModalVisible
+      },
+      set(v) {
+        this.LOGIN_MODAL_VISIBLE(v)
+      },
+    },
   },
   methods: {
 
-    ...mapMutations([CLEAR_REQUESTING_SESSION]),
+    ...mapMutations([CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE]),
     ...mapActions([LOGIN, SIGNUP]),
     login() {
       const { password, email } = this

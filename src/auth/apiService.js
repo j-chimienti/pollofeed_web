@@ -1,8 +1,12 @@
 
 const proxyUrl = window.location.origin +  "/api/?apiurl=https://api.pollofeed.com"
-// https://pf-cors.jchimien2085.workers.dev/corsproxy/?apiurl=https://api.pollofeed.com/api/logout
 
-export async function oauthLogin(provider, params) {
+export async function oauthLogin(provider) {
+  return fetch( proxyUrl + `/api/authorize/${provider}`).then((res) => res.json())
+}
+
+
+export async function oauthCallback(provider, params) {
 
   return fetch( proxyUrl + `/api/callback/${provider}${params}`).then((res) => res.json())
 }

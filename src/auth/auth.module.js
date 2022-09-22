@@ -63,7 +63,7 @@ const actions = {
   [OAUTH_AUTHORIZE_CALLBACK]({ commit, dispatch }, params) {
     const provider = "google" // todo: hardcode
     commit(REQUESTING_SESSION, true)
-    return apiService.oauthLogin(provider, params)
+    return apiService.oauthCallback(provider, params)
       .then((user) => onAuthSuccess({ commit, dispatch }, user))
       .then(() =>  this.$router.push({name: "home"}))
       .catch(err => {

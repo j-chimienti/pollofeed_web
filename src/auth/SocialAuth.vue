@@ -14,6 +14,7 @@ import { LocalStorageKeys } from "../constants"
 import { LocalStorage } from "quasar"
 import { REQUESTING_SESSION } from "./mutations"
 import { mapMutations } from "vuex"
+import { oauthLogin } from "./apiService"
 
 export default {
   name: "SocialAuth",
@@ -21,8 +22,7 @@ export default {
     ...mapMutations([REQUESTING_SESSION]),
     onSubmit(provider) {
       this.REQUESTING_SESSION(true)
-      return fetch(`/api/authorize/${provider}`)
-        .then((res) => res.json())
+      return oauthLogin(provider)
         .then((res) => {
           const { url } = res
           LocalStorage.set(LocalStorageKeys.AUTH_PROVIDER, provider)
