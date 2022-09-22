@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import Login from "../components/Login"
+  import Login from "./Login"
   import LoginBtn from "./LoginBtn"
   import SocialAuth from "./SocialAuth"
   export default {

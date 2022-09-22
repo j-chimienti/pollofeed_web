@@ -7,6 +7,8 @@ export async function oauthLogin(provider, params) {
   return fetch( proxyUrl + `/api/callback/${provider}${params}`).then((res) => res.json())
 }
 
+
+
 export async function resumeSession() {
   return fetch(proxyUrl +  "/api/resumeSession")
 }
