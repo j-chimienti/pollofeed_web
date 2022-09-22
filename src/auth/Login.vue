@@ -1,7 +1,6 @@
 <template>
   <q-dialog v-if="loginModuleVisible">
     <q-card class="q-px-lg loginCard" dark>
-      <LogoV2 style="max-width: 600px" class="q-my-lg" />
       <SocialAuth />
       <hr/>
       <q-form @submit="login" class="q-my-lg text-center" ref="loginForm">
@@ -41,11 +40,10 @@
   import { LOGIN, SIGNUP } from "./actions"
   import { CLEAR_REQUESTING_SESSION } from "./mutations"
   import SocialAuth from "./SocialAuth"
-  import LogoV2 from "./LogoV2"
 
   export default {
   name: "Login",
-  components: { LogoV2, SocialAuth },
+  components: { SocialAuth },
   data() {
     return { password: "", email: "" }
   },
