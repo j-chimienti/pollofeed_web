@@ -40,6 +40,10 @@ export default {
       }
     },
     ...mapGetters([
+      "user",
+      "email",
+      "picture",
+      "authenticated",
       "bitcoinAddress",
       "invoiceUnpaid",
       "invoiceStatus",

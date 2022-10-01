@@ -26,20 +26,25 @@
           <PaymentTypes />
         </q-card>
       </div>
+      <LoginModal/>
     </div>
   </q-page>
 </template>
 
 <script>
-  import NavBarV2 from "../components/NavBarV2"
-  const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
-  import InvoiceModal from "../components/InvoiceModal"
-  import Footer from "components/Footer"
-  import PaymentTypes from "components/PaymentTypes"
-  import AppMixin from "../mixins/AppMixin"
-  import SocialShare from "../components/social/SocialShare"
+import NavBarV2 from "../components/NavBarV2"
+import InvoiceModal from "../components/InvoiceModal"
+import Footer from "components/Footer"
+import PaymentTypes from "components/PaymentTypes"
+import AppMixin from "../mixins/AppMixin"
+import SocialShare from "../components/social/SocialShare"
+import { OPEN_WEBSOCKET } from "../auth/actions"
+import LoginModal from "../auth/LoginModal"
+import { notifyInvoicePaid } from "src/services/notificationService"
 
-  // import Hls from "hls.js"
+const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
+
+// import Hls from "hls.js"
   export default {
   name: "Home",
   mixins: [AppMixin],
@@ -47,22 +52,32 @@
     checkInvoice() {
       if (this.invoiceUnpaid) this.GET_INVOICE()
     },
+    async initUser(token) {
+
+      // await this.$store.dispatch(RESUME_SESSION)
+      await this.$store.dispatch(OPEN_WEBSOCKET)
+      if (token) {
+        this.SET_INVOICE(null)
+        this.SET_DELAYED_FEEDING(token)
+        this.SET_USE_TOKEN_NOW(token)
+      }
+      this.checkInvoice()
+      this.invoiceInterval = setInterval(() => {
+        this.checkInvoice()
+      }, CHECK_INVOICE_INTERVAL)
+
+    }
   },
 
   mounted() {
+
     const { paid, token } = this.$route.query
-    if (paid) this.$q.notify("Invoice paid")
+    if (paid) notifyInvoicePaid(null)
 
-    if (token) {
-      this.SET_INVOICE(null)
-      this.SET_DELAYED_FEEDING(token)
-      this.SET_USE_TOKEN_NOW(token)
-    }
+    this.initUser(token)
 
-    this.invoiceInterval = setInterval(() => {
-      this.checkInvoice()
-    }, CHECK_INVOICE_INTERVAL)
-    this.checkInvoice()
+
+
 
     //
     // var videoSrc = 'https://cloudflarestream.com/a120388a5d58fbb78a795d4b0cfb94c2/manifest/video.m3u8';
@@ -93,13 +108,14 @@
   },
   data() {
     return {
-      STREAM_URL: process.env.STREAM_URL,
-      // STREAM_URL: "https://stream.pollofeed.com",
+      STREAM_URL: `${process.env.STREAM_URL}?${new Date()}`,
+      // STREAM_URL: "https://stream.pollofeed.com?" + new Date(),
       // STREAM_URL: "https://via.placeholder.com/640x480.png?text=pollofeed",
       invoiceInterval: null,
     }
   },
   components: {
+    LoginModal,
     NavBarV2,
     SocialShare,
     PaymentTypes,

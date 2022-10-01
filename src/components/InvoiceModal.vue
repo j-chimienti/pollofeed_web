@@ -41,13 +41,12 @@
 </template>
 
 <script>
-  import { parseToken } from "../services/messageFactory"
-  import QrcodeVue from "qrcode.vue"
-  import { copyToClipboard, openURL } from "quasar"
-  import CopyBtn from "./CopyBtn"
-  import ButtonV2 from "./ButtonV2"
-  import _get from "lodash.get"
-  import AppMixin from "../mixins/AppMixin"
+import QrcodeVue from "qrcode.vue"
+import { copyToClipboard, openURL } from "quasar"
+import CopyBtn from "./CopyBtn"
+import ButtonV2 from "./ButtonV2"
+import _get from "lodash.get"
+import AppMixin from "../mixins/AppMixin"
 
 export default {
   components: {
@@ -102,10 +101,7 @@ export default {
   },
   mixins: [AppMixin],
   computed: {
-    feedToken() {
-      const invoiceId = parseToken(this.invoice)
-      return this.feedTokens.find((token) => token === invoiceId)
-    },
+
 
     href() {
       return `lightning:${this.bolt11}`.toLowerCase()

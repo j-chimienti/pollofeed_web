@@ -10,9 +10,9 @@ import {
 import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
 import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys } from "src/constants"
 import _get from "lodash.get"
-import { LocalStorage, Notify } from "quasar"
+import { LocalStorage } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
-import { loadPaymentTypeFromStorage, loadIvoiceFromStorage } from "src/store/localStorageHelper"
+import { loadIvoiceFromStorage, loadPaymentTypeFromStorage } from "src/store/localStorageHelper"
 
 const fmtbtc = require("fmtbtc")
 const { msat2sat } = fmtbtc
@@ -94,13 +94,13 @@ const actions = {
   },
   [INVOICE]({getters }, req) {
     const {delayFeeding, feedings} = req
-    if (getters.websocket)
-       getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings })
-    else Notify.create({
-      type: "negative",
-      icon: "fas fa-sad-cry",
-      message: "websocket not connected"
-    })
+    const sessionId = getters.sessionId
+       getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings, sessionId })
+    // else Notify.create({
+    //   type: "negative",
+    //   icon: "fas fa-sad-cry",
+    //   message: "websocket not connected"
+    // })
   },
 
 }

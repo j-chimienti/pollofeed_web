@@ -1,5 +1,10 @@
 
-const proxyUrl = window.location.origin +  "/api/?apiurl=https://api.pollofeed.com"
+function getProxy() {
+  if (process.env.NODE_ENV === "development") return window.location.origin;
+  return window.location.origin +  "/api/?apiurl=https://api.pollofeed.com"
+}
+
+const proxyUrl = getProxy()
 
 export async function oauthLogin(provider) {
   return fetch( proxyUrl + `/api/authorize/${provider}`).then((res) => res.json())

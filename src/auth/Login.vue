@@ -1,5 +1,4 @@
 <template>
-  <q-dialog v-model="loginModalVisible">
     <q-card class="q-px-lg loginCard" dark>
       <SocialAuth />
       <hr/>
@@ -32,7 +31,6 @@
 
       </q-form>
     </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -50,14 +48,7 @@
 
   computed: {
     ...mapGetters(["requestingSession", "authError"]),
-    loginModalVisible: {
-      get() {
-        return this.$store.getters.loginModalVisible
-      },
-      set(v) {
-        this.LOGIN_MODAL_VISIBLE(v)
-      },
-    },
+
   },
   methods: {
 

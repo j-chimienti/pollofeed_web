@@ -167,7 +167,9 @@ export default {
       return this.feed(token)
     },
     removeToken(feedToken) {
-      const label = get(feedToken, "label", null)
+      let label = feedToken
+      if (typeof feedToken === "object")
+        label = get(feedToken, "label", "")
       if (label) return this.$store.commit(REMOVE_FEED_TOKEN, label)
     },
     feed(token) {

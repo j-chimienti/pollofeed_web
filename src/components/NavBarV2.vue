@@ -8,6 +8,8 @@
     <WebsocketConnectionStatus
       style="position: absolute; left: 10px; top: 10px"
     />
+<!--    <LoginBtn v-if="!authenticated"/>-->
+<!--    <LogoutBtn v-else/>-->
     <NavLinks class="gt-xs q-my-lg" />
     <div class="row justify-center q-my-lg">
       <SocialShare/>
@@ -36,10 +38,16 @@
   import wheel from "assets/wheel_inner.svg"
   import blackjack from "assets/blackjack.png"
   import SocialShare from "./social/SocialShare"
+  import LoginBtn from "../auth/LoginBtn"
+  import AppMixin from "../mixins/AppMixin"
+  import LogoutBtn from "../auth/LogoutBtn"
 
   export default {
   name: "NavBarV2",
+    mixins: [AppMixin],
   components: {
+    LogoutBtn,
+    LoginBtn,
     SocialShare,
     WebsocketConnectionStatus,
     NavLinks,

@@ -15,8 +15,8 @@ const getters = {
   authenticated: (state) => state.authenticated,
   authError: (state) => state.authError,
   requestingSession: (state) => state.requestingSession,
-  email: state => _get(state.user, "email", "N/A"),
-
+  email: state => _get(state.user, "email", null),
+  sessionId: state => _get(state.user, "sessionId", null),
   picture: state => _get(state.user, "picture", null),
 }
 
@@ -25,38 +25,26 @@ const getInitialState = () => {
   return {
     authenticated: false,
     loginModalVisible: false,
-      user: null, //{playerAccount, session}
+      user: null, //{email,sessionId}
   }
 }
 const state = getInitialState()
-// resumeSession returns:
 
-//{
-//   "session" : {
-//     "id" : "CXSe--EED6aRBfVXFiHvcnCpa3oAJpBL_RZJbbZfjnU=",
-//     "playerAccountId" : "google-oauth2|101687464479583982435",
-//     "createdAt" : "2021-12-29T14:13:03.744Z",
-//     "modifiedAt" : "2022-06-15T00:24:29.687Z"
-//   },
-//   "playerAccount" : {
-//     "email" : "joe.chimienti@eventdynamic.com",
-//     "id" : "google-oauth2|101687464479583982435",
-//     "lightningAddress" : "joe.chimienti@eventdynamic.com_IjzUcB2Z1TE=",
-//     "createdAt" : "2021-12-29T14:13:03.744Z",
-//     "timesAccessed" : 10,
-//     "lastAccess" : "2022-06-15T00:27:14.030Z"
-//   }
-// }
+
+/*
+{
+  "playerAccount" : {
+    "email" : "test1@gmail.com",
+    "createdAt" : "2022-09-22T04:57:13.884Z",
+    "picture" : null,
+    "sessionId" : "3NVB3JMIOV7wv8VHzl7LJw=="
+  }
+}
+ */
 async function onAuthSuccess({ commit, dispatch }, user) {
   commit(LOGIN_MODAL_VISIBLE, false)
   commit(AUTHENTICATED, user.playerAccount)
-  // todo: hardcode
-  if (_get(user, "playerAccount.email", "").includes("session")) {
-    // commit(PLAYING_FOR_FREE, true)
-  }
   return user;
-  //
-  // return await dispatch(OPEN_WEBSOCKET);
 }
 
 const actions = {
@@ -77,6 +65,9 @@ const actions = {
     return apiService.resumeSession()
       .then((res) => res.json())
       .then((user) => onAuthSuccess({ commit, dispatch }, user))
+      .catch(err => {
+        console.log("error resume session", err)
+      })
   },
 
   [SIGNUP]({ commit, dispatch }, { password, email }) {
@@ -121,10 +112,9 @@ const actions = {
           message: "Cannot log in" })
       })
   },
-  [LOGOUT]({ commit }) {
+  [LOGOUT]({commit}) {
     return apiService.logout().finally(() => {
-      // todo: reset root state
-      window.location.reload()
+      commit("auth/RESET_STATE")
     })
   },
 }
@@ -133,11 +123,7 @@ const actions = {
 
 const mutations = {
   ['auth/RESET_STATE'](s) { Object.assign(s, getInitialState()) },
-  [REQUESTING_SESSION](state, requesting = false) {
-    state.requestingSession = requesting
-    // state.user = null
-    // state.authenticated = false
-  },
+  [REQUESTING_SESSION](state, requesting = false) { state.requestingSession = requesting },
   [LOGIN_MODAL_VISIBLE](s,v) { s.loginModalVisible = v},
   [AUTHENTICATED](state, user) {
     state.authenticated = true
