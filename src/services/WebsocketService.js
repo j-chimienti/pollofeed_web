@@ -44,6 +44,7 @@ export function WebsocketService(
       this.ws.onclose = (e) => {
         store.commit(WEBSOCKET_CLOSED)
         console.log("ws closed", e)
+
       }
     })
   }

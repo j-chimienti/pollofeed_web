@@ -125,7 +125,7 @@
               <q-btn @click="feed(feedToken)" class="red-btn">Use</q-btn>
               <q-btn
                 @click="removeToken(feedToken)"
-                label="Delete"
+                icon="fas fa-trash"
                 class="red-btn"
               />
             </div>
@@ -140,7 +140,7 @@
           >
           </q-input>
           <div class="row q-my-md">
-          <q-btn label="use now" @click="manualFeed" />
+            <ButtonV3 label="use now" @click="manualFeed"></ButtonV3>
           </div>
         </div>
       </div>
@@ -153,10 +153,11 @@ import { REMOVE_FEED_TOKEN } from "../store/mutations"
 import AppMixin from "../mixins/AppMixin"
 import ButtonV2 from "./ButtonV2"
 import get from "lodash.get"
+import ButtonV3 from "components/ButtonV3"
 
 export default {
   name: "DelayFeeding",
-  components: { ButtonV2 },
+  components: { ButtonV3, ButtonV2 },
   mixins: [AppMixin],
   data() {
     return { manualFeedToken: "", disabledBtn: false }

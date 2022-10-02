@@ -44,7 +44,6 @@ export const pollofeedModule = {
       LocalStorage.set(FEED_TOKEN_KEY, state.feedTokens)
     },
     [REMOVE_FEED_TOKEN](state, labelOrTokenOrPaymentHash) {
-      console.log(`id=${labelOrTokenOrPaymentHash} tokens=${state.feedTokens.join(",")}`)
       const ft = state.feedTokens
         .filter((ft) => ft.label !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft.token !== labelOrTokenOrPaymentHash)
@@ -52,9 +51,6 @@ export const pollofeedModule = {
         .filter((ft) => ft !== labelOrTokenOrPaymentHash)
         .filter((ft) => ft.trim() !== labelOrTokenOrPaymentHash.trim())
 
-      if (ft.length === state.feedTokens.length) {
-        console.log("failed to remove token", labelOrTokenOrPaymentHash)
-      }
       state.feedTokens = ft
       LocalStorage.set(FEED_TOKEN_KEY, ft)
     },

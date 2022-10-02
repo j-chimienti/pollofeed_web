@@ -2,7 +2,10 @@
   <div class="navbar-v2 text-center">
     <div class="row justify-center">
       <router-link :to="{ name: 'home' }">
-        <img :src="logo" alt="Feed" width="200" />
+<!--          :src="logo"-->
+        <img
+          src="https://imagedelivery.net/aieSGS-_IR9UJPRPLPtPfw/99952f36-00b3-4c17-53cf-e080eb553400/public"
+          alt="Feed" width="200" />
       </router-link>
     </div>
     <WebsocketConnectionStatus
@@ -23,7 +26,10 @@
     <div class="row justify-center q-my-lg">
       <a href="https://bjack.space" class="column">
         <span class="text-primary">bjack.space</span>
-        <img :src="blackjack" width="100" alt="bjack.space" />
+<!--          :src="blackjack"-->
+        <img
+          src="https://imagedelivery.net/aieSGS-_IR9UJPRPLPtPfw/b593c018-666e-4bd5-78f8-db8aeda67400/public"
+          width="100" alt="bjack.space" />
 
       </a>
     </div>

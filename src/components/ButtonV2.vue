@@ -1,6 +1,6 @@
 <template>
   <svg width="170" height="71" viewBox="0 0 170 71" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_307_3306)">
+    <g :clip-path="urlClip">
       <path d="M150 24.0946V46.1487C150 54.888 141.78 61.9566 131.654 61.9566H38.3459C28.2199 61.9566 20 54.8623 20 46.1487V24.0946C20 15.3553 28.2199 8.26099 38.3459 8.26099H131.684C141.81 8.26099 150 15.3553 150 24.0946Z" fill="#91181D"/>
       <path d="M129.48 59.9517H40.52C31.0492 59.9517 23.3356 53.3201 23.3356 45.1205V25.0714C23.3356 16.8975 31.0195 10.2659 40.52 10.2659H129.48C138.951 10.2659 146.664 16.8975 146.664 25.0971V45.1462C146.664 53.3201 138.981 59.9517 129.48 59.9517Z" fill="url(#paint0_linear_307_3306)"/>
       <path d="M128.212 57.7155H42.5873C33.742 57.7155 26.5942 51.5208 26.5942 43.9124V26.3309C26.5942 18.6968 33.7718 12.5278 42.5873 12.5278H128.212C137.057 12.5278 144.205 18.7225 144.205 26.3309V43.9124C144.235 51.5208 137.057 57.7155 128.212 57.7155Z" fill="url(#paint1_linear_307_3306)"/>
@@ -41,7 +41,7 @@
         <stop offset="0.9252" stop-color="#F46E31"/>
         <stop offset="1" stop-color="#F46531"/>
       </linearGradient>
-      <clipPath id="clip0_307_3306">
+      <clipPath :id="id">
         <rect width="130" height="53.6957" fill="white" transform="translate(20 8.26099)"/>
       </clipPath>
     </defs>
@@ -52,6 +52,13 @@
   export default {
     name: "ButtonV2",
     props: ["label"],
+    data() {
+      const id = `${this.label}${new Date().getTime()}`
+      return {
+        id,
+        urlClip: `url(#${id})`
+      }
+    }
   }
 </script>
 
@@ -124,15 +131,16 @@
     z-index: 2;
     border-radius: 10px;
   }
-  /*.main_btn {*/
-  /*  transition: all 0.4s ease-in-out;*/
-  /*}*/
-  /*.main_btn:hover {*/
-  /*  transform: translateY(-8px);*/
-  /*}*/
 
   @import "../css/quasar.variables.scss";
   .red-text {
     fill: $dark_red;
+  }
+
+  .main_btn {
+    transition: all 0.4s ease-in-out;
+  }
+  .main_btn:hover {
+    transform: translateY(-8px);
   }
 </style>

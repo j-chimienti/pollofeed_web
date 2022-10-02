@@ -16,26 +16,32 @@
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
             <div class="row justify-center">
-              <ButtonV2 data-cy="invoice_button" label="create invoice" @click.prevent="invoiceRequest()" />
-            </div>
-            <div class="row justify-center">
-              <q-checkbox
-                label="Give me token to feed"
-                v-model="delayFeeding"
-                data-cy="delayed-order-selector"
-                name="delayFeeding"
-                value="delayed"
-                unchecked-value="not_delayed"
-                class="q-pr-md"
-              >
-                <q-tooltip
-                >Token is in invoice description, when paid it's valid for 1 time use whenever.</q-tooltip
-                >
-              </q-checkbox>
+              <div class="col-3"></div>
+              <div class="col-6">
+                <ButtonV3 class="q-mx-md" :label="createInvoiceLabel" @click.prevent="invoiceRequest()"/>
+              </div>
+              <div class="col-3">
               <q-input
                 label="feedings"
+                class="q-pb-md"
+                min="1"
                 max="50"
-                type="number" v-model.number="feedings" style="max-width: 100px" filled/>
+                type="number" v-model.number="feedings"/>
+                <q-checkbox
+                  label="Give me token to feed"
+                  v-model="delayFeeding"
+                  data-cy="delayed-order-selector"
+                  name="delayFeeding"
+                  value="delayed"
+                  unchecked-value="not_delayed"
+                  class="q-pr-md"
+                >
+                  <q-tooltip
+                  >Receive token(s) to use at your convenience.</q-tooltip
+                  >
+                </q-checkbox>
+              </div>
+
             </div>
 
           </div>
@@ -115,12 +121,14 @@ import AppMixin from "../mixins/AppMixin"
 import LeftArrow from "./LeftArrow"
 import RightArrow from "./RightArrow"
 import BitcoinPayment from "./BitcoinPayment"
+import ButtonV3 from "components/ButtonV3"
 
 export default {
   name: "PaymentTypes",
   mixins: [AppMixin],
   // eslint-disable-next-line vue/no-unused-components
   components: {
+    ButtonV3,
     BitcoinPayment,
     RightArrow,
     LeftArrow,
@@ -137,6 +145,9 @@ export default {
     }
   },
   computed: {
+    createInvoiceLabel() {
+      return "create invoice"
+    },
     tab: {
       get() {
         return this.paymentType
