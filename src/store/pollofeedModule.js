@@ -39,8 +39,9 @@ export const pollofeedModule = {
     },
 
     [ADD_FEED_TOKEN](state, feedToken) {
-      if (!state.feedTokens.find((t) => t === feedToken))
-        state.feedTokens.push(feedToken)
+      const trimmed = feedToken.trim().replaceAll(new RegExp(/"/g), "")
+      if (!state.feedTokens.find((t) => t === trimmed))
+        state.feedTokens.push(trimmed)
       LocalStorage.set(FEED_TOKEN_KEY, state.feedTokens)
     },
     [REMOVE_FEED_TOKEN](state, labelOrTokenOrPaymentHash) {
