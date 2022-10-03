@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: "0 * * * *" # every hour at min 0
 jobs:
-  lint:
+  invoice:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,3 +19,11 @@ jobs:
         env:
           CYPRESS_BASE_URL: https://pollofeed.com
         run: npm run cypress:invoice
+      - name: send telegram message on push
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            failed to create pollofeed.com invoice
