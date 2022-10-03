@@ -3,18 +3,9 @@
     <div class="home">
       <div class="row justify-center q-pa-md">
         <q-card class="card-stream q-pa-md">
-<!--          <div style="position: relative; padding-top: 100%;"><iframe src="https://iframe.videodelivery.net/69cdddecdfb14ec63b653cf47db95ba4?autoplay=true&poster=https%3A%2F%2Fvideodelivery.net%2F96bb44974f6b1a14bab8ee78ad4f3945%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&primaryColor=%23ed1c27" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow=" autoplay; encrypted-media;  " allowfullscreen="true"></iframe></div>-->
           <div class="row justify-center">
             <div class="col" style="max-width: 640px;">
               <q-responsive :ratio="4/3">
-
-<!--                <iframe-->
-<!--                  id="live_stream"-->
-<!--                  :src="STREAM_URL"></iframe>-->
-<!--                <video ref="live_stream"></video>-->
-<!--                <div>-->
-<!--                  <iframe src="https://iframe.videodelivery.net/a57070b12b6442e1090939805b36287a?autoplay=true&poster=https%3A%2F%2Fvideodelivery.net%2Fa57070b12b6442e1090939805b36287a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>-->
-<!--                </div>-->
               <q-img
                 :src="STREAM_URL"
                 id="live_stream"

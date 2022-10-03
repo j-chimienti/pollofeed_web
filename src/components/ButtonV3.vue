@@ -1,7 +1,7 @@
 <template>
   <div class="main_btn">
-    <span class="position-absolute span_btn"></span>
-    <span class="position-absolute span_btn_two"></span>
+<!--    <span class="position-absolute span_btn"></span>-->
+<!--    <span class="position-absolute span_btn_two"></span>-->
     <button class="feed_btn">{{label}}</button>
   </div>
 </template>
@@ -26,9 +26,9 @@ export default {
   max-width: 150px;
   color: #8e1116;
   font-weight: 800;
-  padding: 15px 30px;
+  padding: 1rem;
   outline: 5px solid #91181d !important;
-  font-size: 24px;
+  font-size: 1.5rem;
   background-image: linear-gradient(
     180deg,
     #f4e795 -1.79%,
@@ -41,34 +41,12 @@ export default {
   ) !important;
 }
 
-.span_btn {
-  background: #ffffff;
-  cursor: pointer;
-  opacity: 0.45;
-  height: 5.25px;
-  width: 12.06px;
-  content: "";
-  left: 10%;
-  top: 16%;
-  z-index: 2;
-  border-radius: 10px;
-}
-.span_btn_two {
-  background: #ffffff;
-  opacity: 0.45;
-  height: 5.35px;
-  width: 22.1px;
-  content: "";
-  left: 18%;
-  top: 16%;
-  z-index: 2;
-  border-radius: 10px;
-}
+
 .main_btn {
   transition: all 0.4s ease-in-out;
   cursor: pointer;
 }
 .main_btn:hover {
-  transform: translateY(-8px);
+  transform: translateY(-0.5rem);
 }
 </style>

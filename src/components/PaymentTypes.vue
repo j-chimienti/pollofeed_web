@@ -18,7 +18,7 @@
             <div class="row justify-center">
               <div class="col-12 col-md-3"></div>
               <div class="col-12 col-md-6">
-                <ButtonV3 class="q-mx-md" :label="createInvoiceLabel" @click.prevent="invoiceRequest()"/>
+                <ButtonV3 class="q-mx-md" label="create invoice" @click.prevent="invoiceRequest()"/>
               </div>
               <div class="col-12 col-md-3">
               <q-input
@@ -145,9 +145,7 @@ export default {
     }
   },
   computed: {
-    createInvoiceLabel() {
-      return "create invoice"
-    },
+
     tab: {
       get() {
         return this.paymentType
