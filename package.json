@@ -13,7 +13,10 @@
     "build:web": "quasar build",
     "build:ios": "quasar build --mode capacitor --target ios --ide",
     "cypress": "cypress open",
+    "cypress:open": "cypress open",
+    "cypress:openprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress open",
     "cypress:invoice": "cypress run --spec cypress/integration/invoice.js",
+    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --spec cypress/integration/invoice.js",
     "dev": "quasar dev",
     "dev:electron": "quasar dev -m electron",
     "test": "echo \"No test specified\" && exit 0"

@@ -16,11 +16,11 @@
           <InvoiceModal v-if="invoiceUnpaid" />
           <div v-else>
             <div class="row justify-center">
-              <div class="col-3"></div>
-              <div class="col-6">
+              <div class="col-12 col-md-3"></div>
+              <div class="col-12 col-md-6">
                 <ButtonV3 class="q-mx-md" :label="createInvoiceLabel" @click.prevent="invoiceRequest()"/>
               </div>
-              <div class="col-3">
+              <div class="col-12 col-md-3">
               <q-input
                 label="feedings"
                 class="q-pb-md"

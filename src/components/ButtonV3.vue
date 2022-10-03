@@ -23,6 +23,7 @@ export default {
   cursor: pointer;
   border: 5px solid orange;
   border-radius: 25px;
+  max-width: 150px;
   color: #8e1116;
   font-weight: 800;
   padding: 15px 30px;

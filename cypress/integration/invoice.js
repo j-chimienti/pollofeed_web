@@ -1,32 +1,29 @@
+import { handleErrors } from "./handleErrors"
 
+handleErrors()
 
-const HOST = Cypress.env("HOST")
-const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/
-Cypress.on('uncaught:exception', (err) => {
-  /* returning false here prevents Cypress from failing the test */
-  if (resizeObserverLoopErrRe.test(err.message)) {
-    return false
-  }
-})
-
-
-
-const invoice_button = "[data-cy=invoice_button]"
-const bolt11 = "[data-id=bolt11]"
 const stream = "#live_stream"
 
 function createInvoice() {
-  cy.get(stream).should("be.visible")
-  cy.get(invoice_button).click()
+
+  cy.get('.feed_btn').click()
   cy.contains("copy").should("be.visible")
   cy.contains("share").should("be.visible")
+  //cy.contains("lnbc")
 
 }
 
 describe("pollofeed", () => {
+
+  beforeEach(() => {
+    cy.visit("/")
+  })
   it("can create invoice", () => {
-    cy.visit(HOST)
+    cy.get(stream).should("be.visible")
+    cy.wait(1000)
     createInvoice()
+    cy.get('.feed-price-usd').should("be.visible")
+    cy.get('#bolt11').should("contain.text", "lnbc")
   })
 
 
