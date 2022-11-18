@@ -11,8 +11,7 @@ export async function oauthLogin(provider) {
 }
 
 
-export async function oauthCallback(provider, params) {
-
+export async function ooauthCallback(provider, params) {
   return fetch( proxyUrl + `/api/auth/callback/${provider}${params}`).then((res) => res.json())
 }
 
