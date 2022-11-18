@@ -17,7 +17,6 @@
           placeholder="Password"
           v-model="password"
           required
-          lazy-rules
           label="password"
           :rules="[
           (val) =>
@@ -28,10 +27,10 @@
         <q-input
           v-if="loginType === 'signup'"
           type="password"
+          :required="loginType === 'signup'"
           name="passwordVerify"
           placeholder="Verify Password"
           v-model="passwordVerify"
-          lazy-rules
           label="password"
           :rules="[
           (val) =>
@@ -43,8 +42,10 @@
         <q-btn @click="login" :label="loginType" color="primary"/>
 
 
-        <p @click="LOGIN_TYPE('login')" >Already have an account? sign in</p>
-        <p @click="LOGIN_TYPE('signup')" >Don't have an account? sign up</p>
+        <div class="q-mt-md">
+          <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">Already have an account? sign in</p>
+          <p @click="LOGIN_TYPE('signup')" v-else>Don't have an account? sign up</p>
+        </div>
       </q-form>
     </q-card>
 </template>

@@ -1,5 +1,7 @@
 <template>
-<q-btn @click="$store.commit('LOGIN_MODAL_VISIBLE', true)">{{loginType}}</q-btn>
+<q-btn
+  icon="fa fa-user"
+  @click="$store.commit('LOGIN_MODAL_VISIBLE', true)" color="secondary" >{{loginType}}</q-btn>
 </template>
 
 <script>
