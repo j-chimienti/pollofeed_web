@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { LOGIN, LOGOUT, OAUTH_AUTHORIZE_CALLBACK, OPEN_WEBSOCKET, RESUME_SESSION, SIGNUP } from "./actions"
-import { AUTHENTICATED, LOGIN_MODAL_VISIBLE, REQUESTING_SESSION } from "./mutations"
+import { AUTHENTICATED, LOGIN_MODAL_VISIBLE, LOGIN_TYPE, REQUESTING_SESSION } from "./mutations"
 // eslint-disable-next-line import/no-cycle
 import _get  from "lodash.get"
 import { Notify } from "quasar"
@@ -11,6 +11,7 @@ const getters = {
   user: (state) => state.user,
   isSessionUser: state => _get(state.user, "email", "").includes("session"),
   loggingIn: (state) => state.loggingIn,
+  loginType: state => state.loginType, // signup or login
   loginModalVisible: (state) => state.loginModalVisible,
   authenticated: (state) => state.authenticated,
   authError: (state) => state.authError,
@@ -25,6 +26,7 @@ const getInitialState = () => {
   return {
     authenticated: false,
     loginModalVisible: false,
+    loginType: "signup",
       user: null, //{email,sessionId}
   }
 }
@@ -113,7 +115,11 @@ const actions = {
       })
   },
   [LOGOUT]({commit}) {
-    return apiService.logout().finally(() => {
+    return apiService.logout()
+      .then(() => {
+        Notify.create("logged out")
+      })
+      .finally(() => {
       commit("auth/RESET_STATE")
     })
   },
@@ -122,7 +128,7 @@ const actions = {
 
 
 const mutations = {
-  ['auth/RESET_STATE'](s) { Object.assign(s, getInitialState()) },
+  ['auth/RESET_STATE'](s) { Object.assign(s, getInitialState(), {loginType: s.loginType}) },
   [REQUESTING_SESSION](state, requesting = false) { state.requestingSession = requesting },
   [LOGIN_MODAL_VISIBLE](s,v) { s.loginModalVisible = v},
   [AUTHENTICATED](state, user) {
@@ -130,7 +136,9 @@ const mutations = {
     state.user = user
     state.requestingSession = false
     state.loginModalVisible = false
-  }
+    state.loginType = "login"
+  },
+  [LOGIN_TYPE](s, t) { s.loginType = t }
 }
 
 export default {

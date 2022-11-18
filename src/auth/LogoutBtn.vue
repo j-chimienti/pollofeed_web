@@ -5,7 +5,7 @@
   <q-avatar>
     <q-img v-if="picture" :src="picture"/>
   </q-avatar>
-    <span >logout</span>
+    <span >logout {{email}}</span>
 </q-btn>
 </template>
 

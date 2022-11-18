@@ -11,8 +11,8 @@
     <WebsocketConnectionStatus
       style="position: absolute; left: 10px; top: 10px"
     />
-<!--    <LoginBtn v-if="!authenticated"/>-->
-<!--    <LogoutBtn v-else/>-->
+    <LoginBtn v-if="!authenticated"/>
+    <LogoutBtn v-else/>
     <NavLinks class="gt-xs q-my-lg" />
     <div class="row justify-center q-my-lg">
       <SocialShare/>

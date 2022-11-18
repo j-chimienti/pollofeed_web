@@ -10,6 +10,9 @@ import {
   SET_USE_TOKEN_NOW
 } from "../store/mutations"
 
+import {RESUME_SESSION} from "../auth/actions"
+import { LOGIN_TYPE } from "src/auth/mutations"
+
 export default {
   name: "AppMixin",
   data() {
@@ -27,8 +30,8 @@ export default {
   },
   methods: {
     satsToUsd,
-    ...mapActions([INVOICE, GET_INVOICE, DELAY_FEEDING]),
-    ...mapMutations([SET_USE_TOKEN_NOW, SET_INVOICE, SET_DELAYED_FEEDING, FEEDINGS]),
+    ...mapActions([INVOICE, GET_INVOICE, DELAY_FEEDING, RESUME_SESSION]),
+    ...mapMutations([SET_USE_TOKEN_NOW, SET_INVOICE, SET_DELAYED_FEEDING, FEEDINGS, LOGIN_TYPE]),
   },
   computed: {
     feedings: {
@@ -45,6 +48,7 @@ export default {
       "picture",
       "authenticated",
       "bitcoinAddress",
+      "connectedToWebsocket",
       "invoiceUnpaid",
       "invoiceStatus",
       "invoiceExpired",
@@ -54,6 +58,7 @@ export default {
       "showFeedNow",
       "feedPriceUSD",
       "feedTokens",
+      "loginType",
       "invoice",
       "qr",
       "bolt11",

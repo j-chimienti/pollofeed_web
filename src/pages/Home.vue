@@ -45,7 +45,7 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
     },
     async initUser(token) {
 
-      // await this.$store.dispatch(RESUME_SESSION)
+      await this.RESUME_SESSION()
       await this.$store.dispatch(OPEN_WEBSOCKET)
       if (token) {
         this.SET_INVOICE(null)
@@ -56,6 +56,13 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
       this.invoiceInterval = setInterval(() => {
         this.checkInvoice()
       }, CHECK_INVOICE_INTERVAL)
+
+      this.webSocketInterval = setInterval(() => {
+        if (!this.connectedToWebsocket) {
+          console.log("reopen ws")
+          this.$store.dispatch(OPEN_WEBSOCKET)
+        }
+      }, 5000)
 
     }
   },
@@ -96,6 +103,7 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
   },
   unmounted() {
     if (this.invoiceInterval) clearInterval(this.invoiceInterval)
+    if (this.webSocketInterval) clearInterval(this.webSocketInterval)
   },
   data() {
     return {
@@ -116,7 +124,8 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 
 
 #live_stream {
@@ -127,7 +136,7 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
 .card-stream {
   width: 800px;
   /*height: 934px;*/
-  background: #fff6ce;
+  background: $light_background;
   /* Red Pigment/700 */
   border: 0.5rem solid #8e1116;
   border-radius: 36px;

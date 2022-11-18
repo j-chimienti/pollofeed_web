@@ -1,7 +1,7 @@
 <template>
-    <q-card class="q-px-lg loginCard" dark>
-      <SocialAuth />
-      <hr/>
+    <q-card class="q-px-lg loginCard text-dark">
+<!--      <SocialAuth />-->
+<!--      <hr/>-->
       <q-form @submit="login" class="q-my-lg text-center" ref="loginForm">
         <q-input
           type="email"
@@ -25,10 +25,26 @@
             'Password must be more than 8 characters',
         ]"
         />
+        <q-input
+          v-if="loginType === 'signup'"
+          type="password"
+          name="passwordVerify"
+          placeholder="Verify Password"
+          v-model="passwordVerify"
+          lazy-rules
+          label="password"
+          :rules="[
+          (val) =>
+            (loginType === 'signup' ? val === password : true) ||
+            'Password verification failed',
+        ]"
+        />
 
-        <q-btn @click="login" label="login" color="accent"/>
+        <q-btn @click="login" :label="loginType" color="primary"/>
 
 
+        <p @click="LOGIN_TYPE('login')" >Already have an account? sign in</p>
+        <p @click="LOGIN_TYPE('signup')" >Don't have an account? sign up</p>
       </q-form>
     </q-card>
 </template>
@@ -38,14 +54,15 @@
   import { LOGIN, SIGNUP } from "./actions"
   import { CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE } from "./mutations"
   import SocialAuth from "./SocialAuth"
+  import AppMixin from "src/mixins/AppMixin"
 
   export default {
   name: "Login",
   components: { SocialAuth },
   data() {
-    return { password: "", email: "" }
+    return { password: "", email: "", passwordVerify: "" }
   },
-
+    mixins: [AppMixin],
   computed: {
     ...mapGetters(["requestingSession", "authError"]),
 
@@ -55,12 +72,18 @@
     ...mapMutations([CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE]),
     ...mapActions([LOGIN, SIGNUP]),
     login() {
-      const { password, email } = this
+      const { password, email, loginType } = this
       this.$refs.loginForm.validate().then(success => {
         if (success) {
-          return this.SIGNUP({ password, email }).catch((err) => {
+          if (loginType === "signup") return this.SIGNUP({ password, email }).catch((err) => {
             this.$q.notify({
-              message: "Error " + err,
+              message: "signup error " + err,
+              type: "negative",
+            })
+          })
+          else return this.LOGIN({password, email}).catch((err) => {
+            this.$q.notify({
+              message: "Login Error " + err,
               type: "negative",
             })
           })
@@ -79,10 +102,6 @@
 
 <style lang="scss" scoped>
 @import "../css/quasar.variables";
-*,
-.q-field {
-  color: white;
-}
 .signup-link {
   border-bottom: 4px solid transparent;
   transition: all 0.1s ease-in-out;
