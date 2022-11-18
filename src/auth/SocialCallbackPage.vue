@@ -18,6 +18,7 @@ export default {
     if (params.includes("code=") && params.includes("state=")) {
       this.OAUTH_AUTHORIZE_CALLBACK(params)
     } else {
+      alert("cannot push")
       this.$router.push({name: "home"})
     }
   },
