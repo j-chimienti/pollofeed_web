@@ -1,7 +1,9 @@
 <template>
     <q-card class="q-px-lg loginCard text-dark">
-<!--      <SocialAuth />-->
-<!--      <hr/>-->
+      <div v-if="testSocial">
+        <SocialAuth />
+        <hr/>
+      </div>
       <q-form @submit="login" class="q-my-lg text-center" ref="loginForm">
         <q-input
           type="email"
@@ -46,6 +48,7 @@
           <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">Already have an account? sign in</p>
           <p @click="LOGIN_TYPE('signup')" v-else>Don't have an account? sign up</p>
         </div>
+        <p @click="testSocial = !testSocial">test</p>
       </q-form>
     </q-card>
 </template>
@@ -61,7 +64,7 @@
   name: "Login",
   components: { SocialAuth },
   data() {
-    return { password: "", email: "", passwordVerify: "" }
+    return { password: "", email: "", passwordVerify: "", testSocial: false }
   },
     mixins: [AppMixin],
   computed: {

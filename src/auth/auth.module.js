@@ -1,15 +1,14 @@
 /* eslint-disable */
-import { LOGIN, LOGOUT, OAUTH_AUTHORIZE_CALLBACK, OPEN_WEBSOCKET, RESUME_SESSION, SIGNUP } from "./actions"
+import { LOGIN, LOGOUT, OAUTH_AUTHORIZE_CALLBACK, RESUME_SESSION, SIGNUP } from "./actions"
 import { AUTHENTICATED, LOGIN_MODAL_VISIBLE, LOGIN_TYPE, REQUESTING_SESSION } from "./mutations"
 // eslint-disable-next-line import/no-cycle
-import _get  from "lodash.get"
+import _get from "lodash.get"
 import { Notify } from "quasar"
 
-import * as apiService from './apiService'
+import * as apiService from "./apiService"
 
 const getters = {
   user: (state) => state.user,
-  isSessionUser: state => _get(state.user, "email", "").includes("session"),
   loggingIn: (state) => state.loggingIn,
   loginType: state => state.loginType, // signup or login
   loginModalVisible: (state) => state.loginModalVisible,
@@ -17,6 +16,7 @@ const getters = {
   authError: (state) => state.authError,
   requestingSession: (state) => state.requestingSession,
   email: state => _get(state.user, "email", null),
+  userEmail: (state, getters) => getters.email,
   sessionId: state => _get(state.user, "sessionId", null),
   picture: state => _get(state.user, "picture", null),
 }

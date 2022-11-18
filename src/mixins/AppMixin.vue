@@ -54,6 +54,7 @@ export default {
       "invoiceExpired",
       "invoicePaid",
       "delayedFeedingResponse",
+      "userEmail",
       "websocket",
       "showFeedNow",
       "feedPriceUSD",
