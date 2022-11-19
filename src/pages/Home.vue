@@ -4,20 +4,16 @@
       <div class="row justify-center q-pa-md">
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
-            <div class="col" style="max-width: 640px;">
-              <q-responsive :ratio="4/3">
-              <q-img
-                :src="STREAM_URL"
-                id="live_stream"
-                :loading="false"
-              />
+            <div class="col" style="max-width: 640px">
+              <q-responsive :ratio="4 / 3">
+                <q-img :src="STREAM_URL" id="live_stream" :loading="false" />
               </q-responsive>
             </div>
           </div>
           <PaymentTypes />
         </q-card>
       </div>
-      <LoginModal/>
+      <LoginModal />
     </div>
   </q-page>
 </template>
@@ -36,7 +32,8 @@ import { notifyInvoicePaid } from "src/services/notificationService"
 const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
 
 // import Hls from "hls.js"
-  export default {
+
+export default {
   name: "Home",
   mixins: [AppMixin],
   methods: {
@@ -44,7 +41,6 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
       if (this.invoiceUnpaid) this.GET_INVOICE()
     },
     async initUser(token) {
-
       await this.RESUME_SESSION()
       await this.$store.dispatch(OPEN_WEBSOCKET)
       if (token) {
@@ -63,19 +59,14 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
           this.$store.dispatch(OPEN_WEBSOCKET)
         }
       }, 5000)
-
-    }
+    },
   },
 
   mounted() {
-
     const { paid, token } = this.$route.query
     if (paid) notifyInvoicePaid(null)
 
     this.initUser(token)
-
-
-
 
     //
     // var videoSrc = 'https://cloudflarestream.com/a120388a5d58fbb78a795d4b0cfb94c2/manifest/video.m3u8';
@@ -125,9 +116,6 @@ const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
 </script>
 
 <style scoped lang="scss">
-
-
-
 #live_stream {
   border: 0.375rem solid #8e1116;
   border-radius: 1rem;
