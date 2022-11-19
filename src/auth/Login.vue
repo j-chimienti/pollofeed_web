@@ -1,96 +1,95 @@
 <template>
-    <q-card class="q-px-lg loginCard text-dark">
-      <div v-if="testSocial">
-        <SocialAuth />
-        <hr/>
-      </div>
-      <q-form @submit="login" class="q-my-lg text-center" ref="loginForm">
-        <q-input
-          type="email"
-          placeholder="email"
-          v-model="email"
-          required
-          lazy-rules
-          :rules="[(val) => (val && val.length > 5) || 'Invalid login']"
-        />
-        <q-input
-          type="password"
-          name="password"
-          placeholder="Password"
-          v-model="password"
-          required
-          label="password"
-          :rules="[
+  <q-card class="q-px-lg loginCard text-dark">
+    <SocialAuth />
+    <q-form @submit="login" class="q-my-lg text-center" ref="loginForm">
+      <q-input
+        type="email"
+        placeholder="email"
+        v-model="email"
+        required
+        lazy-rules
+        :rules="[(val) => (val && val.length > 5) || 'Invalid login']"
+      />
+      <q-input
+        type="password"
+        name="password"
+        placeholder="Password"
+        v-model="password"
+        required
+        label="password"
+        :rules="[
           (val) =>
             (val && val.length >= 8) ||
             'Password must be more than 8 characters',
         ]"
-        />
-        <q-input
-          v-if="loginType === 'signup'"
-          type="password"
-          :required="loginType === 'signup'"
-          name="passwordVerify"
-          placeholder="Verify Password"
-          v-model="passwordVerify"
-          label="password"
-          :rules="[
+      />
+      <q-input
+        v-if="loginType === 'signup'"
+        type="password"
+        :required="loginType === 'signup'"
+        name="passwordVerify"
+        placeholder="Verify Password"
+        v-model="passwordVerify"
+        label="password"
+        :rules="[
           (val) =>
             (loginType === 'signup' ? val === password : true) ||
             'Password verification failed',
         ]"
-        />
+      />
 
-        <q-btn @click="login" :label="loginType" color="primary"/>
+      <q-btn @click="login" :label="loginType" color="primary" />
 
-
-        <div class="q-mt-md">
-          <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">Already have an account? sign in</p>
-          <p @click="LOGIN_TYPE('signup')" v-else>Don't have an account? sign up</p>
-        </div>
-        <p @click="testSocial = !testSocial">test</p>
-      </q-form>
-    </q-card>
+      <div class="q-mt-md">
+        <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">
+          Already have an account? sign in
+        </p>
+        <p @click="LOGIN_TYPE('signup')" v-else>
+          Don't have an account? sign up
+        </p>
+      </div>
+    </q-form>
+  </q-card>
 </template>
 
 <script>
-  import { mapActions, mapGetters, mapMutations } from "vuex"
-  import { LOGIN, SIGNUP } from "./actions"
-  import { CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE } from "./mutations"
-  import SocialAuth from "./SocialAuth"
-  import AppMixin from "src/mixins/AppMixin"
+import { mapActions, mapGetters, mapMutations } from "vuex"
+import { LOGIN, SIGNUP } from "./actions"
+import { CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE } from "./mutations"
+import SocialAuth from "./SocialAuth"
+import AppMixin from "src/mixins/AppMixin"
 
-  export default {
+export default {
   name: "Login",
   components: { SocialAuth },
   data() {
-    return { password: "", email: "", passwordVerify: "", testSocial: false }
+    return { password: "", email: "", passwordVerify: "" }
   },
-    mixins: [AppMixin],
+  mixins: [AppMixin],
   computed: {
     ...mapGetters(["requestingSession", "authError"]),
-
   },
   methods: {
-
     ...mapMutations([CLEAR_REQUESTING_SESSION, LOGIN_MODAL_VISIBLE]),
     ...mapActions([LOGIN, SIGNUP]),
     login() {
       const { password, email, loginType } = this
-      this.$refs.loginForm.validate().then(success => {
+      this.$refs.loginForm.validate().then((success) => {
         if (success) {
-          if (loginType === "signup") return this.SIGNUP({ password, email }).catch((err) => {
-            this.$q.notify({
-              message: "signup error " + err,
-              type: "negative",
+          if (loginType === "signup")
+            return this.SIGNUP({ password, email }).catch((err) => {
+              this.$q.notify({
+                message: "signup error " + err,
+                type: "negative",
+              })
             })
-          })
-          else return this.LOGIN({password, email}).catch((err) => {
-            this.$q.notify({
-              message: "Login Error " + err,
-              type: "negative",
+          else
+            return this.LOGIN({ password, email }).catch((err) => {
+              this.$q.notify({
+                message: "Login Error " + err,
+                type: "negative",
+              })
             })
-          })
         } else {
           this.$q.notify({
             message: "Invalid request",
@@ -98,7 +97,6 @@
           })
         }
       })
-
     },
   },
 }
@@ -129,11 +127,11 @@ label {
   font-size: 1.25rem;
 }
 
-  svg {
-    cursor: pointer;
-  }
+svg {
+  cursor: pointer;
+}
 
-  .login-btn {
-    width: 150px;
-  }
+.login-btn {
+  width: 150px;
+}
 </style>

@@ -17,12 +17,11 @@ export default {
     const urlParams = new URLSearchParams(window.location.search)
     if (urlParams.has("code") && urlParams.has("state")) {
       this.OAUTH_AUTHORIZE_CALLBACK({
-        code: urlParams.get('code'),
-        state: urlParams.get("state")
+        code: urlParams.get("code"),
+        state: urlParams.get("state"),
       })
     } else {
-      alert("cannot push")
-      this.$router.push({name: "home"})
+      this.$router.push({ name: "home" })
     }
   },
 }
