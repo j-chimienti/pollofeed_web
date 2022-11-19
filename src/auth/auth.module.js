@@ -57,6 +57,7 @@ const actions = {
       .then((user) => onAuthSuccess({ commit, dispatch }, user))
       .then(() =>  this.$router.push({name: "home"}))
       .catch(err => {
+        alert("error in oauth callback " + err)
         commit("RESET_STATE")
         commit("auth/RESET_STATE")
         return this.$router.push({name: "home"})
