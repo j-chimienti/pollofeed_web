@@ -48,7 +48,7 @@
           <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">Already have an account? sign in</p>
           <p @click="LOGIN_TYPE('signup')" v-else>Don't have an account? sign up</p>
         </div>
-<!--        <p @click="testSocial = !testSocial">test</p>-->
+        <p @click="testSocial = !testSocial">test</p>
       </q-form>
     </q-card>
 </template>
