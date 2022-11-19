@@ -17,8 +17,9 @@ export function WebsocketService(
           : msg
       if (this.ws.readyState !== 1) {
         console.error("ws is not ready")
-        new WebsocketService(store,host, handleWebsocketMessage)
-          .then(() => this.ws.send(MSG))
+        new WebsocketService(store, host, handleWebsocketMessage).then(() =>
+          this.ws.send(MSG)
+        )
       } else {
         this.ws.send(MSG)
         resolve(MSG)
@@ -26,7 +27,7 @@ export function WebsocketService(
     })
   }
 
-  this.open  = function () {
+  this.open = function () {
     return new Promise((resolve, reject) => {
       this.ws.onopen = () => {
         console.log("ws open")
@@ -44,7 +45,6 @@ export function WebsocketService(
       this.ws.onclose = (e) => {
         store.commit(WEBSOCKET_CLOSED)
         console.log("ws closed", e)
-
       }
     })
   }

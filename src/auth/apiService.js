@@ -11,14 +11,14 @@ export async function oauthLogin(provider) {
   )
 }
 
-export async function oauthCallback(provider, { code, state }) {
+export async function oauthCallbackV2(provider, { code, state }) {
   const options = {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ code, state, provider }),
   }
-  return fetch(proxyUrl + `/api/auth/v2/callback/${provider}`, options).then((res) =>
-    res.json()
+  return fetch(proxyUrl + `/api/auth/v2/callback/${provider}`, options).then(
+    (res) => res.json()
   )
 }
 

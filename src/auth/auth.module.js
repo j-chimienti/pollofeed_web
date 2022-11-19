@@ -53,11 +53,13 @@ const actions = {
   [OAUTH_AUTHORIZE_CALLBACK]({ commit, dispatch }, params) {
     const provider = "google" // todo: hardcode
     commit(REQUESTING_SESSION, true)
-    return apiService.oauthCallback(provider, params)
+    return apiService.oauthCallbackV2(provider, params)
       .then((user) => onAuthSuccess({ commit, dispatch }, user))
       .then(() =>  this.$router.push({name: "home"}))
       .catch(err => {
-        alert("error in oauth callback " + err)
+        Notify.create({
+          message: `Error logging in with ${provider}`
+        })
         commit("RESET_STATE")
         commit("auth/RESET_STATE")
         return this.$router.push({name: "home"})

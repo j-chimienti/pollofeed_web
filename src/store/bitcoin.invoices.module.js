@@ -5,20 +5,22 @@ import {
   DELAYED_INVOICE_PAID,
   LOADING_INVOICE,
   SET_INVOICE,
-  SET_PAYMENT_TYPE
+  SET_PAYMENT_TYPE,
 } from "src/store/mutations"
 import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
 import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys } from "src/constants"
 import _get from "lodash.get"
-import { LocalStorage, Notify } from "quasar"
+import { LocalStorage } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
-import { loadIvoiceFromStorage, loadPaymentTypeFromStorage } from "src/store/localStorageHelper"
+import {
+  loadIvoiceFromStorage,
+  loadPaymentTypeFromStorage,
+} from "src/store/localStorageHelper"
 
 const fmtbtc = require("fmtbtc")
 const { msat2sat } = fmtbtc
 
 const paymentType = loadPaymentTypeFromStorage()
-
 
 const getters = {
   btc_usd: (state) => state.btc_usd,
@@ -34,7 +36,7 @@ const getters = {
   bolt11: (state) => _get(state.invoice, "bolt11", null),
   paymentType: (state) => state.paymentType,
   loadingInvoice: (state) => state.loadingInvoice,
-  satoshi: state => {
+  satoshi: (state) => {
     return msat2sat(_get(state.invoice, "amount_msat", 0))
   },
   feedPriceUSD: (_, getters) => {
@@ -42,13 +44,12 @@ const getters = {
   },
 }
 
-
 const state = {
   paymentType,
   invoice: loadIvoiceFromStorage(),
   loadingInvoice: false,
   btc_usd: 1,
-  bitcoinAddress: null
+  bitcoinAddress: null,
 }
 
 const mutations = {
@@ -75,7 +76,9 @@ const mutations = {
     state.paymentType = "TOKENS"
     state.loadingInvoice = false
   },
-  [BITCOIN_ADDRESS](s, addr) { s.bitcoinAddress = addr }
+  [BITCOIN_ADDRESS](s, addr) {
+    s.bitcoinAddress = addr
+  },
 }
 
 const actions = {
@@ -86,25 +89,21 @@ const actions = {
   [GET_INVOICE]({ getters }) {
     if (getters.invoiceStatus === LIGHTNING_INVOICE_STATUS.unpaid) {
       const label = getters.invoice.label
-      if (getters.websocket) getters.websocket._send({ WsGetInvoice: null, label })
+      if (getters.websocket)
+        getters.websocket._send({ WsGetInvoice: null, label })
       else console.log("ws not connected")
     } else {
       // ignore expired and paid
     }
   },
-  [INVOICE]({getters }, req) {
-    const {delayFeeding, feedings} = req
-    const sessionId = getters.sessionId
-
-    if (!getters.websocket)
-      Notify.create({
-          type: "negative",
-          icon: "fas fa-sad-cry",
-          message: "websocket not connected"
-        })
-       else getters.websocket._send({ WsRequestLightingInvoice: null, delayFeeding, feedings, sessionId })
+  [INVOICE]({ getters }, req) {
+    const { delayFeeding, feedings } = req
+    getters.websocket._send({
+      WsRequestLightingInvoice: null,
+      delayFeeding,
+      feedings,
+    })
   },
-
 }
 
 export const invoiceModule = { getters, state, mutations, actions }
