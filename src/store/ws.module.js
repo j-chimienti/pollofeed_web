@@ -28,15 +28,21 @@ const mutations = {
 
 const actions = {
   [OPEN_WEBSOCKET](store) {
-    const { commit } = store
-    return new WebsocketService(store, wsPath, websocketMessageFactory)
+    const { commit, getters } = store
+    const sessionId = getters.sessionId
+    return new WebsocketService(
+      store,
+      wsPath,
+      sessionId,
+      websocketMessageFactory
+    )
       .then((ws) => {
         commit(WEBSOCKET_OPEN, ws)
         return ws
       })
       .catch(() => {
         commit(WEBSOCKET_CLOSED)
-        return null;
+        return null
       })
   },
 }

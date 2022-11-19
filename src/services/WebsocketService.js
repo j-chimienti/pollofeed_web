@@ -4,9 +4,10 @@ import { WEBSOCKET_CLOSED } from "src/store/mutations"
 export function WebsocketService(
   store,
   host,
+  sessionId = null,
   handleWebsocketMessage = console.log
 ) {
-  this.ws = new WebSocket(host)
+  this.ws = null
   this._send = (msg) => {
     return new Promise((resolve) => {
       const MSG =
@@ -29,6 +30,9 @@ export function WebsocketService(
 
   this.open = function () {
     return new Promise((resolve, reject) => {
+      const url = sessionId ? host + "/?session=" + sessionId : host
+      console.log("open ws " + url)
+      this.ws = new WebSocket(url)
       this.ws.onopen = () => {
         console.log("ws open")
         resolve(this)
