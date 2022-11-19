@@ -14,9 +14,12 @@ export default {
     ...mapActions([OAUTH_AUTHORIZE_CALLBACK]),
   },
   mounted() {
-    const params = window.location.search
-    if (params.includes("code=") && params.includes("state=")) {
-      this.OAUTH_AUTHORIZE_CALLBACK(params)
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.has("code") && urlParams.has("state")) {
+      this.OAUTH_AUTHORIZE_CALLBACK({
+        code: urlParams.get('code'),
+        state: urlParams.get("state")
+      })
     } else {
       alert("cannot push")
       this.$router.push({name: "home"})

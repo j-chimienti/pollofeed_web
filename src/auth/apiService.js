@@ -11,8 +11,12 @@ export async function oauthLogin(provider) {
 }
 
 
-export async function oauthCallback(provider, params) {
-  return fetch( proxyUrl + `/api/auth/callback/${provider}${params}`).then((res) => res.json())
+export async function oauthCallback(provider, {code, state}) {
+  const options = {
+    method: "POST",
+    body: JSON.stringify({code, state, provider})
+  }
+  return fetch( proxyUrl + `/api/auth/v2/callback`, options).then((res) => res.json())
 }
 
 
