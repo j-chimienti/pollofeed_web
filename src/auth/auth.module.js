@@ -70,7 +70,9 @@ const actions = {
     return apiService.resumeSession()
       .then(res => res.json())
       .then((user) => onAuthSuccess({ commit, dispatch }, user))
-
+      .catch((err) => {
+        console.log("failed to resume session", err)
+      })
   },
 
   [SIGNUP]({ commit, dispatch }, { password, email }) {
