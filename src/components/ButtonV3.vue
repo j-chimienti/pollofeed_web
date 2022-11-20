@@ -1,9 +1,5 @@
 <template>
-  <div class="main_btn">
-<!--    <span class="position-absolute span_btn"></span>-->
-<!--    <span class="position-absolute span_btn_two"></span>-->
-    <button class="feed_btn">{{label}}</button>
-  </div>
+  <q-btn class="feed_btn" :loading="loading">{{ label }}</q-btn>
 </template>
 
 <script>
@@ -12,9 +8,13 @@ export default {
   props: {
     label: {
       type: String,
-      default: "FEED NOW"
-    }
-  }
+      default: "FEED NOW",
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
 }
 </script>
 
@@ -39,14 +39,10 @@ export default {
     #f46e31 98.22%,
     #f46531 106.3%
   ) !important;
-}
-
-
-.main_btn {
   transition: all 0.4s ease-in-out;
-  cursor: pointer;
 }
-.main_btn:hover {
+
+.feed_btn:hover {
   transform: translateY(-0.5rem);
 }
 </style>

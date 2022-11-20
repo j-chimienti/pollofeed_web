@@ -10,7 +10,7 @@ import {
 import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
 import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys } from "src/constants"
 import _get from "lodash.get"
-import { LocalStorage } from "quasar"
+import { LocalStorage, Notify } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
 import {
   loadIvoiceFromStorage,
@@ -96,13 +96,22 @@ const actions = {
       // ignore expired and paid
     }
   },
-  [INVOICE]({ getters }, req) {
+  [INVOICE]({ getters, commit }, req) {
     const { delayFeeding, feedings } = req
-    getters.websocket._send({
-      WsRequestLightingInvoice: null,
-      delayFeeding,
-      feedings,
-    })
+    if (!getters.websocket) return Notify.create("websocket disconnected")
+    else {
+      const r = getters.websocket._send({
+        WsRequestLightingInvoice: null,
+        delayFeeding,
+        feedings,
+      })
+      if (r === 1) {
+        //loading
+        commit(LOADING_INVOICE)
+      } else {
+        Notify.create("cannot create invoice")
+      }
+    }
   },
 }
 

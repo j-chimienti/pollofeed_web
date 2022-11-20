@@ -1,21 +1,18 @@
 <template>
   <div class="navbar-v2 text-center">
     <div class="row justify-center">
-      <router-link :to="{ name: 'home' }">
-<!--          :src="logo"-->
-        <img
-          src="https://imagedelivery.net/aieSGS-_IR9UJPRPLPtPfw/99952f36-00b3-4c17-53cf-e080eb553400/public"
-          alt="Feed" width="200" />
-      </router-link>
+      <Logo />
     </div>
     <WebsocketConnectionStatus
       style="position: absolute; left: 10px; top: 10px"
     />
-    <LoginBtn v-if="!authenticated"/>
-    <LogoutBtn v-else/>
+    <div class="row">
+      <LoginBtn v-if="!authenticated" />
+      <LogoutBtn v-else />
+    </div>
     <NavLinks class="gt-xs q-my-lg" />
     <div class="row justify-center q-my-lg">
-      <SocialShare/>
+      <SocialShare />
     </div>
     <div class="row justify-center items-center q-my-lg">
       <a href="https://spinnie.space" class="column">
@@ -26,41 +23,41 @@
     <div class="row justify-center q-my-lg">
       <a href="https://bjack.space" class="column">
         <span class="text-primary">bjack.space</span>
-<!--          :src="blackjack"-->
+        <!--          :src="blackjack"-->
         <img
           src="https://imagedelivery.net/aieSGS-_IR9UJPRPLPtPfw/b593c018-666e-4bd5-78f8-db8aeda67400/public"
-          width="100" alt="bjack.space" />
-
+          width="100"
+          alt="bjack.space"
+        />
       </a>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-  import logo from "../assets/img/logo.svg"
-  import BtcUsd from "components/BtcUsd"
-  import NavLinks from "components/NavLinks"
-  import WebsocketConnectionStatus from "components/WebsocketConnectionStatus"
-  import wheel from "assets/wheel_inner.svg"
-  import blackjack from "assets/blackjack.png"
-  import SocialShare from "./social/SocialShare"
-  import LoginBtn from "../auth/LoginBtn"
-  import AppMixin from "../mixins/AppMixin"
-  import LogoutBtn from "../auth/LogoutBtn"
+import NavLinks from "components/NavLinks"
+import WebsocketConnectionStatus from "components/WebsocketConnectionStatus"
+import wheel from "assets/wheel_inner.svg"
+import blackjack from "assets/blackjack.png"
+import SocialShare from "./social/SocialShare"
+import LoginBtn from "../auth/LoginBtn"
+import AppMixin from "../mixins/AppMixin"
+import LogoutBtn from "../auth/LogoutBtn"
+import Logo from "components/Logo"
 
-  export default {
+export default {
   name: "NavBarV2",
-    mixins: [AppMixin],
+  mixins: [AppMixin],
   components: {
+    Logo,
     LogoutBtn,
     LoginBtn,
     SocialShare,
     WebsocketConnectionStatus,
     NavLinks,
-    BtcUsd,
   },
   data() {
-    return { logo, blackjack, wheel }
+    return { blackjack, wheel }
   },
 }
 </script>

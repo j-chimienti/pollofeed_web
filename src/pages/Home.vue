@@ -1,7 +1,8 @@
 <template>
   <q-page>
     <div class="home">
-      <div class="row justify-center q-pa-md">
+      <div class="row justify-center">
+        <MobileBottomNav class="lt-sm" />
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
             <div class="col" style="max-width: 640px">
@@ -28,6 +29,7 @@ import SocialShare from "../components/social/SocialShare"
 import { OPEN_WEBSOCKET } from "../auth/actions"
 import LoginModal from "../auth/LoginModal"
 import { notifyInvoicePaid } from "src/services/notificationService"
+import MobileBottomNav from "components/MobileBottomNav"
 
 const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
 
@@ -54,6 +56,7 @@ export default {
       }, CHECK_INVOICE_INTERVAL)
 
       this.webSocketInterval = setInterval(() => {
+        console.log("check ws connection")
         if (!this.connectedToWebsocket) {
           console.log("reopen ws")
           this.$store.dispatch(OPEN_WEBSOCKET)
@@ -105,6 +108,7 @@ export default {
     }
   },
   components: {
+    MobileBottomNav,
     LoginModal,
     NavBarV2,
     SocialShare,

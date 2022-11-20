@@ -1,5 +1,11 @@
 import { DELAY_FEEDING } from "./actions"
-import { ADD_FEED_TOKEN, REMOVE_FEED_TOKEN, SET_DELAYED_FEEDING, SET_USE_TOKEN_NOW } from "./mutations"
+import {
+  ADD_FEED_TOKEN,
+  FEEDING_STARTED,
+  REMOVE_FEED_TOKEN,
+  SET_DELAYED_FEEDING,
+  SET_USE_TOKEN_NOW,
+} from "./mutations"
 import { FEED_TOKEN_KEY } from "src/constants"
 import { LocalStorage, Notify } from "quasar"
 import { FEEDINGS } from "src/store/mutations"
@@ -7,8 +13,7 @@ import { FEEDINGS } from "src/store/mutations"
 const makefeedTokens = () => {
   try {
     const f = LocalStorage.getItem(FEED_TOKEN_KEY)
-    if (Array.isArray(f))
-      return f.filter((item) => typeof item === 'string')
+    if (Array.isArray(f)) return f.filter((item) => typeof item === "string")
     else return []
   } catch (e) {
     return []
@@ -17,7 +22,8 @@ const makefeedTokens = () => {
 
 export const pollofeedModule = {
   getters: {
-    feedings: state => state.feedings,
+    fedInvoices: (state) => state.fedInvoices,
+    feedings: (state) => state.feedings,
     feedTokens: (state) => state.feedTokens,
     delayedFeedingResponse: (state) => state.delayedFeedingResponse,
     delayFeeding: (state) => state.delayFeeding,
@@ -26,6 +32,7 @@ export const pollofeedModule = {
   },
   state: {
     feedings: 1,
+    fedInvoices: [],
     delayFeeding: "not_delayed",
     feedTokens: makefeedTokens(),
     showFeedNow: null, // feed token to use now
@@ -33,7 +40,12 @@ export const pollofeedModule = {
     delayedFeedingResponse: null,
   },
   mutations: {
-    [FEEDINGS](s, f) { s.feedings = f},
+    [FEEDING_STARTED](s, { timeout, label }) {
+      s.fedInvoices = s.slice().concat({ timeout, label })
+    },
+    [FEEDINGS](s, f) {
+      s.feedings = f
+    },
     [SET_DELAYED_FEEDING](state, delayFeeding) {
       state.delayFeeding = delayFeeding
     },

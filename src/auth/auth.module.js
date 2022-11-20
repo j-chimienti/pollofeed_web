@@ -68,11 +68,9 @@ const actions = {
   [RESUME_SESSION]({ commit, dispatch }) {
     commit(REQUESTING_SESSION, true)
     return apiService.resumeSession()
-      .then((res) => res.json())
+      .then(res => res.json())
       .then((user) => onAuthSuccess({ commit, dispatch }, user))
-      .catch(err => {
-        console.log("error resume session", err)
-      })
+
   },
 
   [SIGNUP]({ commit, dispatch }, { password, email }) {

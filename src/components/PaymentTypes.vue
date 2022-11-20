@@ -1,10 +1,6 @@
 <template>
   <div>
-
-    <div v-if="loadingInvoice">
-      <h3 class="text-center">LOADING...</h3>
-    </div>
-    <div v-else>
+    <div>
       <q-tab-panels
         v-model="tab"
         animated
@@ -12,21 +8,28 @@
         style="background: #fff6ce; min-height: 300px"
       >
         <q-tab-panel name="INVOICE">
-
           <InvoiceModal v-if="invoiceUnpaid" />
-          <div v-else>
+          <q-form v-else ref="createInvoiceForm">
             <div class="row justify-center">
               <div class="col-12 col-md-3"></div>
               <div class="col-12 col-md-6">
-                <ButtonV3 class="q-mx-md" label="create invoice" @click.prevent="invoiceRequest()"/>
+                <ButtonV3
+                  class="q-mx-md"
+                  label="create invoice"
+                  :loading="loadingInvoice"
+                  type="submit"
+                  @click.prevent="invoiceRequest()"
+                />
               </div>
               <div class="col-12 col-md-3">
-              <q-input
-                label="feedings"
-                class="q-pb-md"
-                min="1"
-                max="50"
-                type="number" v-model.number="feedings"/>
+                <q-input
+                  label="feedings"
+                  class="q-pb-md"
+                  min="1"
+                  max="50"
+                  type="number"
+                  v-model.number="feedings"
+                />
                 <q-checkbox
                   label="Give me token to feed"
                   v-model="delayFeeding"
@@ -37,20 +40,14 @@
                   class="q-pr-md"
                 >
                   <q-tooltip
-                  >Receive token(s) to use at your convenience.</q-tooltip
+                    >Receive token(s) to use at your convenience.</q-tooltip
                   >
                 </q-checkbox>
               </div>
-
             </div>
-
-          </div>
+          </q-form>
           <div class="row justify-center q-my-lg">
-
-            <q-expansion-item
-              label="lnurl & lnaddr"
-              expand-separator
-            >
+            <q-expansion-item label="lnurl & lnaddr" expand-separator>
               <qrcode-vue
                 foreground="#8E1116"
                 background="#FFF6CE"
@@ -59,27 +56,27 @@
                 size="250"
                 level="H"
               />
-              <p>lnaddr: {{lightningAddress}}</p>
+              <p>lnaddr: {{ lightningAddress }}</p>
               <p>
-                lnurl: <a class="text-small" :href="'lightning:' + lnurl">{{lnurl}}</a>
+                lnurl:
+                <a class="text-small" :href="'lightning:' + lnurl">{{
+                  lnurl
+                }}</a>
               </p>
-              <br/>
-<!--              <p>or</p>-->
-<!--              <div class="text-h5">give token and feed later</div>-->
-<!--              <qrcode-vue-->
-<!--                foreground="#8E1116"-->
-<!--                background="#FFF6CE"-->
-<!--                :value="lnurlDelayed"-->
-<!--                margin="3"-->
-<!--                size="250"-->
-<!--                level="H"-->
-<!--              />-->
-
-
-
+              <br />
+              <!--              <p>or</p>-->
+              <!--              <div class="text-h5">give token and feed later</div>-->
+              <!--              <qrcode-vue-->
+              <!--                foreground="#8E1116"-->
+              <!--                background="#FFF6CE"-->
+              <!--                :value="lnurlDelayed"-->
+              <!--                margin="3"-->
+              <!--                size="250"-->
+              <!--                level="H"-->
+              <!--              />-->
             </q-expansion-item>
           </div>
-          <BitcoinPayment/>
+          <BitcoinPayment />
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>
       </q-tab-panels>
@@ -100,11 +97,16 @@
             :label="t.label"
           />
         </q-tabs>
-
       </div>
     </div>
 
-    <q-btn v-if="invoice" @click="SET_INVOICE(null)" label="clear invoice" size="sm" color="primary"/>
+    <q-btn
+      v-if="invoiceUnpaid"
+      @click="SET_INVOICE(null)"
+      label="clear invoice"
+      size="sm"
+      color="primary"
+    />
   </div>
 </template>
 
@@ -145,7 +147,6 @@ export default {
     }
   },
   computed: {
-
     tab: {
       get() {
         return this.paymentType
@@ -159,7 +160,7 @@ export default {
     invoiceRequest() {
       return this.INVOICE({
         delayFeeding: this.delayFeeding,
-        feedings: this.feedings
+        feedings: this.feedings,
       })
     },
     ...mapMutations([SET_DELAYED_FEEDING, SET_PAYMENT_TYPE]),

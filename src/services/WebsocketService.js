@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { WEBSOCKET_CLOSED } from "src/store/mutations"
+import _get from "lodash.get"
 
 export function WebsocketService(
   store,
@@ -8,23 +9,11 @@ export function WebsocketService(
 ) {
   this.ws = null
   this._send = (msg) => {
-    return new Promise((resolve) => {
-      const MSG =
-        typeof msg === "string"
-          ? JSON.stringify({ action: msg })
-          : typeof msg === "object"
-          ? JSON.stringify(msg)
-          : msg
-      if (this.ws.readyState !== 1) {
-        console.error("ws is not ready")
-        new WebsocketService(store, host, handleWebsocketMessage).then(() =>
-          this.ws.send(MSG)
-        )
-      } else {
-        this.ws.send(MSG)
-        resolve(MSG)
-      }
-    })
+    const rs = _get(this.ws, "readyState", -1)
+    if (rs === 1) {
+      this.ws.send(typeof msg === "string" ? msg : JSON.stringify(msg))
+    }
+    return this.ws.readyState
   }
 
   this.open = () => {
