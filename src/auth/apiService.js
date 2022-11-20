@@ -28,7 +28,9 @@ export async function oauthCallbackV2(provider, { code, state }) {
 }
 
 export async function resumeSession() {
-  return fetch(proxyUrl + "/api/auth/resumeSession")
+  return fetch(proxyUrl + "/api/auth/resumeSession").catch((err) => {
+    console.log("failed to resume session")
+  })
 }
 
 export async function signup(email, password) {
