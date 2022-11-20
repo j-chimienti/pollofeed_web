@@ -1,6 +1,11 @@
+const apiBaseUrl = process.env.API_BASE_URL
+const nodeEnv = process.env.NODE_ENV
 function getProxy() {
-  if (process.env.NODE_ENV === "development") return window.location.origin
-  return window.location.origin + "/api/?apiurl=https://api.pollofeed.com"
+  if (nodeEnv === "development") return window.location.origin
+  else {
+    const proxy = process.env.VUE_APP_PROXY_URL
+    return `${proxy}/api/?apiurl=${apiBaseUrl}`
+  }
 }
 
 const proxyUrl = getProxy()

@@ -56,7 +56,6 @@ export default {
       }, CHECK_INVOICE_INTERVAL)
 
       this.webSocketInterval = setInterval(() => {
-        console.log("check ws connection")
         if (!this.connectedToWebsocket) {
           console.log("reopen ws")
           this.$store.dispatch(OPEN_WEBSOCKET)
