@@ -41,7 +41,7 @@ export const pollofeedModule = {
   },
   mutations: {
     [FEEDING_STARTED](s, { timeout, label }) {
-      s.fedInvoices = s.slice().concat({ timeout, label })
+      s.fedInvoices = s.fedInvoices.slice().concat({ timeout, label })
     },
     [FEEDINGS](s, f) {
       s.feedings = f
