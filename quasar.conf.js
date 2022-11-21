@@ -7,8 +7,8 @@
 // https://v2.quasar.dev/quasar-cli/quasar-conf-js
 
 /* eslint-env node */
-const ESLintPlugin = require("eslint-webpack-plugin");
-const { configure } = require("quasar/wrappers");
+const ESLintPlugin = require("eslint-webpack-plugin")
+const { configure } = require("quasar/wrappers")
 
 module.exports = configure(function (ctx) {
   return {
@@ -21,7 +21,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: ["i18n", "axios", "vueLibs"],
+    boot: ["axios", "vueLibs"], // "i18n"
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ["app.scss"],
@@ -30,14 +30,14 @@ module.exports = configure(function (ctx) {
     extras: [
       // 'ionicons-v4',
       // 'mdi-v5',
-      'fontawesome-v5',
+      "fontawesome-v5",
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
       // "roboto-font", // optional, you are not bound to it
-     "material-icons", // optional, you are not bound to it
+      "material-icons", // optional, you are not bound to it
     ],
 
     // quasar.config.js
@@ -75,9 +75,9 @@ module.exports = configure(function (ctx) {
       chainWebpack(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
-        const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin");
-        chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin);
+          .use(ESLintPlugin, [{ extensions: ["js", "vue"] }])
+        const nodePolyfillWebpackPlugin = require("node-polyfill-webpack-plugin")
+        chain.plugin("node-polyfill").use(nodePolyfillWebpackPlugin)
       },
     },
 
@@ -99,7 +99,7 @@ module.exports = configure(function (ctx) {
         dark: "false",
       },
 
-      iconSet: 'material-icons', // Quasar icon set
+      iconSet: "material-icons", // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
       // For special cases outside of where the auto-import strategy can have an impact
@@ -133,7 +133,7 @@ module.exports = configure(function (ctx) {
       chainWebpackWebserver(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
       },
 
       middlewares: [
@@ -152,7 +152,7 @@ module.exports = configure(function (ctx) {
       chainWebpackCustomSW(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
       },
 
       manifest: {
@@ -238,15 +238,15 @@ module.exports = configure(function (ctx) {
       chainWebpackMain(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpackPreload(chain) {
         chain
           .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{ extensions: ["js"] }]);
+          .use(ESLintPlugin, [{ extensions: ["js"] }])
       },
     },
-  };
-});
+  }
+})

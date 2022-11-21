@@ -15,14 +15,15 @@
     "cypress": "cypress open",
     "cypress:open": "cypress open",
     "cypress:openprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress open",
-    "cypress:invoice": "cypress run --spec cypress/integration/invoice.js",
-    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --spec cypress/integration/invoice.js",
+    "cypress:invoice": "cypress run --spec cypress/e2e/pollofeed/invoice.cy.js",
+    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --spec cypress/e2e/pollofeed/invoice.cy.js",
     "dev": "quasar dev",
     "dev:electron": "quasar dev -m electron",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@vue-stripe/vue-stripe": "^4.4.4",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "fmtbtc": "^0.0.3",
