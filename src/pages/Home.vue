@@ -3,7 +3,7 @@
     <div class="home">
       <div class="row justify-center">
         <MobileBottomNav class="lt-sm" />
-<!--        <StripeCheckoutForm />-->
+        <!--        <StripeCheckoutForm />-->
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
             <div class="col" style="max-width: 640px">
@@ -16,6 +16,7 @@
         </q-card>
       </div>
       <LoginModal />
+      <CookiesEnabledModal />
     </div>
   </q-page>
 </template>
@@ -32,6 +33,7 @@ import LoginModal from "../auth/LoginModal"
 import { notifyInvoicePaid } from "src/services/notificationService"
 import MobileBottomNav from "components/MobileBottomNav"
 import StripeCheckoutForm from "components/StripeCheckoutForm"
+import CookiesEnabledModal from "components/CookiesEnabledModal"
 
 const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
 
@@ -109,6 +111,7 @@ export default {
     }
   },
   components: {
+    CookiesEnabledModal,
     StripeCheckoutForm,
     MobileBottomNav,
     LoginModal,
