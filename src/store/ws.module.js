@@ -28,8 +28,12 @@ const mutations = {
 
 const actions = {
   [OPEN_WEBSOCKET](store) {
-    const { commit } = store
-    return new WebsocketService(store, wsPath, websocketMessageFactory)
+    const { commit, getters } = store
+    const { sessionId } = getters
+    const ws = new WebsocketService(store, websocketMessageFactory)
+    const url = sessionId ? `${wsPath}?session=${sessionId}` : wsPath
+    return ws
+      .open(url)
       .then((ws) => {
         commit(WEBSOCKET_OPEN, ws)
         return ws

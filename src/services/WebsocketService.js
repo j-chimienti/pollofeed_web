@@ -2,11 +2,7 @@
 import { WEBSOCKET_CLOSED } from "src/store/mutations"
 import _get from "lodash.get"
 
-export function WebsocketService(
-  store,
-  host,
-  handleWebsocketMessage = console.log
-) {
+export function WebsocketService(store, handleWebsocketMessage = console.log) {
   this.ws = null
   this._send = (msg) => {
     const rs = _get(this.ws, "readyState", -1)
@@ -16,10 +12,10 @@ export function WebsocketService(
     return this.ws.readyState
   }
 
-  this.open = () => {
+  this.open = (url) => {
     return new Promise((resolve, reject) => {
-      console.log("open ws " + host)
-      this.ws = new WebSocket(host)
+      console.log("open ws " + url)
+      this.ws = new WebSocket(url)
       this.ws.onopen = () => {
         console.log("ws open")
         resolve(this)
@@ -39,5 +35,4 @@ export function WebsocketService(
       }
     })
   }
-  return this.open()
 }
