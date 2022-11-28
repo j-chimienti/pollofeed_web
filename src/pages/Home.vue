@@ -3,7 +3,6 @@
     <div class="home">
       <div class="row justify-center">
         <MobileBottomNav class="lt-sm" />
-        <!--        <StripeCheckoutForm />-->
         <q-card class="card-stream q-pa-md">
           <div class="row justify-center">
             <div class="col" style="max-width: 640px">
@@ -32,10 +31,8 @@ import { OPEN_WEBSOCKET } from "../auth/actions"
 import LoginModal from "../auth/LoginModal"
 import { notifyInvoicePaid } from "src/services/notificationService"
 import MobileBottomNav from "components/MobileBottomNav"
-import StripeCheckoutForm from "components/StripeCheckoutForm"
 import CookiesEnabledModal from "components/CookiesEnabledModal"
-
-const CHECK_INVOICE_INTERVAL = process.env.CHECK_INVOICE_INTERVAL
+import { CHECK_INVOICE_INTERVAL, STREAM_URL } from "src/constants"
 
 // import Hls from "hls.js"
 
@@ -61,7 +58,6 @@ export default {
 
       this.webSocketInterval = setInterval(() => {
         if (!this.connectedToWebsocket) {
-          console.log("reopen ws")
           this.$store.dispatch(OPEN_WEBSOCKET)
         }
       }, 5000)
@@ -104,15 +100,12 @@ export default {
   },
   data() {
     return {
-      STREAM_URL: `${process.env.STREAM_URL}?${new Date()}`,
-      // STREAM_URL: "https://stream.pollofeed.com?" + new Date(),
-      // STREAM_URL: "https://via.placeholder.com/640x480.png?text=pollofeed",
+      STREAM_URL,
       invoiceInterval: null,
     }
   },
   components: {
     CookiesEnabledModal,
-    StripeCheckoutForm,
     MobileBottomNav,
     LoginModal,
     NavBarV2,

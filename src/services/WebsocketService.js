@@ -14,7 +14,7 @@ export function WebsocketService(store, handleWebsocketMessage = console.log) {
 
   this.open = (url) => {
     return new Promise((resolve, reject) => {
-      console.log("open ws " + url)
+      console.log("open ws")
       this.ws = new WebSocket(url)
       this.ws.onopen = () => {
         console.log("ws open")

@@ -43,6 +43,12 @@ export function websocketMessageFactory(store, json) {
       const [_, ph] = message.split(":")
       store.commit(REMOVE_FEED_TOKEN, ph)
       store.commit(SET_INVOICE, null)
+    } else if (message.includes("failed to create invoice")) {
+      Notify.create({
+        type: "negative",
+        message: "failed to create invoice",
+      })
+      store.commit(CLEAR_LOADING_INVOICE)
     }
   }
   if (feedingStarted !== null) {

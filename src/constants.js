@@ -23,3 +23,9 @@ export const LocalStorageKeys = {
   PAYMENT_TYPE_KEY: "PAYMENT_TYPE",
   AUTH_PROVIDER: "AUTH_PROVIDER",
 }
+
+export const CHECK_INVOICE_INTERVAL = parseInt(
+  process.env.CHECK_INVOICE_INTERVAL
+)
+// add random param so no cache
+export const STREAM_URL = `${process.env.STREAM_URL}?${new Date()}`
