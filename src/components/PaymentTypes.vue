@@ -64,16 +64,6 @@
                 }}</a>
               </p>
               <br />
-              <!--              <p>or</p>-->
-              <!--              <div class="text-h5">give token and feed later</div>-->
-              <!--              <qrcode-vue-->
-              <!--                foreground="#8E1116"-->
-              <!--                background="#FFF6CE"-->
-              <!--                :value="lnurlDelayed"-->
-              <!--                margin="3"-->
-              <!--                size="250"-->
-              <!--                level="H"-->
-              <!--              />-->
             </q-expansion-item>
           </div>
           <BitcoinPayment />

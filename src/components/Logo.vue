@@ -1,6 +1,6 @@
 <template>
   <router-link :to="{ name: 'home' }">
-    <img :src="logo" alt="Feed" :width="width" />
+    <q-img :src="logo" :width="imgWidth" />
   </router-link>
 </template>
 <script>
@@ -9,9 +9,9 @@ import logo from "../assets/img/logo.svg"
 export default {
   name: "Logo",
   props: {
-    width: {
-      type: Number,
-      default: 200,
+    imgWidth: {
+      type: String,
+      default: "200px",
     },
   },
   data() {
@@ -19,13 +19,4 @@ export default {
   },
 }
 </script>
-<style scoped>
-@media all and (max-width: 1700px) {
-}
-
-@media all and (max-width: 1400px) {
-}
-
-@media all and (max-width: 1200px) {
-}
-</style>
+<style scoped></style>

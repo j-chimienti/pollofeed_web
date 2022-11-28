@@ -29,3 +29,5 @@ export const CHECK_INVOICE_INTERVAL = parseInt(
 )
 // add random param so no cache
 export const STREAM_URL = `${process.env.STREAM_URL}?${new Date()}`
+
+export const LIGHTNING_URL = process.env.LIGHTNING_URL

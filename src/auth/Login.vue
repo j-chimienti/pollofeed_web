@@ -38,7 +38,12 @@
         ]"
       />
 
-      <q-btn @click="login" :label="loginType" color="primary" />
+      <q-btn
+        @click="login"
+        :label="loginType"
+        color="primary"
+        :loading="loadingLogin"
+      />
 
       <div class="q-mt-md">
         <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">
@@ -63,7 +68,7 @@ export default {
   name: "Login",
   components: { SocialAuth },
   data() {
-    return { password: "", email: "", passwordVerify: "" }
+    return { password: "", email: "", passwordVerify: "", loadingLogin: false }
   },
   mixins: [AppMixin],
   computed: {
@@ -76,21 +81,31 @@ export default {
       const { password, email, loginType } = this
       this.$refs.loginForm.validate().then((success) => {
         if (success) {
+          this.loadingLogin = true
           if (loginType === "signup")
-            return this.SIGNUP({ password, email }).catch((err) => {
-              this.$q.notify({
-                message: "signup error " + err,
-                type: "negative",
+            return this.SIGNUP({ password, email })
+              .catch((err) => {
+                this.$q.notify({
+                  message: "signup error " + err,
+                  type: "negative",
+                })
               })
-            })
+              .finally(() => {
+                this.loadingLogin = false
+              })
           else
-            return this.LOGIN({ password, email }).catch((err) => {
-              this.$q.notify({
-                message: "Login Error " + err,
-                type: "negative",
+            return this.LOGIN({ password, email })
+              .catch((err) => {
+                this.$q.notify({
+                  message: "Login Error " + err,
+                  type: "negative",
+                })
               })
-            })
+              .finally(() => {
+                this.loadingLogin = false
+              })
         } else {
+          this.loadingLogin = false
           this.$q.notify({
             message: "Invalid request",
             type: "negative",

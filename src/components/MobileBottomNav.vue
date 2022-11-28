@@ -2,7 +2,7 @@
   <div>
     <q-tabs v-model="tab" class="text-teal">
       <q-tab>
-        <Logo :width="65" />
+        <Logo img-width="65px" />
       </q-tab>
       <q-tab name="mails">
         <LoginBtn v-if="!authenticated" />

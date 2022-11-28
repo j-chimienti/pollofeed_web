@@ -21,7 +21,7 @@ const routes = [
   {
     path: "/test",
     name: "test",
-    component: () => import("../auth/TestPage.vue")
+    component: () => import("../components/SplashScreen"),
   },
 
   // Always leave this as last one,
