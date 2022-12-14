@@ -122,12 +122,11 @@ export function websocketMessageFactory(store, json) {
 
 function checkForLabel(store, label, timeout) {
   setTimeout(() => {
-    console.log(store.getters.fedInvoices, label)
     const foundOpt = store.getters.fedInvoices.find(({ label, timeout }) => {
       return label === label
     })
     if (!foundOpt) {
-      Notify.create("Feeder has not feed, may be down")
+     // Notify.create("Feeder has not feed, may be down")
     }
   }, timeout)
 }
