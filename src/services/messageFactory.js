@@ -23,7 +23,6 @@ export function websocketMessageFactory(store, json) {
   const {
     success = false,
     invoice = null,
-    // todayOrderCount = null,
     error = null,
     orders = null,
     // bitcoinAddress = null,
@@ -32,7 +31,7 @@ export function websocketMessageFactory(store, json) {
     // {"time": 1663758020.2687995, "label": "pollofeed.com,pollofeed,OCS1b0-Gg9g=", "seconds": 10}
     feedingStarted = null,
     invoicePaid = null, //  ListInvoice.label
-    notification = null,
+    notification = null, // string, notifications from backend similar to messages
     tokens = null,
     message = null,
   } = json
@@ -42,6 +41,7 @@ export function websocketMessageFactory(store, json) {
       type: "warning",
       message: notification,
       timeout: 60 * 1000,
+      dismissible: true,
     })
   }
   if (message !== null) {
