@@ -41,7 +41,7 @@ export function websocketMessageFactory(store, json) {
       type: "warning",
       message: notification,
       timeout: 60 * 1000,
-      dismissible: true,
+      closeBtn: true,
     })
   }
   if (message !== null) {
