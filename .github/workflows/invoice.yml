@@ -15,10 +15,8 @@ jobs:
           node-version: '12.22.6'
       - name: install dependencies
         run: npm i
-      - name: npm run cypress:invoice
-        env:
-          CYPRESS_BASE_URL: https://pollofeed.com
-        run: npm run cypress:invoice
+      - name: npm run cypress:invoiceprod
+        run: npm run cypress:invoiceprod
       - name: send telegram message on push
         if: failure()
         uses: appleboy/telegram-action@master

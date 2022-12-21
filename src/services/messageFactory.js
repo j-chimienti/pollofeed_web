@@ -39,6 +39,7 @@ export function websocketMessageFactory(store, json) {
 
   if (notification !== null) {
     Notify.create({
+      type: "warning",
       message: notification,
       timeout: 60 * 1000,
     })
