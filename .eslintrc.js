@@ -3,6 +3,16 @@ module.exports = {
   // This option interrupts the configuration hierarchy at this file
   // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
   root: true,
+  overrides: [
+    {
+      files: ['**/*.cy.{js,jsx,ts,tsx}'],
+      extends: [
+        // Add Cypress-specific lint rules, globals and Cypress plugin
+        // See https://github.com/cypress-io/eslint-plugin-cypress#rules
+        'plugin:cypress/recommended',
+      ],
+    },
+  ],
 
   parserOptions: {
     parser: '@babel/eslint-parser',

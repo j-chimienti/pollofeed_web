@@ -32,11 +32,17 @@ export function websocketMessageFactory(store, json) {
     // {"time": 1663758020.2687995, "label": "pollofeed.com,pollofeed,OCS1b0-Gg9g=", "seconds": 10}
     feedingStarted = null,
     invoicePaid = null, //  ListInvoice.label
-
+    notification = null,
     tokens = null,
     message = null,
   } = json
 
+  if (notification !== null) {
+    Notify.create({
+      message: notification,
+      timeout: 60 * 1000,
+    })
+  }
   if (message !== null) {
     //{"success":true,"message":"NOT_FOUND:2ad0d1624d046fb088bd4133761010eeb86cbf3bd0c772d78d47880a71c45f66"}
     if (message.startsWith("NOT_FOUND:")) {
@@ -126,7 +132,7 @@ function checkForLabel(store, label, timeout) {
       return label === label
     })
     if (!foundOpt) {
-     // Notify.create("Feeder has not feed, may be down")
+      // Notify.create("Feeder has not feed, may be down")
     }
   }, timeout)
 }

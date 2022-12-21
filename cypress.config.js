@@ -1,15 +1,23 @@
-const { defineConfig } = require('cypress')
+
+const { injectQuasarDevServerConfig } = require('@quasar/quasar-app-extension-testing-e2e-cypress/cct-dev-server');
+const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
-  env: {
-    HOST: 'localhost:8080',
-    CYPRESS_BASE_URL: 'localhost:8080',
-  },
+  fixturesFolder: 'test/cypress/fixtures',
+  screenshotsFolder: 'test/cypress/screenshots',
+  videosFolder: 'test/cypress/videos',
+  video: true,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
-    },
+    // setupNodeEvents(on, config) {},
+    baseUrl: 'http://localhost:8080/',
+    supportFile: 'test/cypress/support/e2e.js',
+    specPattern: 'test/cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
   },
-})
+  component: {
+    // setupNodeEvents(on, config) {},
+    supportFile: 'test/cypress/support/component.js',
+    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
+    indexHtmlFile: 'test/cypress/support/component-index.html',
+    devServer: injectQuasarDevServerConfig(),
+  },
+});

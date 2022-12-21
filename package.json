@@ -12,14 +12,18 @@
     "build:electron": "quasar build -m electron",
     "build:web": "quasar build",
     "build:ios": "quasar build --mode capacitor --target ios --ide",
-    "cypress": "cypress open",
-    "cypress:open": "cypress open",
+    "cypress": "CYPRESS_BASE_URL=http://localhost:8080 cypress open",
+    "cypress:open": "CYPRESS_BASE_URL=http://localhost:8080 cypress open",
     "cypress:openprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress open",
-    "cypress:invoice": "cypress run --spec cypress/e2e/pollofeed/invoice.cy.js",
-    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --spec cypress/e2e/pollofeed/invoice.cy.js",
+    "cypress:invoice": "CYPRESS_BASE_URL=http://localhost:8080 cypress run --spec test/cypress/e2e/pollofeed/invoice.cy.js",
+    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --spec test/cypress/e2e/pollofeed/invoice.cy.js",
     "dev": "quasar dev",
     "dev:electron": "quasar dev -m electron",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
+    "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress open --e2e\"",
+    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:8080 \"cypress run --e2e\"",
+    "test:component": "cross-env NODE_ENV=test cypress open --component",
+    "test:component:ci": "cross-env NODE_ENV=test cypress run --component"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -40,10 +44,11 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",
     "@quasar/app": "^3.3.3",
+    "@quasar/quasar-app-extension-testing-e2e-cypress": "^5.0.0-beta.10",
     "@vue/cli-plugin-eslint": "~4.5.4",
     "@vue/devtools": "^5.3.4",
     "@vue/eslint-config-prettier": "^6.0.0",
-    "cypress": "^10.11.0",
+    "cypress": "^11.2.0",
     "dotenv": "^10.0.0",
     "electron": "^19.0.3",
     "electron-packager": "^15.2.0",
@@ -54,7 +59,8 @@
     "lint-staged": "^9.5.0",
     "node-polyfill-webpack-plugin": "^1.1.4",
     "prettier": "^2.2.1",
-    "workbox-webpack-plugin": "^6.5.3"
+    "workbox-webpack-plugin": "^6.5.3",
+    "eslint-plugin-cypress": "^2.12.1"
   },
   "browserslist": [
     "last 10 Chrome versions",
