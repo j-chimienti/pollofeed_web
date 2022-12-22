@@ -48,25 +48,35 @@
           </q-form>
           <div class="row justify-center q-my-lg">
             <q-expansion-item label="lnurl & lnaddr" expand-separator>
-              <qrcode-vue
-                foreground="#8E1116"
-                background="#FFF6CE"
-                :value="lnurl"
-                margin="3"
-                size="250"
-                level="H"
-              />
-              <p>lnaddr: {{ lightningAddress }}</p>
-              <p>
-                lnurl:
-                <a class="text-small" :href="'lightning:' + lnurl">{{
-                  lnurl
-                }}</a>
-              </p>
+              <q-card style="width: 300px" class="q-my-lg">
+                <vue-qr :text="lnurl" :size="250" colorDark="#8E1116"></vue-qr>
+                <q-card-section>
+                  <div class="text-h6">Scan LNURL in compatible wallet</div>
+                  <!--                  <div class="text-subtitle2"></div>-->
+                </q-card-section>
+              </q-card>
+              <q-card style="width: 300px">
+                <vue-qr
+                  :text="lightningAddress"
+                  :size="250"
+                  colorDark="#8E1116"
+                ></vue-qr>
+                <q-card-section>
+                  <div class="text-h6">
+                    Scan Address: {{ lightningAddress }}
+                  </div>
+                  <!--                  <div class="text-subtitle2">-->
+                  <!--                    -->
+                  <!--                    Scan qr or enter address in compatible wallet-->
+                  <!--                  </div>-->
+                </q-card-section>
+              </q-card>
               <br />
             </q-expansion-item>
+            <!--            <q-expansion-item label="btc" expand-separator>-->
+            <!--              <BitcoinPayment />-->
+            <!--            </q-expansion-item>-->
           </div>
-          <!--          <BitcoinPayment />-->
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>
       </q-tab-panels>

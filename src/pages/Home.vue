@@ -14,6 +14,7 @@
           <PaymentTypes />
         </q-card>
       </div>
+
       <LoginModal />
       <CookiesEnabledModal />
     </div>

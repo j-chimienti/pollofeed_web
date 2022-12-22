@@ -17,6 +17,7 @@ import {
 import { RESUME_SESSION } from "../auth/actions"
 import { LOGIN_TYPE } from "src/auth/mutations"
 
+import logo from "../assets/img/logo.png"
 export default {
   name: "AppMixin",
   data() {
@@ -24,6 +25,7 @@ export default {
       lnurl: LIGHTNING_URL,
       displayUrl: "lightning:" + LIGHTNING_URL.toUpperCase(),
       PAYMENT_TYPES,
+      logo,
       paymentTypes: PAYMENT_TYPES,
       lightningAddress: process.env.LIGHTNING_ADDRESS,
     }

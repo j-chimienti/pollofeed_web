@@ -2,17 +2,13 @@
   <div class="text-center" style="width: 100%">
     <div class="row justify-center">
       <div class="col-12 col-md-6">
-        <a v-bind:href="href" class="full-height" ref="bolt11qrcode">
-          <qrcode-vue
-
-            :v-if="bolt11"
-            foreground="#8E1116"
-            background="#FFF6CE"
-            :value="bolt11"
-            margin="0"
-            size="250"
-            level="H"
-          />
+        <a v-bind:href="href" class="full-height pointer" ref="bolt11qrcode">
+          <vue-qr
+            :logoSrc="logo"
+            :text="bolt11"
+            :size="250"
+            colorDark="#8E1116"
+          ></vue-qr>
         </a>
       </div>
       <div class="col-12 col-md-4 text-center">
@@ -101,8 +97,6 @@ export default {
   },
   mixins: [AppMixin],
   computed: {
-
-
     href() {
       return `lightning:${this.bolt11}`.toLowerCase()
     },
@@ -114,7 +108,7 @@ export default {
   data() {
     return {
       updateDurationInterval: null,
-      copyText: "copy"
+      copyText: "copy",
     }
   },
 }
