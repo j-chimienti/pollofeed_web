@@ -1,6 +1,11 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex"
-import { DELAY_FEEDING, GET_INVOICE, INVOICE } from "../store/actions"
+import {
+  BITCOIN_INVOICE,
+  DELAY_FEEDING,
+  GET_INVOICE,
+  INVOICE,
+} from "../store/actions"
 import { LIGHTNING_URL, PAYMENT_TYPES } from "../constants"
 import {
   FEEDINGS,
@@ -24,7 +29,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions([INVOICE, GET_INVOICE, DELAY_FEEDING, RESUME_SESSION]),
+    ...mapActions([
+      INVOICE,
+      GET_INVOICE,
+      DELAY_FEEDING,
+      RESUME_SESSION,
+      BITCOIN_INVOICE,
+    ]),
     ...mapMutations([
       SET_USE_TOKEN_NOW,
       SET_INVOICE,

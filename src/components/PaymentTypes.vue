@@ -66,7 +66,7 @@
               <br />
             </q-expansion-item>
           </div>
-          <BitcoinPayment />
+          <!--          <BitcoinPayment />-->
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>
       </q-tab-panels>

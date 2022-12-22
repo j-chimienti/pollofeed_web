@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import {
   ADD_FEED_TOKEN,
+  BITCOIN_ADDRESS,
   BTC_USD,
   CLEAR_LOADING_INVOICE,
   FEEDING_STARTED,
@@ -18,6 +19,7 @@ import {
   notifyInvoicePaid,
 } from "src/services/notificationService"
 import { parseToken } from "src/services/orderService"
+import { saveBTCPayServerInvoice } from "src/services/localStorageService"
 
 export function websocketMessageFactory(store, json) {
   const {
@@ -25,7 +27,7 @@ export function websocketMessageFactory(store, json) {
     invoice = null,
     error = null,
     orders = null,
-    // bitcoinAddress = null,
+    bitcoinAddress = null,
     delayedFeedingResponse = null,
     btc_usd = null,
     // {"time": 1663758020.2687995, "label": "pollofeed.com,pollofeed,OCS1b0-Gg9g=", "seconds": 10}
@@ -34,6 +36,7 @@ export function websocketMessageFactory(store, json) {
     notification = null, // string, notifications from backend similar to messages
     tokens = null,
     message = null,
+    btcInvoice = null, // BTCPayServerInvoice
   } = json
 
   if (notification !== null) {
@@ -76,7 +79,7 @@ export function websocketMessageFactory(store, json) {
   if (tokens !== null) {
     tokens.forEach((t) => store.commit(ADD_FEED_TOKEN, t))
   }
-  // if (bitcoinAddress) store.commit(BITCOIN_ADDRESS, bitcoinAddress)
+  if (bitcoinAddress) store.commit(BITCOIN_ADDRESS, bitcoinAddress)
   if (error) store.commit(CLEAR_LOADING_INVOICE)
   if (invoice) {
     store.commit(CLEAR_LOADING_INVOICE)
@@ -100,6 +103,10 @@ export function websocketMessageFactory(store, json) {
       notifyExpired(invoice.label)
       tokens.forEach((t) => store.commit(REMOVE_FEED_TOKEN, t))
     }
+  }
+  if (btcInvoice) {
+    saveBTCPayServerInvoice(btcInvoice)
+    window.open(btcInvoice.url)
   }
   if (invoicePaid) store.dispatch(INVOICE_PAID, invoicePaid)
   if (btc_usd) store.commit(BTC_USD, btc_usd)

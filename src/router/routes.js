@@ -21,7 +21,7 @@ const routes = [
   {
     path: "/test",
     name: "test",
-    component: () => import("../components/SplashScreen"),
+    component: () => import("../pages/TestPage"),
   },
 
   // Always leave this as last one,

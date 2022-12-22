@@ -2,6 +2,10 @@
 import { WEBSOCKET_CLOSED } from "src/store/mutations"
 import _get from "lodash.get"
 
+export function bitcoinInvoice(email, ws) {
+  return ws._send(JSON.stringify({ WsBitcoinInvoice: null, email }))
+}
+
 export function WebsocketService(store, handleWebsocketMessage = console.log) {
   this.ws = null
   this._send = (msg) => {

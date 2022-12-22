@@ -7,15 +7,25 @@ import {
   SET_INVOICE,
   SET_PAYMENT_TYPE,
 } from "src/store/mutations"
-import { GET_INVOICE, INVOICE, INVOICE_PAID } from "src/store/actions"
+import {
+  BITCOIN_INVOICE,
+  GET_INVOICE,
+  INVOICE,
+  INVOICE_PAID,
+} from "src/store/actions"
 import { LIGHTNING_INVOICE_STATUS, LocalStorageKeys } from "src/constants"
 import _get from "lodash.get"
 import { LocalStorage, Notify } from "quasar"
 import { satsToUsd } from "src/services/moneyUtils"
 import {
+  loadBitcoinPrice,
+  loadBTCPayServerInvoice,
   loadIvoiceFromStorage,
   loadPaymentTypeFromStorage,
-} from "src/store/localStorageHelper"
+  saveBitcoinPrice,
+  savePaymentType,
+} from "src/services/localStorageService"
+import { bitcoinInvoice } from "src/services/WebsocketService"
 
 const fmtbtc = require("fmtbtc")
 const { msat2sat } = fmtbtc
@@ -48,8 +58,9 @@ const state = {
   paymentType,
   invoice: loadIvoiceFromStorage(),
   loadingInvoice: false,
-  btc_usd: 1,
+  btc_usd: loadBitcoinPrice(),
   bitcoinAddress: null,
+  btcPayServerInvoice: loadBTCPayServerInvoice(),
 }
 
 const mutations = {
@@ -66,11 +77,11 @@ const mutations = {
   },
   [BTC_USD](state, btc_usd) {
     state.btc_usd = btc_usd
+    saveBitcoinPrice(btc_usd)
   },
   [SET_PAYMENT_TYPE](state, paymentType) {
     state.paymentType = paymentType
-    if (typeof paymentType === "string")
-      LocalStorage.set(LocalStorageKeys.PAYMENT_TYPE_KEY, paymentType)
+    if (typeof paymentType === "string") savePaymentType(paymentType)
   },
   [DELAYED_INVOICE_PAID](state) {
     state.paymentType = "TOKENS"
@@ -96,21 +107,21 @@ const actions = {
       // ignore expired and paid
     }
   },
+  [BITCOIN_INVOICE]({ getters }, email) {
+    return bitcoinInvoice(email, getters.websocket)
+  },
   [INVOICE]({ getters, commit }, req) {
     const { delayFeeding, feedings } = req
-    if (!getters.websocket) return Notify.create("websocket disconnected")
-    else {
-      const r = getters.websocket._send({
-        WsRequestLightingInvoice: null,
-        delayFeeding,
-        feedings,
-      })
-      if (r === 1) {
-        //loading
-        commit(LOADING_INVOICE)
-      } else {
-        Notify.create("cannot create invoice")
-      }
+    const r = getters.websocket._send({
+      WsRequestLightingInvoice: null,
+      delayFeeding,
+      feedings,
+    })
+    if (r === 1) {
+      //loading
+      commit(LOADING_INVOICE)
+    } else {
+      Notify.create("cannot create invoice")
     }
   },
 }
