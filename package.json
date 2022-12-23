@@ -45,7 +45,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",
     "@quasar/app": "^3.3.3",
-    "@vue/cli-plugin-eslint": "~4.5.4",
+    "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/devtools": "^5.3.4",
     "@vue/eslint-config-prettier": "^6.0.0",
     "cypress": "12.2.0",
