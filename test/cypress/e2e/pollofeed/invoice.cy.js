@@ -5,8 +5,8 @@ handleErrors()
 describe("pollofeed", () => {
   it("can create invoice", () => {
     cy.visit("/")
-    cy.dataCy("liveStream").should("be.visible")
     cy.dataCy("wsConnected")
+    // cy.dataCy("liveStream").should("be.visible")
     cy.dataCy("createLightningInvoiceButton").click()
     cy.dataCy("copyBolt11").should("be.visible")
     cy.dataCy("shareBolt11").should("be.visible")
