@@ -13,23 +13,34 @@
       </div>
       <div class="col-12 col-md-4 text-center">
         <p>
-          <span v-if="feedPriceUSD" class="feed-price-usd">{{
-            feedPriceUSD
-          }}</span>
+          <span
+            v-if="feedPriceUSD"
+            data-cy="feedPrice"
+            class="feed-price-usd"
+            >{{ feedPriceUSD }}</span
+          >
           <span v-if="timeRemaining">
             <q-icon name="timer"></q-icon>
             <span style="width: 2rem">{{ timeRemaining }}</span>
           </span>
         </p>
         <p>
-          <CopyBtn :label="copyText" @click="copyPaymentRequest" />
+          <CopyBtn
+            :label="copyText"
+            data-cy="copyBolt11"
+            @click="copyPaymentRequest"
+          />
           <a :href="href">
-            <CopyBtn label="share" />
+            <CopyBtn label="share" data-cy="shareBolt11" />
           </a>
         </p>
-        <p @click="copyPaymentRequest" class="bolt11" id="bolt11">
-          {{ bolt11.slice(0, 20) }}...
-        </p>
+        <q-input
+          disabled
+          @click="copyPaymentRequest"
+          class="bolt11"
+          data-cy="bolt11"
+          :model-value="bolt11"
+        />
       </div>
       <div class="col-12 col-md-4"></div>
     </div>
@@ -38,7 +49,7 @@
 
 <script>
 import QrcodeVue from "qrcode.vue"
-import { copyToClipboard, openURL } from "quasar"
+import { copyToClipboard, Notify, openURL } from "quasar"
 import CopyBtn from "./CopyBtn"
 import ButtonV2 from "./ButtonV2"
 import _get from "lodash.get"
@@ -65,10 +76,7 @@ export default {
     },
     copyPaymentRequest() {
       copyToClipboard(this.bolt11)
-      this.copyText = "copied"
-      setTimeout(() => {
-        this.copyText = "copy"
-      }, 2000)
+      Notify.create("copied")
     },
     updateExp() {
       return setInterval(() => {

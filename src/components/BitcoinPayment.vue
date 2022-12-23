@@ -1,18 +1,21 @@
 <template>
-  <div>
-    <q-form @submit="sendBitcoinInvoice" ref="btcInvoiceForm">
+  <div class="q-pa-md" style="max-width: 400px">
+    <q-form
+      @submit="sendBitcoinInvoice"
+      ref="btcInvoiceForm"
+      class="q-gutter-md"
+    >
       <q-input
         v-model="emailForBitcoinInvoice"
         type="email"
         placeholder="email"
         required
+        hint="You will receive tokens in an email"
       />
-      <q-btn color="primary" type="submit">Generate address</q-btn>
-      <p>
-        Submit email to generate address. You will receive a token via email
-      </p>
+      <div>
+        <q-btn color="primary" type="submit" label="Generate address" />
+      </div>
     </q-form>
-    <a v-if="bitcoinAddress" :href="href">{{ bitcoinAddress }}</a>
   </div>
 </template>
 

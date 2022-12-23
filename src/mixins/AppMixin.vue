@@ -17,7 +17,7 @@ import {
 import { RESUME_SESSION } from "../auth/actions"
 import { LOGIN_TYPE } from "src/auth/mutations"
 
-import logo from "../assets/img/logo.png"
+import logo from "../assets/img/PF/PF_profile_01.jpg"
 export default {
   name: "AppMixin",
   data() {

@@ -16,6 +16,7 @@
                 <ButtonV3
                   class="q-mx-md"
                   label="create invoice"
+                  data-cy="createLightningInvoiceButton"
                   :loading="loadingInvoice"
                   type="submit"
                   @click.prevent="invoiceRequest()"
@@ -65,17 +66,13 @@
                   <div class="text-h6">
                     Scan Address: {{ lightningAddress }}
                   </div>
-                  <!--                  <div class="text-subtitle2">-->
-                  <!--                    -->
-                  <!--                    Scan qr or enter address in compatible wallet-->
-                  <!--                  </div>-->
                 </q-card-section>
               </q-card>
               <br />
             </q-expansion-item>
-            <!--            <q-expansion-item label="btc" expand-separator>-->
-            <!--              <BitcoinPayment />-->
-            <!--            </q-expansion-item>-->
+            <q-expansion-item label="btc" expand-separator>
+              <BitcoinPayment />
+            </q-expansion-item>
           </div>
         </q-tab-panel>
         <q-tab-panel name="TOKENS"><DelayFeeding /></q-tab-panel>

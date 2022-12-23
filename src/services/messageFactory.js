@@ -10,7 +10,7 @@ import {
   SET_ORDERS,
   SET_PAYMENT_TYPE,
 } from "../store/mutations"
-import { Notify } from "quasar"
+import { Notify, openURL } from "quasar"
 import { LIGHTNING_INVOICE_STATUS } from "src/constants"
 import { INVOICE_PAID } from "src/store/actions"
 import { SET_USE_TOKEN_NOW } from "src/store/mutations"
@@ -106,7 +106,7 @@ export function websocketMessageFactory(store, json) {
   }
   if (btcInvoice) {
     saveBTCPayServerInvoice(btcInvoice)
-    window.open(btcInvoice.url)
+    openURL(btcInvoice.url)
   }
   if (invoicePaid) store.dispatch(INVOICE_PAID, invoicePaid)
   if (btc_usd) store.commit(BTC_USD, btc_usd)
