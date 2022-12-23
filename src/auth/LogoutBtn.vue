@@ -1,5 +1,6 @@
 <template>
   <q-btn
+    data-cy="logoutBtn"
     @click="$store.dispatch('LOGOUT')"
     color="secondary"
     :label="'logout ' + email"

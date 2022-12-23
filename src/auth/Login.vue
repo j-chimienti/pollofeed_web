@@ -1,7 +1,12 @@
 <template>
   <q-card class="q-px-lg loginCard text-dark">
     <SocialAuth />
-    <q-form @submit="login" class="q-my-lg text-center" ref="loginForm">
+    <q-form
+      @submit="login"
+      class="q-my-lg text-center"
+      ref="loginForm"
+      data-cy="loginForm"
+    >
       <q-input
         type="email"
         placeholder="email"
