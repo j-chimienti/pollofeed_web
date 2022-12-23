@@ -1,5 +1,6 @@
 <template>
   <div class="q-pa-md" style="max-width: 400px">
+    <p>$5.00 for 75 tokens <small>sent by email</small></p>
     <q-form
       @submit="sendBitcoinInvoice"
       ref="btcInvoiceForm"
@@ -10,7 +11,6 @@
         type="email"
         placeholder="email"
         required
-        hint="You will receive tokens in an email"
       />
       <div>
         <q-btn color="primary" type="submit" label="Generate address" />
