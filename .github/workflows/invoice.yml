@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: '16.16.0'
       - name: install dependencies
-        run: npm i
+        run: yarn install
       - name: npm run cypress:invoiceprod
         run: npm run cypress:invoiceprod
       - name: send telegram message on push
