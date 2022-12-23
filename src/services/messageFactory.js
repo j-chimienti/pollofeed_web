@@ -111,7 +111,6 @@ export function websocketMessageFactory(store, json) {
   if (invoicePaid) store.dispatch(INVOICE_PAID, invoicePaid)
   if (btc_usd) store.commit(BTC_USD, btc_usd)
   if (orders) store.commit(SET_ORDERS, orders)
-  // if (todayOrderCount) store.commit("todayOrderCount", todayOrderCount)
   // {"success":true,"delayedFeedingResponse":{"success":true,"token":" lfQ/5r7rkBNZOH8z+DBqHA==","message":"Used feed token", invoiceLabel: "label"}}
   if (delayedFeedingResponse) {
     const {

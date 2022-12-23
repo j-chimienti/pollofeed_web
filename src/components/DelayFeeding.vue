@@ -1,5 +1,5 @@
 <template>
-  <div class="delay-feeding" >
+  <div class="delay-feeding">
     <p style="font-size: 1.25rem">My Tokens</p>
     <div v-if="showFeedNow">
       <div @click="feed(showFeedNow)" class="row cursor-pointer justify-center">
@@ -112,7 +112,10 @@
     </div>
     <div v-else>
       <div class="row flex justify-around">
-        <div v-if="feedTokens?.length" class="col-md-8 q-pa-md feedTokens-container">
+        <div
+          v-if="feedTokens?.length"
+          class="col-md-8 q-pa-md feedTokens-container"
+        >
           <div
             class="row justify-between items-center"
             v-for="feedToken in feedTokens"
@@ -145,6 +148,9 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <q-btn icon="save" label="export tokens" @click="exportTokens" />
+    </div>
   </div>
 </template>
 
@@ -154,6 +160,7 @@ import AppMixin from "../mixins/AppMixin"
 import ButtonV2 from "./ButtonV2"
 import get from "lodash.get"
 import ButtonV3 from "components/ButtonV3"
+import { exportFile, Notify } from "quasar"
 
 export default {
   name: "DelayFeeding",
@@ -163,14 +170,20 @@ export default {
     return { manualFeedToken: "", disabledBtn: false }
   },
   methods: {
+    exportTokens() {
+      const contents = `token,url\n${this.feedTokens
+        .map((t) => `${t},https://pollofeed.com/?token=${t}`)
+        .join("\n")}`
+      const success = exportFile("pollofeedTokens.csv", contents)
+      if (!success) Notify.create("failed")
+    },
     manualFeed() {
       const token = this.manualFeedToken.trim()
       return this.feed(token)
     },
     removeToken(feedToken) {
       let label = feedToken
-      if (typeof feedToken === "object")
-        label = get(feedToken, "label", "")
+      if (typeof feedToken === "object") label = get(feedToken, "label", "")
       if (label) return this.$store.commit(REMOVE_FEED_TOKEN, label)
     },
     feed(token) {
@@ -181,11 +194,10 @@ export default {
 </script>
 
 <style scoped>
-
 .feedToken {
   min-width: 108px;
   height: 37px;
-  border: 2px solid #8E1116;
+  border: 2px solid #8e1116;
   border-radius: 50px;
 }
 
@@ -197,20 +209,18 @@ export default {
   border-radius: 55px;
 }
 
-  .feedTokens-container {
+.feedTokens-container {
+  width: 411px;
+  height: 159px;
 
-    width: 411px;
-    height: 159px;
+  overflow-y: scroll;
 
-    overflow-y: scroll;
+  /* Bright Saffron/50 */
 
-    /* Bright Saffron/50 */
+  background: #fffae7;
+  /* Red Pigment/700 */
 
-    background: #FFFAE7;
-    /* Red Pigment/700 */
-
-    border: 2px solid #8E1116;
-    border-radius: 12px;
-  }
-
+  border: 2px solid #8e1116;
+  border-radius: 12px;
+}
 </style>
