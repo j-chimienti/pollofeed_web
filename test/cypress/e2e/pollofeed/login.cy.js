@@ -1,12 +1,10 @@
-import { TEST_USER_ZERO_BALANCE } from "../testData"
 import { login } from "../../login"
 import { handleErrors } from "app/test/cypress/e2e/handleErrors"
-const un = TEST_USER_ZERO_BALANCE.username
-const pw = TEST_USER_ZERO_BALANCE.password
+const un = Cypress.env("LOGIN_USERNAME")
+const pw = Cypress.env("LOGIN_PASSWORD")
 
 handleErrors()
 
-// todo: login w/ a different user
 describe("login", () => {
   beforeEach(() => {
     cy.clearCookies()

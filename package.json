@@ -16,7 +16,7 @@
     "cypress:open": "CYPRESS_BASE_URL=http://localhost:8080 cypress open",
     "cypress:openprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress open",
     "cypress:invoice": "CYPRESS_BASE_URL=http://localhost:8080 cypress run --spec test/cypress/e2e/pollofeed/invoice.cy.js",
-    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --video=false --spec test/cypress/e2e/pollofeed/invoice.cy.js",
+    "cypress:invoiceprod": "CYPRESS_BASE_URL=https://pollofeed.com cypress run --record=false --spec test/cypress/e2e/pollofeed/invoice.cy.js",
     "dev": "quasar dev",
     "dev:electron": "quasar dev -m electron",
     "test": "echo \"See package.json => scripts for available tests.\" && exit 0",
