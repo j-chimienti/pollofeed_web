@@ -10,7 +10,7 @@
               <q-responsive :ratio="4 / 3">
                 <q-img
                   :src="STREAM_URL"
-                  data-cy="live_stream"
+                  data-cy="liveStream"
                   id="live_stream"
                   :loading="false"
                 />
