@@ -11,6 +11,6 @@ jobs:
         with:
           node-version: '16.16.0'
       - name: install dependencies
-        run: npm i
+        run: yarn install
       - name: build web app
-        run: npm run build:web
+        run: yarn run build:web
