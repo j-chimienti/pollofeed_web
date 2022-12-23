@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '12.22.6'
+          node-version: '16.16.0'
       - name: install dependencies
         run: npm i
       - name: npm run cypress:invoiceprod
