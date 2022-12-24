@@ -32,6 +32,7 @@ export const pollofeedModule = {
   },
   state: {
     feedings: 1,
+    paymentType: "INVOICE",
     fedInvoices: [],
     delayFeeding: "not_delayed",
     feedTokens: makefeedTokens(),

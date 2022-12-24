@@ -2,10 +2,10 @@
   <q-btn
     data-cy="loginBtn"
     icon="fa fa-user"
+    :label="loginType"
     @click="$store.commit('LOGIN_MODAL_VISIBLE', true)"
     color="secondary"
-    >{{ loginType }}</q-btn
-  >
+  />
 </template>
 
 <script>

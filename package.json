@@ -2,7 +2,7 @@
   "name": "pollofeed_web",
   "version": "0.2.10-rc-1",
   "private": false,
-  "description": "Bitcoin Lightning Chicken Feeder",
+  "description": "View Chickens and Feed with Bitcoin Lightning",
   "author": "@pollofeed",
   "scripts": {
     "build": "quasar build",

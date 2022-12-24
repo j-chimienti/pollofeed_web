@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
+  <div class="q-pa-md">
     <p>$5.00 for 75 tokens <small>sent by email</small></p>
     <q-form
       @submit="sendBitcoinInvoice"
@@ -13,7 +13,7 @@
         required
       />
       <div>
-        <q-btn color="primary" type="submit" label="Generate address" />
+        <ButtonV3 label="generate address" />
       </div>
     </q-form>
   </div>
@@ -22,9 +22,11 @@
 <script>
 import AppMixin from "../mixins/AppMixin"
 import { Notify } from "quasar"
+import ButtonV3 from "components/ButtonV3"
 
 export default {
   name: "BitcoinPayment",
+  components: { ButtonV3 },
   data() {
     return { emailForBitcoinInvoice: "" }
   },

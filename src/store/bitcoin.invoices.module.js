@@ -81,7 +81,7 @@ const mutations = {
   },
   [SET_PAYMENT_TYPE](state, paymentType) {
     state.paymentType = paymentType
-    if (typeof paymentType === "string") savePaymentType(paymentType)
+    savePaymentType(paymentType)
   },
   [DELAYED_INVOICE_PAID](state) {
     state.paymentType = "TOKENS"

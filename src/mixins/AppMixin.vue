@@ -11,6 +11,7 @@ import {
   FEEDINGS,
   SET_DELAYED_FEEDING,
   SET_INVOICE,
+  SET_PAYMENT_TYPE,
   SET_USE_TOKEN_NOW,
 } from "../store/mutations"
 
@@ -40,6 +41,7 @@ export default {
     ]),
     ...mapMutations([
       SET_USE_TOKEN_NOW,
+      SET_PAYMENT_TYPE,
       SET_INVOICE,
       SET_DELAYED_FEEDING,
       FEEDINGS,

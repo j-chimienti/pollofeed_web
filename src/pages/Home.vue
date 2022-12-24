@@ -53,6 +53,7 @@ export default {
     async initUser(token) {
       await this.RESUME_SESSION()
       await this.$store.dispatch(OPEN_WEBSOCKET)
+      // todo: ensure token use view active even if logged in
       if (token) {
         this.SET_INVOICE(null)
         this.SET_DELAYED_FEEDING(token)
