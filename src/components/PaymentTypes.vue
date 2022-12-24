@@ -6,8 +6,8 @@
           <q-splitter v-model="splitterModel" style="min-height: 250px">
             <template v-slot:before>
               <q-tabs v-model="paymentTypeTab" vertical align="justify">
-                <q-tab name="lightning" label="Lightning" />
-                <q-tab name="btc" :icon="bitcoin" label="Bitcoin" />
+                <q-tab name="lightning" icon="img:/ln.svg" label="Lightning" />
+                <q-tab name="btc" :icon="'img:/btc.svg'" label="Bitcoin" />
                 <q-tab name="lnurl" label="LNURL" />
                 <q-tab name="lnaddr" label="LNADDR" />
               </q-tabs>
@@ -91,7 +91,6 @@ import InvoiceModal from "./InvoiceModal"
 import AppMixin from "../mixins/AppMixin"
 import BitcoinPayment from "./BitcoinPayment"
 import LightningInvoiceForm from "components/LightningInvoiceForm"
-import btcIcon from "../assets/img/btcIcon.svg"
 export default {
   name: "PaymentTypes",
   mixins: [AppMixin],
@@ -104,8 +103,7 @@ export default {
   },
   data() {
     return {
-      paymentTypeTab: "btc",
-      btcIcon,
+      paymentTypeTab: "lightning",
     }
   },
   computed: {
