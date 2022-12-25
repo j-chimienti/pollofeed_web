@@ -12,11 +12,10 @@
         placeholder="email"
         v-model="email"
         required
-        lazy-rules
-        :rules="[(val) => (val && val.length > 5) || 'Invalid login']"
+        :lazy-rules="[(val) => (val && val.length > 5) || 'Invalid login']"
       />
       <q-input
-        type="password"
+        :type="passwordVisible ? 'text' : 'password'"
         name="password"
         placeholder="Password"
         v-model="password"
@@ -27,7 +26,15 @@
             (val && val.length >= 8) ||
             'Password must be more than 8 characters',
         ]"
-      />
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="passwordVisible ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="passwordVisible = !passwordVisible"
+          />
+        </template>
+      </q-input>
       <q-input
         v-if="loginType === 'signup'"
         type="password"
@@ -41,16 +48,25 @@
             (loginType === 'signup' ? val === password : true) ||
             'Password verification failed',
         ]"
-      />
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="passwordVisibleVerify ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="passwordVisibleVerify = !passwordVisibleVerify"
+          />
+        </template>
+      </q-input>
 
       <q-btn
         @click="login"
+        type="submit"
         :label="loginType"
         color="primary"
         :loading="loadingLogin"
       />
 
-      <div class="q-mt-md">
+      <div class="q-mt-md pointer">
         <p @click="LOGIN_TYPE('login')" v-if="loginType === 'signup'">
           Already have an account? sign in
         </p>
@@ -73,7 +89,14 @@ export default {
   name: "Login",
   components: { SocialAuth },
   data() {
-    return { password: "", email: "", passwordVerify: "", loadingLogin: false }
+    return {
+      password: "",
+      email: "",
+      passwordVerify: "",
+      loadingLogin: false,
+      passwordVisible: false,
+      passwordVisibleVerify: false,
+    }
   },
   mixins: [AppMixin],
   computed: {
