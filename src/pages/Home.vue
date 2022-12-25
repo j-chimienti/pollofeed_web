@@ -4,7 +4,7 @@
       <div hidden data-cy="wsConnected" v-if="connectedToWebsocket" />
       <div class="row justify-center">
         <MobileBottomNav class="lt-sm" />
-        <q-card class="card-stream q-pa-md">
+        <q-card class="card-stream q-px-sm-md">
           <div class="row justify-center">
             <div class="col" style="max-width: 640px">
               <q-responsive :ratio="4 / 3">

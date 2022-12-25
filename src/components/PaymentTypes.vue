@@ -20,8 +20,6 @@
                 animated
                 swipeable
                 vertical
-                transition-prev="jump-up"
-                transition-next="jump-up"
               >
                 <q-tab-panel name="lightning">
                   <InvoiceModal v-if="invoiceUnpaid" />
@@ -120,14 +118,8 @@ export default {
 </script>
 
 <style scoped>
-.view-text {
-  /*font-style: normal;*/
-  /*font-weight: 400;*/
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
-.amount-txt {
-  font-size: 1.75rem;
-  line-height: 1.75rem;
+.q-tab-panel {
+  padding: 16px;
+  padding-left: 5px;
 }
 </style>

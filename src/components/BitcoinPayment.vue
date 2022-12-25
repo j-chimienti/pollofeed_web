@@ -8,12 +8,12 @@
     >
       <q-input
         v-model="emailForBitcoinInvoice"
-        type="email"
-        placeholder="email"
-        required
+        dense
+        :lazy-rules="[(v) => isValidEmail(v)]"
+        error-message="Please enter a valid email address."
       />
       <div>
-        <ButtonV3 label="generate address" />
+        <ButtonV3 label="submit" />
       </div>
     </q-form>
   </div>
@@ -32,11 +32,17 @@ export default {
   },
   mixins: [AppMixin],
   methods: {
+    isValidEmail(val) {
+      const emailPattern =
+        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/
+      return emailPattern.test(val) || "Invalid email"
+    },
     sendBitcoinInvoice() {
       this.$refs.btcInvoiceForm
         .validate()
-        .then(() => {
-          this.BITCOIN_INVOICE(this.emailForBitcoinInvoice)
+        .then((success) => {
+          if (success) this.BITCOIN_INVOICE(this.emailForBitcoinInvoice)
+          else Notify.create("invalid email")
         })
         .catch((err) => {
           Notify.create("invalid " + err)

@@ -1,25 +1,22 @@
 <template>
-  <q-form ref="createInvoiceForm">
-    <div class="row justify-center">
-      <div class="col-12 col-md-3"></div>
-      <div class="col-12 col-md-6">
-        <ButtonV3
-          class="q-mx-md"
-          label="submit"
-          data-cy="createLightningInvoiceButton"
-          type="submit"
-          @click.prevent="invoiceRequest"
-        />
-      </div>
-      <div class="col-12 col-md-3">
+  <div class="justify-center">
+    <q-form ref="createInvoiceForm" @submit="invoiceRequest">
+      <ButtonV3
+        label="submit"
+        data-cy="createLightningInvoiceButton"
+        type="submit"
+        @click="invoiceRequest"
+      />
+      <div class="row justify-center vertical-middle q-py-md">
         <q-input
           label="feedings"
-          class="q-pb-md"
           min="1"
           max="50"
+          style="width: 100px"
           type="number"
           v-model.number="feedings"
-        />
+        >
+        </q-input>
         <q-checkbox
           label="Give me token to feed"
           v-model="delayFeeding"
@@ -27,13 +24,12 @@
           name="delayFeeding"
           value="delayed"
           unchecked-value="not_delayed"
-          class="q-pr-md"
         >
           <q-tooltip>Receive token(s) to use at your convenience. </q-tooltip>
         </q-checkbox>
       </div>
-    </div>
-  </q-form>
+    </q-form>
+  </div>
 </template>
 <script>
 import ButtonV3 from "components/ButtonV3"
