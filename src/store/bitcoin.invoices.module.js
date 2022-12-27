@@ -23,6 +23,7 @@ import {
   loadIvoiceFromStorage,
   loadPaymentTypeFromStorage,
   saveBitcoinPrice,
+  saveBTCPayServerInvoice,
   savePaymentType,
 } from "src/services/localStorageService"
 import { bitcoinInvoice } from "src/services/WebsocketService"
@@ -52,6 +53,7 @@ const getters = {
   feedPriceUSD: (_, getters) => {
     return satsToUsd(getters.satoshi, getters.btc_usd)
   },
+  btcPayServerInvoice: (state) => state.btcPayServerInvoice,
 }
 
 const state = {
@@ -64,6 +66,10 @@ const state = {
 }
 
 const mutations = {
+  ["btcInvoice"](state, i) {
+    state.btcPayServerInvoice = i
+    saveBTCPayServerInvoice(i)
+  },
   [LOADING_INVOICE](state) {
     state.loadingInvoice = true
   },

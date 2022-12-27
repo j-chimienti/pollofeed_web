@@ -74,6 +74,7 @@ export default {
       "showFeedNow",
       "feedPriceUSD",
       "feedTokens",
+      "btcPayServerInvoice",
       "loginType",
       "invoice",
       "qr",

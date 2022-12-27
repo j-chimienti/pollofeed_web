@@ -1,25 +1,28 @@
 <template>
-  <div class="row justify-center">
-    <div style="max-width: 400px">
-      <p>$5.00 for 75 tokens <small>sent by email</small></p>
-      <q-form
-        @submit="sendBitcoinInvoice"
-        ref="btcInvoiceForm"
-        class="q-gutter-md"
-      >
-        <q-input
-          v-model="emailForBitcoinInvoice"
-          dense
-          class="q-my-md"
-          label="email"
-          :lazy-rules="[(v) => isValidEmail(v)]"
-          error-message="Please enter a valid email address."
-        />
-        <div>
-          <ButtonV3 label="submit" />
-        </div>
-      </q-form>
+  <div>
+    <div class="row justify-center">
+      <div style="max-width: 400px">
+        <p>$5.00 for 75 tokens <small>sent by email</small></p>
+        <q-form
+          @submit="sendBitcoinInvoice"
+          ref="btcInvoiceForm"
+          class="q-gutter-md"
+        >
+          <q-input
+            v-model="emailForBitcoinInvoice"
+            dense
+            class="q-my-md"
+            label="email"
+            :lazy-rules="[(v) => isValidEmail(v)]"
+            error-message="Please enter a valid email address."
+          />
+          <div>
+            <ButtonV3 label="submit" />
+          </div>
+        </q-form>
+      </div>
     </div>
+    <BTCPayServerInvoice v-if="btcPayServerInvoice !== null" />
   </div>
 </template>
 
@@ -27,10 +30,11 @@
 import AppMixin from "../mixins/AppMixin"
 import { Notify } from "quasar"
 import ButtonV3 from "components/ButtonV3"
+import BTCPayServerInvoice from "components/BTCPayServerInvoice"
 
 export default {
   name: "BitcoinPayment",
-  components: { ButtonV3 },
+  components: { BTCPayServerInvoice, ButtonV3 },
   data() {
     return { emailForBitcoinInvoice: "" }
   },
