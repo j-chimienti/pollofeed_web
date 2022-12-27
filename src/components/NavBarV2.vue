@@ -6,7 +6,7 @@
     <WebsocketConnectionStatus
       style="position: absolute; left: 10px; top: 10px"
     />
-    <div class="row">
+    <div class="row justify-center">
       <LoginBtn v-if="!authenticated" />
       <LogoutBtn v-else />
     </div>

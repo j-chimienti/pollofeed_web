@@ -1,8 +1,6 @@
 <template>
   <div>
-    <router-link type="a" :to="{ name: 'about' }">
-      About
-    </router-link>
+    <q-btn type="a" :to="{ name: 'about' }" label="about" />
 
     <!--    <router-link type="a" :to="{name: 'about'}">-->
     <!--      <ButtonV2 label="contact"/>-->

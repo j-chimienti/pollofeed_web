@@ -40,6 +40,8 @@ import { notifyInvoicePaid } from "src/services/notificationService"
 import MobileBottomNav from "components/MobileBottomNav"
 import CookiesEnabledModal from "components/CookiesEnabledModal"
 import { CHECK_INVOICE_INTERVAL, STREAM_URL } from "src/constants"
+import LoginBtn from "src/auth/LoginBtn"
+import LogoutBtn from "src/auth/LogoutBtn"
 
 // import Hls from "hls.js"
 
@@ -113,6 +115,8 @@ export default {
     }
   },
   components: {
+    LogoutBtn,
+    LoginBtn,
     CookiesEnabledModal,
     MobileBottomNav,
     LoginModal,

@@ -1,21 +1,25 @@
 <template>
-  <div class="q-pa-md">
-    <p>$5.00 for 75 tokens <small>sent by email</small></p>
-    <q-form
-      @submit="sendBitcoinInvoice"
-      ref="btcInvoiceForm"
-      class="q-gutter-md"
-    >
-      <q-input
-        v-model="emailForBitcoinInvoice"
-        dense
-        :lazy-rules="[(v) => isValidEmail(v)]"
-        error-message="Please enter a valid email address."
-      />
-      <div>
-        <ButtonV3 label="submit" />
-      </div>
-    </q-form>
+  <div class="row justify-center">
+    <div style="max-width: 400px">
+      <p>$5.00 for 75 tokens <small>sent by email</small></p>
+      <q-form
+        @submit="sendBitcoinInvoice"
+        ref="btcInvoiceForm"
+        class="q-gutter-md"
+      >
+        <q-input
+          v-model="emailForBitcoinInvoice"
+          dense
+          class="q-my-md"
+          label="email"
+          :lazy-rules="[(v) => isValidEmail(v)]"
+          error-message="Please enter a valid email address."
+        />
+        <div>
+          <ButtonV3 label="submit" />
+        </div>
+      </q-form>
+    </div>
   </div>
 </template>
 

@@ -1,14 +1,8 @@
 <template>
   <div>
-    <q-tabs v-model="tab" class="text-teal">
-      <q-tab>
-        <Logo img-width="65px" />
-      </q-tab>
-      <q-tab name="mails">
-        <LoginBtn v-if="!authenticated" />
-        <LogoutBtn v-else />
-      </q-tab>
-    </q-tabs>
+    <Logo img-width="65px" />
+    <LoginBtn v-if="!authenticated" />
+    <LogoutBtn v-else />
   </div>
 </template>
 

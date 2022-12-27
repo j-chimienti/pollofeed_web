@@ -4,7 +4,7 @@
     icon="fa fa-user"
     :label="loginType"
     @click="$store.commit('LOGIN_MODAL_VISIBLE', true)"
-    color="secondary"
+    color="primary"
   />
 </template>
 

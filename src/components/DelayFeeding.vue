@@ -1,6 +1,5 @@
 <template>
   <div class="delay-feeding">
-    <p style="font-size: 1.25rem">My Tokens</p>
     <div v-if="showFeedNow">
       <div @click="feed(showFeedNow)" class="row cursor-pointer justify-center">
         <svg
@@ -148,7 +147,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row q-my-md justify-center">
       <q-btn icon="save" label="export tokens" @click="exportTokens" />
     </div>
   </div>
