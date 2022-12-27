@@ -5,6 +5,7 @@
         label="submit"
         data-cy="createLightningInvoiceButton"
         type="submit"
+        :loading="loadingInvoice"
         @click="invoiceRequest"
       />
       <div class="row justify-center vertical-middle q-py-md">

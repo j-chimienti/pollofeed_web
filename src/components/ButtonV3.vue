@@ -3,7 +3,7 @@
     <div class="position-relative d-inline main_btn">
       <span class="position-absolute span_btn"></span>
       <span class="position-absolute span_btn_two"></span>
-      <button class="feed_btn">{{ label }}</button>
+      <button class="feed_btn" :disabled="loading">{{ label }}</button>
     </div>
   </div>
 </template>
