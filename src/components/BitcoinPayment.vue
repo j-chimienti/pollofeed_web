@@ -2,7 +2,9 @@
   <div>
     <div class="row justify-center">
       <div style="max-width: 400px">
-        <p>$5.00 for 75 tokens <small>sent by email</small></p>
+        <div class="text-h6">
+          $5.00 for 75 tokens <small>sent by email</small>
+        </div>
         <q-form
           @submit="sendBitcoinInvoice"
           ref="btcInvoiceForm"
@@ -13,7 +15,8 @@
             dense
             class="q-my-md"
             label="email"
-            :lazy-rules="[(v) => isValidEmail(v)]"
+            lazy-rules
+            :rules="[(v) => isValidEmail(v)]"
             error-message="Please enter a valid email address."
           />
           <div>
@@ -40,11 +43,6 @@ export default {
   },
   mixins: [AppMixin],
   methods: {
-    isValidEmail(val) {
-      const emailPattern =
-        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/
-      return emailPattern.test(val) || "Invalid email"
-    },
     sendBitcoinInvoice() {
       this.$refs.btcInvoiceForm
         .validate()

@@ -13,8 +13,10 @@
           label="feedings"
           min="1"
           max="50"
+          filled
           style="width: 100px"
           type="number"
+          :rules="[(v) => v > 0 || 'Min 1', (v) => v <= 50 || 'Max 50']"
           v-model.number="feedings"
         >
         </q-input>

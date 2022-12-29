@@ -11,16 +11,16 @@
         type="email"
         placeholder="email"
         v-model="email"
-        required
-        :lazy-rules="[(val) => (val && val.length > 5) || 'Invalid login']"
+        lazy-rules
+        :rules="[(v) => isValidEmail(v)]"
       />
       <q-input
         :type="passwordVisible ? 'text' : 'password'"
         name="password"
         placeholder="Password"
         v-model="password"
-        required
         label="password"
+        lazy-rules
         :rules="[
           (val) =>
             (val && val.length >= 8) ||
@@ -38,11 +38,11 @@
       <q-input
         v-if="loginType === 'signup'"
         type="password"
-        :required="loginType === 'signup'"
         name="passwordVerify"
         placeholder="Verify Password"
         v-model="passwordVerify"
         label="password"
+        lazy-rules
         :rules="[
           (val) =>
             (loginType === 'signup' ? val === password : true) ||
@@ -59,7 +59,6 @@
       </q-input>
 
       <q-btn
-        @click="login"
         type="submit"
         :label="loginType"
         color="primary"
