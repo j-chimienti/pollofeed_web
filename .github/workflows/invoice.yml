@@ -2,8 +2,8 @@ name: invoice
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "10 * * * *" # every hour at min 10
+#  schedule:
+#    - cron: "10 * * * *" # every hour at min 10
 jobs:
   invoice:
     runs-on: ubuntu-latest
